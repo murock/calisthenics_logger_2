@@ -7,15 +7,26 @@ class TrainingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Training Page"),
-      ),
+      // appBar: AppBar(
+      //   title: Text("Training Page"),
+      // ),
       body: new Container(
         decoration: new BoxDecoration(
           gradient: new LinearGradient(
             colors: [START_GRADIENT_COLOUR, END_GRADIENT_COLOUR],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: new Column(
+            children: [
+              Text(
+                'Pull Up',
+                style: TextStyle(color: Colors.red),
+              )
+            ],
           ),
         ),
       ),
