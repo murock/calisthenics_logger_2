@@ -31,7 +31,38 @@ class TrainingPage extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline1,
                   //  style: TextStyle(color: Colors.red),
                 ),
-              )
+              ),
+              SizedBox(
+                height: 100,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () {},
+                    child: const Icon(Icons.remove),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Column(
+                      children: [
+                        Text(
+                          "10",
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                        Text(
+                          "Reps",
+                          style: Theme.of(context).textTheme.subtitle2,
+                        )
+                      ],
+                    ),
+                  ),
+                  FloatingActionButton(
+                    onPressed: () {},
+                    child: const Icon(Icons.add),
+                  )
+                ],
+              ),
             ],
           ),
         ),

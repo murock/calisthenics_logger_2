@@ -3,6 +3,7 @@ import 'package:calisthenics_logger_2/presentation/pages/training_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  // Paint.enableDithering = true;
   runApp(MyApp());
 }
 
