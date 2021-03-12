@@ -1,3 +1,4 @@
+import 'package:calisthenics_logger_2/core/util/theme.dart';
 import 'package:calisthenics_logger_2/presentation/pages/training_page.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +12,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        // scaffoldBackgroundColor: Colors.green,
-      ),
+      theme: basicTheme(),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      //   // scaffoldBackgroundColor: Colors.green,
+      // ),
       home: TrainingPage(),
     );
   }

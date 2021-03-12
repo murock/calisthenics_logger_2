@@ -22,9 +22,15 @@ class TrainingPage extends StatelessWidget {
           backgroundColor: Colors.transparent,
           body: new Column(
             children: [
-              Text(
-                'Pull Up',
-                style: TextStyle(color: Colors.red),
+              SizedBox(
+                height: 40,
+              ),
+              Center(
+                child: Text(
+                  'Pull Up',
+                  style: Theme.of(context).textTheme.headline1,
+                  //  style: TextStyle(color: Colors.red),
+                ),
               )
             ],
           ),
