@@ -1,4 +1,5 @@
 import 'package:calisthenics_logger_2/core/constants.dart';
+import 'package:calisthenics_logger_2/core/util/theme.dart';
 import 'package:flutter/material.dart';
 
 class TrainingPage extends StatelessWidget {
@@ -63,6 +64,33 @@ class TrainingPage extends StatelessWidget {
                   )
                 ],
               ),
+              SizedBox(
+                height: 50,
+              ),
+              Theme(
+                data: pinkTheme(),
+                child: FloatingActionButton(
+                  onPressed: () {},
+                  child: const Icon(Icons.add),
+                ),
+              ),
+              Container(
+                height: 100,
+                child: ListView(
+                  children: [
+                    Placeholder(
+                      color: Colors.white,
+                      fallbackHeight: 30,
+                      fallbackWidth: 100,
+                    ),
+                    Placeholder(
+                      color: Colors.white,
+                      fallbackHeight: 30,
+                      fallbackWidth: 100,
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),

@@ -29,6 +29,7 @@ ThemeData basicTheme() {
   //   );
   // }
 
+  // Blue highlighted boarder, with blue icon in the middle
   FloatingActionButtonThemeData _fabTheme(FloatingActionButtonThemeData base) {
     return base.copyWith(
       foregroundColor: Color(0Xff3A83AC),
@@ -46,4 +47,25 @@ ThemeData basicTheme() {
       textTheme: _basicTextTheme(base.textTheme),
       accentColor: Color(0Xff71263),
       floatingActionButtonTheme: _fabTheme(base.floatingActionButtonTheme));
+}
+
+ThemeData pinkTheme() {
+  FloatingActionButtonThemeData _fabPinkTheme(
+      FloatingActionButtonThemeData base) {
+    return base.copyWith(
+      foregroundColor: Colors.white,
+      backgroundColor: Color(0Xffd71263),
+      shape: CircleBorder(
+          // side: BorderSide(
+          //   color: Colors.white,
+          // ),
+          ),
+      //foregroundColor: Color(0Xff71263),
+      //  backgroundColor: Color(0Xffd71263),
+    );
+  }
+
+  final ThemeData base = ThemeData.light();
+  return base.copyWith(
+      floatingActionButtonTheme: _fabPinkTheme(base.floatingActionButtonTheme));
 }
