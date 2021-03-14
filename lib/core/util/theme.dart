@@ -3,20 +3,25 @@ import 'package:flutter/material.dart';
 ThemeData basicTheme() {
   TextTheme _basicTextTheme(TextTheme base) {
     return base.copyWith(
-      headline1: base.headline1.copyWith(
+      headline1: base.headline1!.copyWith(
         fontFamily: 'Nunito',
         fontWeight: FontWeight.w600,
         fontSize: 22.0,
         color: Colors.white,
       ),
-      subtitle1: base.subtitle1.copyWith(
+      subtitle1: base.subtitle1!.copyWith(
         fontFamily: 'Nunito',
         fontSize: 30,
         color: Colors.white,
       ),
-      subtitle2: base.subtitle1.copyWith(
+      subtitle2: base.subtitle1!.copyWith(
         fontFamily: 'Nunito',
         fontSize: 10,
+        color: Colors.grey,
+      ),
+      bodyText1: base.subtitle1!.copyWith(
+        fontFamily: 'Nunito',
+        fontSize: 15,
         color: Colors.grey,
       ),
     );
