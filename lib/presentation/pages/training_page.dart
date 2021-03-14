@@ -3,8 +3,6 @@ import 'package:calisthenics_logger_2/core/util/theme.dart';
 import 'package:flutter/material.dart';
 
 class TrainingPage extends StatelessWidget {
-  Color? gradientStart = Colors.indigo[900]; //Change start gradient color here
-  Color? gradientEnd = Colors.blueGrey[900]; //Change end gradient color here
   @override
   Widget build(BuildContext context) {
     return Scaffold(

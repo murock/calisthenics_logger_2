@@ -1,4 +1,5 @@
 import 'package:calisthenics_logger_2/core/util/theme.dart';
+import 'package:calisthenics_logger_2/presentation/pages/charts_page.dart';
 import 'package:calisthenics_logger_2/presentation/pages/training_page.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       //   primarySwatch: Colors.blue,
       //   // scaffoldBackgroundColor: Colors.green,
       // ),
-      home: TrainingPage(),
+      home: ChartsPage.withSampleData(), //TrainingPage(),
     );
   }
 }
