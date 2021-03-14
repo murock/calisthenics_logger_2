@@ -56,13 +56,25 @@ class TrainingPage extends StatelessWidget {
               ),
               AddRemoveRow(),
               Container(
-                height: 100,
-                child: ListView(
-                  children: [
-                    RecordedExerciseItem(setNum: '1', reps: '8  '),
-                    RecordedExerciseItem(setNum: '2', reps: '9  '),
-                    RecordedExerciseItem(setNum: '3', reps: '10'),
-                  ],
+                height: 200,
+                child: ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) =>
+                      Divider(
+                    color: Colors.white,
+                  ),
+                  itemCount: 3,
+                  itemBuilder: (context, index) => Padding(
+                    padding: EdgeInsets.all(1),
+                    child: RecordedExerciseItem(
+                      setNum: (index + 1).toString(),
+                      reps: (index + 8).toString(),
+                    ),
+                  ),
+                  // children: [
+                  //   RecordedExerciseItem(setNum: '1', reps: '8  '),
+                  //   RecordedExerciseItem(setNum: '2', reps: '9  '),
+                  //   RecordedExerciseItem(setNum: '3', reps: '10'),
+                  // ],
                 ),
               )
             ],
