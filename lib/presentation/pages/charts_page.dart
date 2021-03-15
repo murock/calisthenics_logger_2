@@ -39,7 +39,7 @@ class ChartsPage extends StatelessWidget {
               animate: animate,
               behaviors: [
                 new charts.ChartTitle('Top title text',
-                    subTitle: 'Top sub-title text',
+                    subTitle: 'kgs',
                     behaviorPosition: charts.BehaviorPosition.top,
                     titleOutsideJustification:
                         charts.OutsideJustification.start,
@@ -48,18 +48,18 @@ class ChartsPage extends StatelessWidget {
                     // The top tick label may extend upwards into the top margin region
                     // if it is located at the top of the draw area.
                     innerPadding: 18),
-                new charts.ChartTitle('Bottom title text',
-                    behaviorPosition: charts.BehaviorPosition.bottom,
-                    titleOutsideJustification:
-                        charts.OutsideJustification.middleDrawArea),
-                new charts.ChartTitle('Start title',
-                    behaviorPosition: charts.BehaviorPosition.start,
-                    titleOutsideJustification:
-                        charts.OutsideJustification.middleDrawArea),
-                new charts.ChartTitle('End title',
-                    behaviorPosition: charts.BehaviorPosition.end,
-                    titleOutsideJustification:
-                        charts.OutsideJustification.middleDrawArea),
+                // new charts.ChartTitle('Bottom title text',
+                //     behaviorPosition: charts.BehaviorPosition.bottom,
+                //     titleOutsideJustification:
+                //         charts.OutsideJustification.middleDrawArea),
+                // new charts.ChartTitle('Start title',
+                //     behaviorPosition: charts.BehaviorPosition.start,
+                //     titleOutsideJustification:
+                //         charts.OutsideJustification.middleDrawArea),
+                // new charts.ChartTitle('End title',
+                //     behaviorPosition: charts.BehaviorPosition.end,
+                //     titleOutsideJustification:
+                //         charts.OutsideJustification.middleDrawArea),
               ],
             )),
       ],
@@ -134,4 +134,8 @@ class LinearSales {
   final int sales;
 
   LinearSales(this.year, this.sales);
+}
+
+class ExerciseData {
+  final DateTime date;
 }
