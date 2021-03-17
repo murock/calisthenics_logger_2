@@ -1,3 +1,5 @@
+import 'package:calisthenics_logger_2/presentation/widgets/styledContainer.dart';
+
 /// Example of a simple line chart.
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
@@ -20,59 +22,85 @@ class ChartsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 70,
-        ),
-        Text(
-          'Results',
-          style: Theme.of(context).textTheme.headline1,
-        ),
-        SizedBox(
-          height: 40,
-        ),
-        Container(
-            height: 400,
-            child: charts.TimeSeriesChart(
-              seriesList,
-              animate: animate,
-              behaviors: [
-                new charts.ChartTitle('Top title text',
-                    subTitle: 'kgs',
-                    behaviorPosition: charts.BehaviorPosition.top,
-                    titleOutsideJustification:
-                        charts.OutsideJustification.start,
-                    // Set a larger inner padding than the default (10) to avoid
-                    // rendering the text too close to the top measure axis tick label.
-                    // The top tick label may extend upwards into the top margin region
-                    // if it is located at the top of the draw area.
-                    innerPadding: 18),
-                // new charts.ChartTitle('Bottom title text',
-                //     behaviorPosition: charts.BehaviorPosition.bottom,
-                //     titleOutsideJustification:
-                //         charts.OutsideJustification.middleDrawArea),
-                // new charts.ChartTitle('Start title',
-                //     behaviorPosition: charts.BehaviorPosition.start,
-                //     titleOutsideJustification:
-                //         charts.OutsideJustification.middleDrawArea),
-                // new charts.ChartTitle('End title',
-                //     behaviorPosition: charts.BehaviorPosition.end,
-                //     titleOutsideJustification:
-                //         charts.OutsideJustification.middleDrawArea),
-              ],
-            )),
-      ],
+    return StyledContainer(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 70,
+          ),
+          Text(
+            'Results',
+            style: Theme.of(context).textTheme.headline1,
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          Container(
+              height: 400,
+              child: charts.TimeSeriesChart(
+                seriesList,
+                animate: animate,
+                defaultRenderer: charts.PointRendererConfig(
+                    pointRendererDecorators: [charts.PointRendererDecorator()]),
+                domainAxis: new charts.DateTimeAxisSpec(
+                    renderSpec: new charts.SmallTickRendererSpec(
+
+                        // Tick and Label styling here.
+                        labelStyle: new charts.TextStyleSpec(
+                            fontSize: 18, // size in Pts.
+                            color: charts.MaterialPalette.white),
+
+                        // Change the line colors to match text color.
+                        lineStyle: new charts.LineStyleSpec(
+                            color: charts.MaterialPalette.white))),
+                primaryMeasureAxis: new charts.NumericAxisSpec(
+                    renderSpec: new charts.GridlineRendererSpec(
+
+                        // Tick and Label styling here.
+                        labelStyle: new charts.TextStyleSpec(
+                            fontSize: 18, // size in Pts.
+                            color: charts.MaterialPalette.white),
+
+                        // Change the line colors to match text color.
+                        lineStyle: new charts.LineStyleSpec(
+                            color: charts.MaterialPalette.white))),
+                behaviors: [
+                  // new charts.ChartTitle('Top title text',
+                  //     subTitle: 'kgs',
+                  //     behaviorPosition: charts.BehaviorPosition.top,
+                  //     titleOutsideJustification:
+                  //         charts.OutsideJustification.start,
+                  // Set a larger inner padding than the default (10) to avoid
+                  // rendering the text too close to the top measure axis tick label.
+                  // The top tick label may extend upwards into the top margin region
+                  // if it is located at the top of the draw area.
+                  //      innerPadding: 18),
+                  // new charts.ChartTitle('Bottom title text',
+                  //     behaviorPosition: charts.BehaviorPosition.bottom,
+                  //     titleOutsideJustification:
+                  //         charts.OutsideJustification.middleDrawArea),
+                  new charts.ChartTitle('Reps',
+                      behaviorPosition: charts.BehaviorPosition.start,
+                      titleOutsideJustification:
+                          charts.OutsideJustification.middleDrawArea),
+                  // new charts.ChartTitle('End title',
+                  //     behaviorPosition: charts.BehaviorPosition.end,
+                  //     titleOutsideJustification:
+                  //         charts.OutsideJustification.middleDrawArea),
+                ],
+              )),
+        ],
+      ),
     );
   }
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<ExerciseData, DateTime>> _createSampleData() {
     final data = [
-      new ExerciseData(new DateTime(2021, 2, 1), 5),
-      new ExerciseData(new DateTime(2021, 3, 2), 25),
-      new ExerciseData(new DateTime(2021, 3, 6), 100),
-      new ExerciseData(new DateTime(2021, 4, 1), 75),
+      new ExerciseData(new DateTime(2021, 2, 1), 3),
+      new ExerciseData(new DateTime(2021, 3, 2), 5),
+      new ExerciseData(new DateTime(2021, 3, 6), 10),
+      new ExerciseData(new DateTime(2021, 4, 1), 15),
     ];
 
     return [

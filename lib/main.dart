@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       //   primarySwatch: Colors.blue,
       //   // scaffoldBackgroundColor: Colors.green,
       // ),
-      home: ChartsPage.withSampleData(), //TrainingPage(),
+      home: ChartsPage.withSampleData(), //TrainingPage(), //
     );
   }
 }
