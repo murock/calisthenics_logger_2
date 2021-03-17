@@ -3,7 +3,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class ChartsPage extends StatelessWidget {
-  final List<charts.Series> seriesList;
+  final List<charts.Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
   const ChartsPage({Key? key, required this.seriesList, required this.animate})
@@ -34,7 +34,7 @@ class ChartsPage extends StatelessWidget {
         ),
         Container(
             height: 400,
-            child: charts.LineChart(
+            child: charts.TimeSeriesChart(
               seriesList,
               animate: animate,
               behaviors: [
@@ -67,20 +67,20 @@ class ChartsPage extends StatelessWidget {
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<charts.Series<ExerciseData, DateTime>> _createSampleData() {
     final data = [
-      new LinearSales(0, 5),
-      new LinearSales(1, 25),
-      new LinearSales(2, 100),
-      new LinearSales(3, 75),
+      new ExerciseData(new DateTime(2021, 2, 1), 5),
+      new ExerciseData(new DateTime(2021, 3, 2), 25),
+      new ExerciseData(new DateTime(2021, 3, 6), 100),
+      new ExerciseData(new DateTime(2021, 4, 1), 75),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      new charts.Series<ExerciseData, DateTime>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (ExerciseData sales, _) => sales.time,
+        measureFn: (ExerciseData sales, _) => sales.reps,
         data: data,
       )
     ];
@@ -137,5 +137,8 @@ class LinearSales {
 }
 
 class ExerciseData {
-  final DateTime date;
+  final DateTime time;
+  final int reps;
+
+  ExerciseData(this.time, this.reps);
 }
