@@ -15,10 +15,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: basicTheme(),
-      // theme: ThemeData(
-      //   primarySwatch: Colors.blue,
-      //   // scaffoldBackgroundColor: Colors.green,
-      // ),
       home: ChartsPage.withSampleData(), //TrainingPage(), //
     );
   }

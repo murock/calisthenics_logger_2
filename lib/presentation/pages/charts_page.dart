@@ -1,3 +1,4 @@
+import 'package:calisthenics_logger_2/core/constants.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styledContainer.dart';
 
 /// Example of a simple line chart.
@@ -36,59 +37,49 @@ class ChartsPage extends StatelessWidget {
             height: 40,
           ),
           Container(
-              height: 400,
-              child: charts.TimeSeriesChart(
-                seriesList,
-                animate: animate,
-                defaultRenderer: charts.PointRendererConfig(
-                    pointRendererDecorators: [charts.PointRendererDecorator()]),
-                domainAxis: new charts.DateTimeAxisSpec(
-                    renderSpec: new charts.SmallTickRendererSpec(
+            height: 400,
+            child: charts.TimeSeriesChart(
+              seriesList,
+              animate: animate,
+              domainAxis: new charts.DateTimeAxisSpec(
+                  renderSpec: new charts.SmallTickRendererSpec(
 
-                        // Tick and Label styling here.
-                        labelStyle: new charts.TextStyleSpec(
-                            fontSize: 18, // size in Pts.
-                            color: charts.MaterialPalette.white),
+                      // Tick and Label styling here.
+                      labelStyle: new charts.TextStyleSpec(
+                          fontFamily: FONT_FAMILY,
+                          fontSize: FONT_SIZE_BODY_TEXT1, // size in Pts.
+                          color: charts.MaterialPalette.white),
 
-                        // Change the line colors to match text color.
-                        lineStyle: new charts.LineStyleSpec(
-                            color: charts.MaterialPalette.white))),
-                primaryMeasureAxis: new charts.NumericAxisSpec(
-                    renderSpec: new charts.GridlineRendererSpec(
+                      // Change the line colors to match text color.
+                      lineStyle: new charts.LineStyleSpec(
+                          color: charts.MaterialPalette.white))),
+              primaryMeasureAxis: new charts.NumericAxisSpec(
+                  renderSpec: new charts.GridlineRendererSpec(
 
-                        // Tick and Label styling here.
-                        labelStyle: new charts.TextStyleSpec(
-                            fontSize: 18, // size in Pts.
-                            color: charts.MaterialPalette.white),
+                      // Tick and Label styling here.
+                      labelStyle: new charts.TextStyleSpec(
+                          fontFamily: FONT_FAMILY,
+                          fontSize: FONT_SIZE_BODY_TEXT1, // size in Pts.
+                          color: charts.MaterialPalette.white),
 
-                        // Change the line colors to match text color.
-                        lineStyle: new charts.LineStyleSpec(
-                            color: charts.MaterialPalette.white))),
-                behaviors: [
-                  // new charts.ChartTitle('Top title text',
-                  //     subTitle: 'kgs',
-                  //     behaviorPosition: charts.BehaviorPosition.top,
-                  //     titleOutsideJustification:
-                  //         charts.OutsideJustification.start,
-                  // Set a larger inner padding than the default (10) to avoid
-                  // rendering the text too close to the top measure axis tick label.
-                  // The top tick label may extend upwards into the top margin region
-                  // if it is located at the top of the draw area.
-                  //      innerPadding: 18),
-                  // new charts.ChartTitle('Bottom title text',
-                  //     behaviorPosition: charts.BehaviorPosition.bottom,
-                  //     titleOutsideJustification:
-                  //         charts.OutsideJustification.middleDrawArea),
-                  new charts.ChartTitle('Reps',
-                      behaviorPosition: charts.BehaviorPosition.start,
-                      titleOutsideJustification:
-                          charts.OutsideJustification.middleDrawArea),
-                  // new charts.ChartTitle('End title',
-                  //     behaviorPosition: charts.BehaviorPosition.end,
-                  //     titleOutsideJustification:
-                  //         charts.OutsideJustification.middleDrawArea),
-                ],
-              )),
+                      // Change the line colors to match text color.
+                      lineStyle: new charts.LineStyleSpec(
+                          color: charts.MaterialPalette.white))),
+              behaviors: [
+                new charts.ChartTitle(
+                  'Reps',
+                  behaviorPosition: charts.BehaviorPosition.start,
+                  titleStyleSpec: charts.TextStyleSpec(
+                    fontFamily: FONT_FAMILY,
+                    fontSize: FONT_SIZE_HEADLINE1,
+                    color: charts.MaterialPalette.white,
+                  ),
+                  innerPadding: 8,
+                  outerPadding: 0,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -113,55 +104,6 @@ class ChartsPage extends StatelessWidget {
       )
     ];
   }
-}
-
-class SimpleLineChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
-
-  SimpleLineChart(this.seriesList, {required this.animate});
-
-  /// Creates a [LineChart] with sample data and no transition.
-  factory SimpleLineChart.withSampleData() {
-    return new SimpleLineChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new charts.LineChart(seriesList, animate: animate);
-  }
-
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
-    final data = [
-      new LinearSales(0, 5),
-      new LinearSales(1, 25),
-      new LinearSales(2, 100),
-      new LinearSales(3, 75),
-    ];
-
-    return [
-      new charts.Series<LinearSales, int>(
-        id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        data: data,
-      )
-    ];
-  }
-}
-
-/// Sample linear data type.
-class LinearSales {
-  final int year;
-  final int sales;
-
-  LinearSales(this.year, this.sales);
 }
 
 class ExerciseData {
