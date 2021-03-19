@@ -15,7 +15,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: basicTheme(),
-      home: ChartsPage.withSampleData(), //TrainingPage(), //
+      //  home: ChartsPage.withSampleData(), //TrainingPage(), //
+      initialRoute: '/',
+      routes: {
+        '/': (context) => ChartsPage.withSampleData(),
+        '/tools': (context) => ChartsPage.withSampleData(),
+        '/calender': (context) => ChartsPage.withSampleData(),
+        '/training': (context) => TrainingPage(),
+      },
     );
   }
 }

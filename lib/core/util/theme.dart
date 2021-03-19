@@ -10,6 +10,11 @@ ThemeData basicTheme() {
         fontSize: FONT_SIZE_HEADLINE1.toDouble(),
         color: FONT_COLOUR,
       ),
+      headline2: base.subtitle1!.copyWith(
+        fontFamily: FONT_FAMILY,
+        fontSize: 12,
+        color: Colors.white,
+      ),
       subtitle1: base.subtitle1!.copyWith(
         fontFamily: FONT_FAMILY,
         fontSize: 30,
@@ -24,6 +29,11 @@ ThemeData basicTheme() {
         fontFamily: FONT_FAMILY,
         fontSize: FONT_SIZE_BODY_TEXT1.toDouble(),
         color: Colors.grey,
+      ),
+      bodyText2: base.subtitle1!.copyWith(
+        fontFamily: FONT_FAMILY,
+        fontSize: FONT_SIZE_BODY_TEXT1.toDouble(),
+        color: Colors.white,
       ),
     );
   }
@@ -41,10 +51,13 @@ ThemeData basicTheme() {
     );
   }
 
-  final ThemeData base = ThemeData.light();
+  final ThemeData base = ThemeData.dark();
   return base.copyWith(
       textTheme: _basicTextTheme(base.textTheme),
       accentColor: Color(0Xff71263),
+      iconTheme: base.iconTheme.copyWith(
+        color: Colors.white,
+      ),
       floatingActionButtonTheme: _fabTheme(base.floatingActionButtonTheme));
 }
 
