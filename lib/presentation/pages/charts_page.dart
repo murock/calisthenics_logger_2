@@ -165,14 +165,6 @@ class ChartsPage extends StatelessWidget {
       )
     ];
   }
-
-  List<Widget> _buildDrawerSection(final String title, final String text) {
-    return [
-      HeadlineText2(title),
-      SubTitleText2(text),
-      Divider(color: Colors.grey),
-    ];
-  }
 }
 
 class ExerciseData {
