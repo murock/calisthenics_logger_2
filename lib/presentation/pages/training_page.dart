@@ -1,5 +1,5 @@
 import 'package:calisthenics_logger_2/core/util/theme.dart';
-import 'package:calisthenics_logger_2/presentation/widgets/styledContainer.dart';
+import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
 import 'package:flutter/material.dart';
 
 class TrainingPage extends StatelessWidget {
