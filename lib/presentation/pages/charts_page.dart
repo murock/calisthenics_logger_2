@@ -1,4 +1,5 @@
 import 'package:calisthenics_logger_2/core/constants.dart';
+import 'package:calisthenics_logger_2/presentation/widgets/completed_set_item_builder.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/sub_title_text_2.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/body_text_2.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/headline_text_2.dart';
@@ -75,10 +76,10 @@ class ChartsPage extends StatelessWidget {
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ..._buildDrawerSection('Hollow Body', '5 Sets'),
-                    ..._buildDrawerSection('Pull Ups', '3 Sets'),
-                    ..._buildDrawerSection('Pistol Squats', '3 Sets'),
-                    ..._buildDrawerSection('Human Flag', '3 Sets'),
+                    ...BuildDrawerSection('Hollow Body', '5 Sets'),
+                    ...BuildDrawerSection('Pull Ups', '3 Sets'),
+                    ...BuildDrawerSection('Pistol Squats', '3 Sets'),
+                    ...BuildDrawerSection('Human Flag', '3 Sets'),
                   ],
                 ),
                 onTap: () {
