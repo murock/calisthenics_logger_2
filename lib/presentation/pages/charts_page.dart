@@ -1,8 +1,6 @@
 import 'package:calisthenics_logger_2/core/constants.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/completed_set_item_builder.dart';
-import 'package:calisthenics_logger_2/presentation/widgets/sub_title_text_2.dart';
-import 'package:calisthenics_logger_2/presentation/widgets/body_text_2.dart';
-import 'package:calisthenics_logger_2/presentation/widgets/headline_text_2.dart';
+import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
 
 /// Y axis options, Reps, Weight, Hold time
@@ -27,70 +25,9 @@ class ChartsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Results',
-          style: Theme.of(context).textTheme.headline1,
-        ),
-        backgroundColor: APP_BAR_COLOUR,
-      ),
-      drawer: Drawer(
-        child: StyledContainer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              SizedBox(
-                height: 100,
-              ),
-              ListTile(
-                leading: Icon(Icons.home),
-                title: BodyText2('Home'),
-                onTap: () {
-                  Navigator.pushNamed(context, '/training');
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.build),
-                title: BodyText2('Tools'),
-                onTap: () {
-                  Navigator.pushNamed(context, '/tools');
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.calendar_today_rounded),
-                title: BodyText2('Calendar'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              Divider(
-                color: Colors.white,
-              ),
-              ListTile(
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ...BuildDrawerSection('Hollow Body', '5 Sets'),
-                    ...BuildDrawerSection('Pull Ups', '3 Sets'),
-                    ...BuildDrawerSection('Pistol Squats', '3 Sets'),
-                    ...BuildDrawerSection('Human Flag', '3 Sets'),
-                  ],
-                ),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+    return StyledScaffold(
+      title: 'Results',
+      completedSetDrawerItems: createSampleDrawerItems(),
       body: StyledContainer(
         child: Column(
           children: [
@@ -156,16 +93,39 @@ class ChartsPage extends StatelessWidget {
       new ExerciseData(new DateTime(2021, 4, 1), 15),
     ];
 
+    final data2 = [
+      new ExerciseData(new DateTime(2021, 1, 1), 3),
+      new ExerciseData(new DateTime(2021, 1, 10), 5),
+      new ExerciseData(new DateTime(2021, 2, 1), 10),
+      new ExerciseData(new DateTime(2021, 2, 20), 15),
+    ];
+
     return [
       new charts.Series<ExerciseData, DateTime>(
-        id: 'Sales',
+        id: 'blue',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (ExerciseData sales, _) => sales.time,
         measureFn: (ExerciseData sales, _) => sales.reps,
         data: data,
+      ),
+      new charts.Series<ExerciseData, DateTime>(
+        id: 'green',
+        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        domainFn: (ExerciseData sales, _) => sales.time,
+        measureFn: (ExerciseData sales, _) => sales.reps,
+        data: data2,
       )
     ];
   }
+}
+
+List<Widget> createSampleDrawerItems() {
+  return [
+    ...BuildDrawerSection('Hollow Body', '5 Sets'),
+    ...BuildDrawerSection('Pull Ups', '3 Sets'),
+    ...BuildDrawerSection('Pistol Squats', '3 Sets'),
+    ...BuildDrawerSection('Human Flag', '3 Sets'),
+  ];
 }
 
 class ExerciseData {

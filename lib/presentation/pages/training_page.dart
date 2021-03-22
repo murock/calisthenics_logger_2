@@ -1,5 +1,7 @@
 import 'package:calisthenics_logger_2/core/util/theme.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
+import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart';
+import 'package:calisthenics_logger_2/presentation/pages/charts_page.dart';
 import 'package:flutter/material.dart';
 
 class TrainingPage extends StatelessWidget {
@@ -10,62 +12,46 @@ class TrainingPage extends StatelessWidget {
       //   title: Text("Training Page"),
       // ),
       body: new StyledContainer(
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
+        child: StyledScaffold(
+          title: 'Training',
+          completedSetDrawerItems: createSampleDrawerItems(),
           body: new Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
-                height: 40,
-              ),
               Center(
                 child: Text(
-                  'Pull Up',
+                  'Pull Up - Today',
                   style: Theme.of(context).textTheme.headline1,
                   //  style: TextStyle(color: Colors.red),
                 ),
-              ),
-              SizedBox(
-                height: 50,
               ),
               ExerciseInput(
                 mainText: '10',
                 subText: 'Reps',
               ),
-              SizedBox(
-                height: 40,
-              ),
               ExerciseInput(
                 mainText: '20',
                 subText: 'kgs',
               ),
-              SizedBox(
-                height: 40,
-              ),
               BandDropdown(),
-              SizedBox(
-                height: 40,
-              ),
               AddRemoveRow(),
-              Container(
-                height: 200,
-                child: ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider(
-                    color: Colors.white,
-                  ),
-                  itemCount: 3,
-                  itemBuilder: (context, index) => Padding(
-                    padding: EdgeInsets.all(1),
-                    child: RecordedExerciseItem(
-                      setNum: (index + 1).toString(),
-                      reps: (index + 8).toString(),
+              Flexible(
+                child: Container(
+                  height: 200,
+                  child: ListView.separated(
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Divider(
+                      color: Colors.white,
+                    ),
+                    itemCount: 3,
+                    itemBuilder: (context, index) => Padding(
+                      padding: EdgeInsets.all(1),
+                      child: RecordedExerciseItem(
+                        setNum: (index + 1).toString(),
+                        reps: (index + 7).toString(),
+                      ),
                     ),
                   ),
-                  // children: [
-                  //   RecordedExerciseItem(setNum: '1', reps: '8  '),
-                  //   RecordedExerciseItem(setNum: '2', reps: '9  '),
-                  //   RecordedExerciseItem(setNum: '3', reps: '10'),
-                  // ],
                 ),
               )
             ],
@@ -89,36 +75,32 @@ class RecordedExerciseItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '$setNum',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  '$reps reps',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  '20kgs',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  'Red band',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-          )
-          // Text(
-          //   '1    $reps Reps    20kgs    Red band',
-          //   style: Theme.of(context).textTheme.bodyText1,
-          // ),
+        padding: const EdgeInsets.only(left: 20),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '$setNum',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              Text(
+                '$reps reps',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              Text(
+                '20kgs',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              Text(
+                'Red band',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
           ),
+        ),
+      ),
     );
   }
 }
@@ -188,10 +170,12 @@ class AddRemoveRow extends StatelessWidget {
           FloatingActionButton(
             onPressed: () {},
             child: const Icon(Icons.add),
+            heroTag: null,
           ),
           FloatingActionButton(
             onPressed: () {},
             child: const Icon(Icons.delete),
+            heroTag: null,
           ),
         ],
       ),
@@ -217,6 +201,7 @@ class ExerciseInput extends StatelessWidget {
         FloatingActionButton(
           onPressed: () {},
           child: const Icon(Icons.remove),
+          heroTag: null,
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 30),
@@ -236,6 +221,7 @@ class ExerciseInput extends StatelessWidget {
         FloatingActionButton(
           onPressed: () {},
           child: const Icon(Icons.add),
+          heroTag: null,
         )
       ],
     );

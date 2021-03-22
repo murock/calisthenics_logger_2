@@ -1,7 +1,5 @@
 import 'package:calisthenics_logger_2/core/constants.dart';
-import 'package:calisthenics_logger_2/presentation/widgets/headline_text_2.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
-import 'package:calisthenics_logger_2/presentation/widgets/sub_title_text_2.dart';
 import 'package:flutter/material.dart';
 
 import 'body_text_2.dart';
@@ -27,6 +25,7 @@ class StyledScaffold extends StatelessWidget {
         ),
         backgroundColor: APP_BAR_COLOUR,
       ),
+      backgroundColor: Colors.transparent,
       drawer: Drawer(
         child: StyledContainer(
           child: ListView(
