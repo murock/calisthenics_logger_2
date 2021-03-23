@@ -30,9 +30,14 @@ class ChartsPage extends StatelessWidget {
       completedSetDrawerItems: createSampleDrawerItems(),
       body: StyledContainer(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(
-              height: 40,
+            Center(
+              child: Text(
+                'Pull Up',
+                style: Theme.of(context).textTheme.headline1,
+                //  style: TextStyle(color: Colors.red),
+              ),
             ),
             Container(
               height: 400,
