@@ -54,7 +54,7 @@ ThemeData basicTheme() {
   final ThemeData base = ThemeData.dark();
   return base.copyWith(
       textTheme: _basicTextTheme(base.textTheme),
-      accentColor: Color(0Xff71263),
+      accentColor: CONTRAST_COLOUR,
       iconTheme: base.iconTheme.copyWith(
         color: Colors.white,
       ),
@@ -66,7 +66,7 @@ ThemeData pinkTheme() {
       FloatingActionButtonThemeData base) {
     return base.copyWith(
       foregroundColor: Colors.white,
-      backgroundColor: Color(0Xffd71263),
+      backgroundColor: CONTRAST_COLOUR,
     );
   }
 

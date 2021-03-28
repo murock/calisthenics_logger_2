@@ -56,6 +56,7 @@ class StyledScaffold extends StatelessWidget {
                 leading: Icon(Icons.calendar_today_rounded),
                 title: BodyText2('Calendar'),
                 onTap: () {
+                  Navigator.pushNamed(context, '/calender');
                   // Update the state of the app.
                   // ...
                 },
