@@ -16,7 +16,7 @@ jobs:
       with:
         channel: beta
     - run: flutter config --enable-web
-    - run: flutter build web
+    - run: flutter build web --no-sound-null-safety
 
     - name: Deploy to Netlify
       uses: nwtgck/actions-netlify@v1.1
