@@ -44,14 +44,23 @@ class _CalendarPageState extends State<CalendarPage>
     super.initState();
     final _selectedDay = DateTime.now();
 
-    List<ExerciseRowData> _exampleExerciseData = [
+    List<ExerciseRowData> _examplePullUpData = [
       ExerciseRowData('Pull Up', '1', '4', '5kg'),
       ExerciseRowData('Pull Up', '2', '5', '5kg'),
       ExerciseRowData('Pull Up', '3', '4', '10kg'),
     ];
 
+    List<ExerciseRowData> _examplePushUpData = [
+      ExerciseRowData('Push Up', '1', '15', '5kg'),
+      ExerciseRowData('Push Up', '2', '20', '5kg'),
+      ExerciseRowData('Push Up', '3', '10', '10kg'),
+    ];
+
     _events = {
-      _selectedDay.subtract(Duration(days: 27)): [_exampleExerciseData],
+      _selectedDay.subtract(Duration(days: 1)): [
+        _examplePullUpData,
+        _examplePushUpData
+      ],
       // _selectedDay.subtract(Duration(days: 30)): [
       //   'Event A0',
       //   'Event B0',
@@ -368,13 +377,15 @@ class _CalendarPageState extends State<CalendarPage>
       children: _selectedEvents
           .map((event) => Container(
                 decoration: BoxDecoration(
-                  border: Border.all(width: 0.8),
+                  border: Border.all(color: Colors.white),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 margin:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: ListTile(
-                  title: Text(_extractExerciseData(event)),
+                  title: Text(_extractExerciseName(event)),
+                  subtitle: Text(_extractExerciseData(event)),
+                  dense: true,
                   onTap: () {
                     print('$event tapped!');
                     Navigator.pushNamed(context, '/training');
@@ -385,8 +396,12 @@ class _CalendarPageState extends State<CalendarPage>
     );
   }
 
+  String _extractExerciseName(List<ExerciseRowData> data) {
+    return data[0].exerciseName;
+  }
+
   String _extractExerciseData(List<ExerciseRowData> data) {
-    String result = data[0].exerciseName + '\n';
+    String result = "";
     data.forEach((exerciseRow) {
       String row = "";
       row += exerciseRow.setNum + '  ';
