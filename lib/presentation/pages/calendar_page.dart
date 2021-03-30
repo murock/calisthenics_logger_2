@@ -384,7 +384,10 @@ class _CalendarPageState extends State<CalendarPage>
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: ListTile(
                   title: Text(_extractExerciseName(event)),
-                  subtitle: Text(_extractExerciseData(event)),
+                  subtitle: Container(
+                    height: 50,
+                    child: _getExerciseGrid(event),
+                  ), //Text(_extractExerciseData(event)),
                   dense: true,
                   onTap: () {
                     print('$event tapped!');
@@ -394,6 +397,15 @@ class _CalendarPageState extends State<CalendarPage>
               ))
           .toList(),
     );
+  }
+
+  GridView _getExerciseGrid(List<ExerciseRowData> data) {
+    GridView grid = GridView.count(
+      crossAxisCount: 3,
+      children: [Text("hi"), Text("hi"), Text("hi"), Text("hi")],
+    );
+
+    return grid;
   }
 
   String _extractExerciseName(List<ExerciseRowData> data) {
