@@ -45,19 +45,19 @@ class _CalendarPageState extends State<CalendarPage>
     final _selectedDay = DateTime.now();
 
     List<ExerciseRowData> _examplePullUpData = [
-      ExerciseRowData('Pull Up', '1', '4', '5kg'),
-      ExerciseRowData('Pull Up', '2', '5', '5kg'),
-      ExerciseRowData('Pull Up', '3', '4', '10kg'),
+      ExerciseRowData('Pull Up', '1', '4', '5'),
+      ExerciseRowData('Pull Up', '2', '5', '5'),
+      ExerciseRowData('Pull Up', '3', '4', '10'),
     ];
 
     List<ExerciseRowData> _examplePushUpData = [
-      ExerciseRowData('Push Up', '1', '15', '5kg'),
-      ExerciseRowData('Push Up', '2', '20', '5kg'),
-      ExerciseRowData('Push Up', '3', '10', '10kg'),
+      ExerciseRowData('Push Up', '1', '15', '5'),
+      ExerciseRowData('Push Up', '2', '20', '5'),
+      ExerciseRowData('Push Up', '3', '10', '10'),
     ];
 
     _events = {
-      _selectedDay.subtract(Duration(days: 1)): [
+      _selectedDay.subtract(Duration(days: 0)): [
         _examplePullUpData,
         _examplePushUpData
       ],
@@ -383,7 +383,7 @@ class _CalendarPageState extends State<CalendarPage>
                 margin:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: ListTile(
-                  title: Text(_extractExerciseName(event)),
+                  title: _getListTileTitleWidget(_extractExerciseName(event)),
                   subtitle: Container(
                     height: 50,
                     child: _getExerciseGrid(event),
@@ -399,13 +399,41 @@ class _CalendarPageState extends State<CalendarPage>
     );
   }
 
+  Widget _getListTileTitleWidget(String title) {
+    return Column(
+      children: [Text(title), Divider()],
+    );
+  }
+
   GridView _getExerciseGrid(List<ExerciseRowData> data) {
     GridView grid = GridView.count(
       crossAxisCount: 3,
-      children: [Text("hi"), Text("hi"), Text("hi"), Text("hi")],
+      children: [..._getExerciseGridWidgets(data)],
     );
 
     return grid;
+  }
+
+  List<Widget> _getExerciseGridWidgets(List<ExerciseRowData> rowData) {
+    List<Widget> result = <Widget>[];
+    rowData.forEach((exerciseRow) {
+      result.add(Text(exerciseRow.setNum));
+      result.add(Column(
+        children: [
+          Row(
+            children: [
+              Text(exerciseRow.weight),
+              Text(
+                ' kgs',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
+          ),
+        ],
+      ));
+      result.add(Text(exerciseRow.reps + "reps"));
+    });
+    return result;
   }
 
   String _extractExerciseName(List<ExerciseRowData> data) {

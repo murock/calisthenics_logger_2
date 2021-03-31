@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Calisthenics Logger 2',
       theme: basicTheme(),
       //  home: ChartsPage.withSampleData(), //TrainingPage(), //
       initialRoute: '/',
