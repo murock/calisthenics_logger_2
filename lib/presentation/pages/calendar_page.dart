@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:calisthenics_logger_2/presentation/pages/charts_page.dart';
+import 'package:calisthenics_logger_2/presentation/widgets/body_text_1.dart';
+import 'package:calisthenics_logger_2/presentation/widgets/body_text_2.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart';
+import 'package:calisthenics_logger_2/presentation/widgets/sub_title_text_2.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:calisthenics_logger_2/core/constants.dart';
@@ -385,7 +390,7 @@ class _CalendarPageState extends State<CalendarPage>
                 child: ListTile(
                   title: _getListTileTitleWidget(_extractExerciseName(event)),
                   subtitle: Container(
-                    height: 50,
+                    height: 70,
                     child: _getExerciseGrid(event),
                   ), //Text(_extractExerciseData(event)),
                   dense: true,
@@ -407,6 +412,7 @@ class _CalendarPageState extends State<CalendarPage>
 
   GridView _getExerciseGrid(List<ExerciseRowData> data) {
     GridView grid = GridView.count(
+      childAspectRatio: 7.0,
       crossAxisCount: 3,
       children: [..._getExerciseGridWidgets(data)],
     );
@@ -417,21 +423,14 @@ class _CalendarPageState extends State<CalendarPage>
   List<Widget> _getExerciseGridWidgets(List<ExerciseRowData> rowData) {
     List<Widget> result = <Widget>[];
     rowData.forEach((exerciseRow) {
-      result.add(Text(exerciseRow.setNum));
+      log(exerciseRow.setNum);
+      result.add(BodyText2(exerciseRow.setNum));
       result.add(Column(
         children: [
-          Row(
-            children: [
-              Text(exerciseRow.weight),
-              Text(
-                ' kgs',
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            ],
-          ),
+          ExerciseGridWidget(exerciseRow.weight, 'kgs'),
         ],
       ));
-      result.add(Text(exerciseRow.reps + "reps"));
+      result.add(ExerciseGridWidget(exerciseRow.reps, "reps"));
     });
     return result;
   }
@@ -451,5 +450,27 @@ class _CalendarPageState extends State<CalendarPage>
     });
 
     return result;
+  }
+}
+
+class ExerciseGridWidget extends StatelessWidget {
+  final String text;
+  final String subText;
+  const ExerciseGridWidget(
+    this.text,
+    this.subText, {
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        BodyText2(text),
+        SubTitleText2(
+          this.subText,
+        ),
+      ],
+    );
   }
 }
