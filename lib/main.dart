@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
       //  home: ChartsPage.withSampleData(), //TrainingPage(), //
       initialRoute: '/',
       routes: {
-        '/': (context) => CalendarPage(title: 'title'),
+        '/': (context) => CalendarPage(),
         '/tools': (context) => ChartsPage.withSampleData(),
-        '/calender': (context) => CalendarPage(title: 'title'),
+        '/calender': (context) => CalendarPage(),
         '/training': (context) => TrainingPage(),
       },
     );

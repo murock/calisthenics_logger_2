@@ -1,5 +1,5 @@
 import 'package:calisthenics_logger_2/core/constants.dart';
-import 'package:calisthenics_logger_2/presentation/widgets/completed_set_item_builder.dart';
+import 'package:calisthenics_logger_2/presentation/widgets/drawer_section.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
 
@@ -126,10 +126,10 @@ class ChartsPage extends StatelessWidget {
 
 List<Widget> createSampleDrawerItems() {
   return [
-    ...BuildDrawerSection('Hollow Body', '5 Sets'),
-    ...BuildDrawerSection('Pull Ups', '3 Sets'),
-    ...BuildDrawerSection('Pistol Squats', '3 Sets'),
-    ...BuildDrawerSection('Human Flag', '3 Sets'),
+    DrawerSection('Hollow Body', '5 Sets'),
+    DrawerSection('Pull Ups', '3 Sets'),
+    DrawerSection('Pistol Squats', '3 Sets'),
+    DrawerSection('Human Flag', '3 Sets'),
   ];
 }
 

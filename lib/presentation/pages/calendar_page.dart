@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:calisthenics_logger_2/presentation/pages/charts_page.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/body_text_2.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
@@ -9,19 +7,26 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:calisthenics_logger_2/core/constants.dart';
 
-class ExerciseRowData {
+class ExerciseData {
   final String exerciseName;
+  final int numPopulatedFields;
+  final List<ExerciseRowData> rowData;
+
+  ExerciseData(this.exerciseName, this.numPopulatedFields, this.rowData);
+}
+
+class ExerciseRowData {
   final String setNum;
   final String reps;
   final String weight;
+  final String band;
+  final String tool;
 
-  ExerciseRowData(this.exerciseName, this.setNum, this.reps, this.weight);
+  ExerciseRowData(this.setNum, this.reps, this.weight, this.band, this.tool);
 }
 
 class CalendarPage extends StatefulWidget {
-  final String title;
-
-  const CalendarPage({Key? key, required this.title}) : super(key: key);
+  const CalendarPage({Key? key}) : super(key: key);
 
   @override
   _CalendarPageState createState() => _CalendarPageState();
@@ -38,24 +43,23 @@ class _CalendarPageState extends State<CalendarPage>
   void initState() {
     super.initState();
     final _selectedDay = DateTime.now();
+    ExerciseData _examplePullUpData = new ExerciseData('Pull Up', 4, [
+      ExerciseRowData('1', '4', '5', '', 'wide'),
+      ExerciseRowData('2', '5', '5', '', 'wide'),
+      ExerciseRowData('3', '4', '10', '', 'wide'),
+    ]);
 
-    List<ExerciseRowData> _examplePullUpData = [
-      ExerciseRowData('Pull Up', '1', '4', '5'),
-      ExerciseRowData('Pull Up', '2', '5', '5'),
-      ExerciseRowData('Pull Up', '3', '4', '10'),
-    ];
+    ExerciseData _examplePushUpData = new ExerciseData('Push Up', 3, [
+      ExerciseRowData('1', '15', '', 'red', ''),
+      ExerciseRowData('2', '20', '', 'purple', ''),
+    ]);
 
-    List<ExerciseRowData> _examplePushUpData = [
-      ExerciseRowData('Push Up', '1', '15', '5'),
-      ExerciseRowData('Push Up', '2', '20', '5'),
-    ];
-
-    List<ExerciseRowData> _exampleDeadliftData = [
-      ExerciseRowData('Deadlift', '1', '15', '5'),
-      ExerciseRowData('Deadlift', '2', '20', '5'),
-      ExerciseRowData('Deadlift', '3', '15', '5'),
-      ExerciseRowData('Deadlift', '4', '20', '5'),
-    ];
+    ExerciseData _exampleDeadliftData = new ExerciseData('Deadlift', 3, [
+      ExerciseRowData('1', '15', '5', '', ''),
+      ExerciseRowData('2', '20', '15', '', ''),
+      ExerciseRowData('3', '15', '25', '', ''),
+      ExerciseRowData('4', '20', '125', '', ''),
+    ]);
 
     _events = {
       _selectedDay.subtract(Duration(days: 0)): [
@@ -103,7 +107,7 @@ class _CalendarPageState extends State<CalendarPage>
   @override
   Widget build(BuildContext context) {
     return StyledScaffold(
-      title: widget.title,
+      title: 'Calendar',
       completedSetDrawerItems: createSampleDrawerItems(),
       body: StyledContainer(
         child: Column(
@@ -123,9 +127,9 @@ class _CalendarPageState extends State<CalendarPage>
       events: _events,
       startingDayOfWeek: StartingDayOfWeek.monday,
       calendarStyle: CalendarStyle(
-        selectedColor: CONTRAST_COLOUR, // Colors.deepOrange[400],
-        todayColor: CONTRAST_COLOUR_LIGHTER, //Colors.deepOrange[200],
-        markersColor: Colors.grey[700], //Colors.brown[700],
+        selectedColor: CONTRAST_COLOUR,
+        todayColor: CONTRAST_COLOUR_LIGHTER,
+        markersColor: Colors.grey[700],
         outsideDaysVisible: false,
         weekendStyle: TextStyle().copyWith(color: Colors.white),
       ),
@@ -148,25 +152,26 @@ class _CalendarPageState extends State<CalendarPage>
 
   Widget _buildEventList() {
     return ListView(
-      children: _selectedEvents
-          .map((event) => Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                child: ListTile(
-                  title: _getListTileTitleWidget(_extractExerciseName(event)),
-                  subtitle: _getExerciseGrid(event),
-                  dense: true,
-                  onTap: () {
-                    print('$event tapped!');
-                    Navigator.pushNamed(context, '/training');
-                  },
-                ),
-              ))
-          .toList(),
+      children: _selectedEvents.map((event) {
+        ExerciseData exerciseData = event;
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+          child: ListTile(
+            title: _getListTileTitleWidget(exerciseData.exerciseName),
+            subtitle: _getExerciseGrid(
+                exerciseData.numPopulatedFields, exerciseData.rowData),
+            dense: true,
+            onTap: () {
+              print('$event tapped!');
+              Navigator.pushNamed(context, '/training');
+            },
+          ),
+        );
+      }).toList(),
     );
   }
 
@@ -176,12 +181,12 @@ class _CalendarPageState extends State<CalendarPage>
     );
   }
 
-  GridView _getExerciseGrid(List<ExerciseRowData> data) {
+  GridView _getExerciseGrid(int columnCount, List<ExerciseRowData> data) {
     GridView grid = GridView.count(
       shrinkWrap: true,
       childAspectRatio: 7.0,
-      crossAxisCount: 3,
-      children: [..._getExerciseGridWidgets(data)],
+      crossAxisCount: columnCount,
+      children: _getExerciseGridWidgets(data),
     );
 
     return grid;
@@ -190,16 +195,21 @@ class _CalendarPageState extends State<CalendarPage>
   List<Widget> _getExerciseGridWidgets(List<ExerciseRowData> rowData) {
     List<Widget> result = <Widget>[];
     rowData.forEach((exerciseRow) {
-      log(exerciseRow.setNum);
-      result.add(BodyText2(exerciseRow.setNum));
-      result.add(ExerciseGridWidget(exerciseRow.weight, 'kgs'));
-      result.add(ExerciseGridWidget(exerciseRow.reps, "reps"));
+      result.add(ExerciseGridWidget(exerciseRow.setNum, ''));
+      if (exerciseRow.weight.isNotEmpty) {
+        result.add(ExerciseGridWidget(exerciseRow.weight, 'kgs'));
+      }
+      if (exerciseRow.band.isNotEmpty) {
+        result.add(ExerciseGridWidget(exerciseRow.band, "band"));
+      }
+      if (exerciseRow.tool.isNotEmpty) {
+        result.add(ExerciseGridWidget(exerciseRow.tool, ""));
+      }
+      if (exerciseRow.reps.isNotEmpty) {
+        result.add(ExerciseGridWidget(exerciseRow.reps, "reps"));
+      }
     });
     return result;
-  }
-
-  String _extractExerciseName(List<ExerciseRowData> data) {
-    return data[0].exerciseName;
   }
 }
 
@@ -215,10 +225,11 @@ class ExerciseGridWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         BodyText2(text),
         SubTitleText2(
-          this.subText,
+          ' ' + this.subText,
         ),
       ],
     );
