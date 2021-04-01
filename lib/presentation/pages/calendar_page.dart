@@ -58,7 +58,7 @@ class _CalendarPageState extends State<CalendarPage>
     List<ExerciseRowData> _examplePushUpData = [
       ExerciseRowData('Push Up', '1', '15', '5'),
       ExerciseRowData('Push Up', '2', '20', '5'),
-      ExerciseRowData('Push Up', '3', '10', '10'),
+      // ExerciseRowData('Push Up', '3', '10', '10'),
     ];
 
     _events = {
@@ -389,10 +389,8 @@ class _CalendarPageState extends State<CalendarPage>
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: ListTile(
                   title: _getListTileTitleWidget(_extractExerciseName(event)),
-                  subtitle: Container(
-                    height: 70,
-                    child: _getExerciseGrid(event),
-                  ), //Text(_extractExerciseData(event)),
+                  subtitle: _getExerciseGrid(
+                      event), //Text(_extractExerciseData(event)),
                   dense: true,
                   onTap: () {
                     print('$event tapped!');
@@ -412,6 +410,7 @@ class _CalendarPageState extends State<CalendarPage>
 
   GridView _getExerciseGrid(List<ExerciseRowData> data) {
     GridView grid = GridView.count(
+      shrinkWrap: true,
       childAspectRatio: 7.0,
       crossAxisCount: 3,
       children: [..._getExerciseGridWidgets(data)],
@@ -425,11 +424,7 @@ class _CalendarPageState extends State<CalendarPage>
     rowData.forEach((exerciseRow) {
       log(exerciseRow.setNum);
       result.add(BodyText2(exerciseRow.setNum));
-      result.add(Column(
-        children: [
-          ExerciseGridWidget(exerciseRow.weight, 'kgs'),
-        ],
-      ));
+      result.add(ExerciseGridWidget(exerciseRow.weight, 'kgs'));
       result.add(ExerciseGridWidget(exerciseRow.reps, "reps"));
     });
     return result;
