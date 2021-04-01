@@ -61,10 +61,18 @@ class _CalendarPageState extends State<CalendarPage>
       // ExerciseRowData('Push Up', '3', '10', '10'),
     ];
 
+    List<ExerciseRowData> _exampleDeadliftData = [
+      ExerciseRowData('Deadlift', '1', '15', '5'),
+      ExerciseRowData('Deadlift', '2', '20', '5'),
+      ExerciseRowData('Deadlift', '3', '15', '5'),
+      ExerciseRowData('Deadlift', '4', '20', '5'),
+    ];
+
     _events = {
       _selectedDay.subtract(Duration(days: 0)): [
         _examplePullUpData,
-        _examplePushUpData
+        _examplePushUpData,
+        _exampleDeadliftData
       ],
       // _selectedDay.subtract(Duration(days: 30)): [
       //   'Event A0',
