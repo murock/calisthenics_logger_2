@@ -1,4 +1,5 @@
 import 'package:calisthenics_logger_2/presentation/pages/charts_page.dart';
+import 'package:calisthenics_logger_2/presentation/pages/home_page.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/body_text_2.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart';
@@ -11,8 +12,10 @@ class ExerciseData {
   final String exerciseName;
   final int numPopulatedFields;
   final List<ExerciseRowData> rowData;
+  final date;
 
-  ExerciseData(this.exerciseName, this.numPopulatedFields, this.rowData);
+  ExerciseData(
+      this.exerciseName, this.numPopulatedFields, this.date, this.rowData);
 }
 
 class ExerciseRowData {
@@ -43,18 +46,21 @@ class _CalendarPageState extends State<CalendarPage>
   void initState() {
     super.initState();
     final _selectedDay = DateTime.now();
-    ExerciseData _examplePullUpData = new ExerciseData('Pull Up', 4, [
+    ExerciseData _examplePullUpData =
+        new ExerciseData('Pull Up', 4, DateTime.now(), [
       ExerciseRowData('1', '4', '5', '', 'wide'),
       ExerciseRowData('2', '5', '5', '', 'wide'),
       ExerciseRowData('3', '4', '10', '', 'wide'),
     ]);
 
-    ExerciseData _examplePushUpData = new ExerciseData('Push Up', 3, [
+    ExerciseData _examplePushUpData =
+        new ExerciseData('Push Up', 3, DateTime.now(), [
       ExerciseRowData('1', '15', '', 'red', ''),
       ExerciseRowData('2', '20', '', 'purple', ''),
     ]);
 
-    ExerciseData _exampleDeadliftData = new ExerciseData('Deadlift', 3, [
+    ExerciseData _exampleDeadliftData =
+        new ExerciseData('Deadlift', 3, DateTime.now(), [
       ExerciseRowData('1', '15', '5', '', ''),
       ExerciseRowData('2', '20', '15', '', ''),
       ExerciseRowData('3', '15', '25', '', ''),
@@ -114,7 +120,11 @@ class _CalendarPageState extends State<CalendarPage>
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             _buildTableCalendar(),
-            Expanded(child: _buildEventList()),
+            Expanded(
+              child: WorkoutList(
+                exerciseData: _selectedEvents,
+              ),
+            ),
           ],
         ),
       ),
@@ -210,13 +220,13 @@ class _CalendarPageState extends State<CalendarPage>
         result.add(ExerciseGridWidget(exerciseRow.weight, 'kgs'));
       }
       if (exerciseRow.band.isNotEmpty) {
-        result.add(ExerciseGridWidget(exerciseRow.band, "band"));
+        result.add(ExerciseGridWidget(exerciseRow.band, 'band'));
       }
       if (exerciseRow.tool.isNotEmpty) {
-        result.add(ExerciseGridWidget(exerciseRow.tool, ""));
+        result.add(ExerciseGridWidget(exerciseRow.tool, ''));
       }
       if (exerciseRow.reps.isNotEmpty) {
-        result.add(ExerciseGridWidget(exerciseRow.reps, "reps"));
+        result.add(ExerciseGridWidget(exerciseRow.reps, 'reps'));
       }
     });
     return result;

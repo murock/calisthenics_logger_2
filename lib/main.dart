@@ -1,12 +1,21 @@
 import 'package:calisthenics_logger_2/core/util/theme.dart';
 import 'package:calisthenics_logger_2/presentation/pages/calendar_page.dart';
 import 'package:calisthenics_logger_2/presentation/pages/charts_page.dart';
+import 'package:calisthenics_logger_2/presentation/pages/home_page.dart';
 import 'package:calisthenics_logger_2/presentation/pages/training_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
-  // Paint.enableDithering = true;
-  runApp(MyApp());
+  // We need to call it manually,
+  // because we going to call setPreferredOrientations()
+  // before the runApp() call
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Than we setup preferred orientations,
+  // and only after it finished we run our app
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +28,7 @@ class MyApp extends StatelessWidget {
       //  home: ChartsPage.withSampleData(), //TrainingPage(), //
       initialRoute: '/',
       routes: {
-        '/': (context) => CalendarPage(),
+        '/': (context) => HomePage(),
         '/tools': (context) => ChartsPage.withSampleData(),
         '/calender': (context) => CalendarPage(),
         '/training': (context) => TrainingPage(),

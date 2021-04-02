@@ -38,7 +38,7 @@ class StyledScaffold extends StatelessWidget {
                 leading: Icon(Icons.home),
                 title: BodyText2('Home'),
                 onTap: () {
-                  Navigator.pushNamed(context, '/training');
+                  Navigator.pushNamed(context, '/');
                   // Update the state of the app.
                   // ...
                 },

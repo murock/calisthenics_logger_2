@@ -90,34 +90,35 @@ class ChartsPage extends StatelessWidget {
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<ExerciseData, DateTime>> _createSampleData() {
+  static List<charts.Series<ExerciseDataForCharts, DateTime>>
+      _createSampleData() {
     final data = [
-      new ExerciseData(new DateTime(2021, 2, 1), 3),
-      new ExerciseData(new DateTime(2021, 3, 2), 5),
-      new ExerciseData(new DateTime(2021, 3, 6), 10),
-      new ExerciseData(new DateTime(2021, 4, 1), 15),
+      new ExerciseDataForCharts(new DateTime(2021, 2, 1), 3),
+      new ExerciseDataForCharts(new DateTime(2021, 3, 2), 5),
+      new ExerciseDataForCharts(new DateTime(2021, 3, 6), 10),
+      new ExerciseDataForCharts(new DateTime(2021, 4, 1), 15),
     ];
 
     final data2 = [
-      new ExerciseData(new DateTime(2021, 1, 1), 3),
-      new ExerciseData(new DateTime(2021, 1, 10), 5),
-      new ExerciseData(new DateTime(2021, 2, 1), 10),
-      new ExerciseData(new DateTime(2021, 2, 20), 15),
+      new ExerciseDataForCharts(new DateTime(2021, 1, 1), 3),
+      new ExerciseDataForCharts(new DateTime(2021, 1, 10), 5),
+      new ExerciseDataForCharts(new DateTime(2021, 2, 1), 10),
+      new ExerciseDataForCharts(new DateTime(2021, 2, 20), 15),
     ];
 
     return [
-      new charts.Series<ExerciseData, DateTime>(
+      new charts.Series<ExerciseDataForCharts, DateTime>(
         id: 'blue',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (ExerciseData sales, _) => sales.time,
-        measureFn: (ExerciseData sales, _) => sales.reps,
+        domainFn: (ExerciseDataForCharts sales, _) => sales.time,
+        measureFn: (ExerciseDataForCharts sales, _) => sales.reps,
         data: data,
       ),
-      new charts.Series<ExerciseData, DateTime>(
+      new charts.Series<ExerciseDataForCharts, DateTime>(
         id: 'green',
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-        domainFn: (ExerciseData sales, _) => sales.time,
-        measureFn: (ExerciseData sales, _) => sales.reps,
+        domainFn: (ExerciseDataForCharts sales, _) => sales.time,
+        measureFn: (ExerciseDataForCharts sales, _) => sales.reps,
         data: data2,
       )
     ];
@@ -133,9 +134,9 @@ List<Widget> createSampleDrawerItems() {
   ];
 }
 
-class ExerciseData {
+class ExerciseDataForCharts {
   final DateTime time;
   final int reps;
 
-  ExerciseData(this.time, this.reps);
+  ExerciseDataForCharts(this.time, this.reps);
 }
