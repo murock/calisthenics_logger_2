@@ -20,7 +20,7 @@ ThemeData basicTheme() {
         fontSize: 30,
         color: FONT_COLOUR,
       ),
-      subtitle2: base.subtitle1!.copyWith(
+      subtitle2: base.subtitle2!.copyWith(
         fontFamily: FONT_FAMILY,
         fontSize: 10,
         color: Colors.grey,

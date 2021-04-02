@@ -65,7 +65,7 @@ class _CalendarPageState extends State<CalendarPage>
       _selectedDay.subtract(Duration(days: 0)): [
         _examplePullUpData,
         _examplePushUpData,
-        _exampleDeadliftData
+        _exampleDeadliftData,
       ],
     };
 
@@ -182,9 +182,19 @@ class _CalendarPageState extends State<CalendarPage>
   }
 
   GridView _getExerciseGrid(int columnCount, List<ExerciseRowData> data) {
+    // Magic number area, TODO: understand how to set childAspect ratio based on number of columns
+    // Magic number source: https://github.com/flutter/flutter/issues/29035
+    var maxWidth = 500.0;
+    var width = MediaQuery.of(context).size.width;
+    var columns = (width ~/ maxWidth) + columnCount;
+    var columnWidth = width / columns;
+    var aspectRatio = columnWidth / 20;
+
     GridView grid = GridView.count(
+      // Setting primary to false disables scrolling within the gridview
+      primary: false,
       shrinkWrap: true,
-      childAspectRatio: 7.0,
+      childAspectRatio: aspectRatio,
       crossAxisCount: columnCount,
       children: _getExerciseGridWidgets(data),
     );
