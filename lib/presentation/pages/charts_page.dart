@@ -1,5 +1,4 @@
 import 'package:calisthenics_logger_2/core/constants.dart';
-import 'package:calisthenics_logger_2/presentation/widgets/drawer_section.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
 
@@ -25,9 +24,8 @@ class ChartsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StyledScaffold(
+    return StyledScaffold.withSampleData(
       title: 'Results',
-      completedSetDrawerItems: createSampleDrawerItems(),
       body: StyledContainer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -123,15 +121,6 @@ class ChartsPage extends StatelessWidget {
       )
     ];
   }
-}
-
-List<Widget> createSampleDrawerItems() {
-  return [
-    DrawerSection('Hollow Body', '5 Sets'),
-    DrawerSection('Pull Ups', '3 Sets'),
-    DrawerSection('Pistol Squats', '3 Sets'),
-    DrawerSection('Human Flag', '3 Sets'),
-  ];
 }
 
 class ExerciseDataForCharts {

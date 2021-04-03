@@ -1,4 +1,5 @@
 import 'package:calisthenics_logger_2/core/constants.dart';
+import 'package:calisthenics_logger_2/presentation/widgets/drawer_section.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,15 @@ class StyledScaffold extends StatelessWidget {
   final String title;
   final Widget body;
   final List<Widget> completedSetDrawerItems;
+
+  factory StyledScaffold.withSampleData(
+      {required String title, required Widget body}) {
+    return new StyledScaffold(
+      title: title,
+      body: body,
+      completedSetDrawerItems: createSampleDrawerItems(),
+    );
+  }
 
   const StyledScaffold(
       {Key? key,
@@ -79,5 +89,14 @@ class StyledScaffold extends StatelessWidget {
       ),
       body: this.body,
     );
+  }
+
+  static List<Widget> createSampleDrawerItems() {
+    return [
+      DrawerSection('Hollow Body', '5 Sets'),
+      DrawerSection('Pull Ups', '3 Sets'),
+      DrawerSection('Pistol Squats', '3 Sets'),
+      DrawerSection('Human Flag', '3 Sets'),
+    ];
   }
 }

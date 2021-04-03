@@ -1,32 +1,9 @@
-import 'package:calisthenics_logger_2/presentation/pages/charts_page.dart';
-import 'package:calisthenics_logger_2/presentation/pages/home_page.dart';
-import 'package:calisthenics_logger_2/presentation/widgets/body_text_2.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart';
-import 'package:calisthenics_logger_2/presentation/widgets/sub_title_text_2.dart';
+import 'package:calisthenics_logger_2/presentation/widgets/workout_list.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:calisthenics_logger_2/core/constants.dart';
-
-class ExerciseData {
-  final String exerciseName;
-  final int numPopulatedFields;
-  final List<ExerciseRowData> rowData;
-  final date;
-
-  ExerciseData(
-      this.exerciseName, this.numPopulatedFields, this.date, this.rowData);
-}
-
-class ExerciseRowData {
-  final String setNum;
-  final String reps;
-  final String weight;
-  final String band;
-  final String tool;
-
-  ExerciseRowData(this.setNum, this.reps, this.weight, this.band, this.tool);
-}
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key? key}) : super(key: key);
@@ -112,9 +89,8 @@ class _CalendarPageState extends State<CalendarPage>
 
   @override
   Widget build(BuildContext context) {
-    return StyledScaffold(
+    return StyledScaffold.withSampleData(
       title: 'Calendar',
-      completedSetDrawerItems: createSampleDrawerItems(),
       body: StyledContainer(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -157,101 +133,6 @@ class _CalendarPageState extends State<CalendarPage>
       onDaySelected: _onDaySelected,
       onVisibleDaysChanged: _onVisibleDaysChanged,
       onCalendarCreated: _onCalendarCreated,
-    );
-  }
-
-  Widget _buildEventList() {
-    return ListView(
-      children: _selectedEvents.map((event) {
-        ExerciseData exerciseData = event;
-        return Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: ListTile(
-            title: _getListTileTitleWidget(exerciseData.exerciseName),
-            subtitle: _getExerciseGrid(
-                exerciseData.numPopulatedFields, exerciseData.rowData),
-            dense: true,
-            onTap: () {
-              print('$event tapped!');
-              Navigator.pushNamed(context, '/training');
-            },
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  Widget _getListTileTitleWidget(String title) {
-    return Column(
-      children: [Text(title), Divider()],
-    );
-  }
-
-  GridView _getExerciseGrid(int columnCount, List<ExerciseRowData> data) {
-    // Magic number area, TODO: understand how to set childAspect ratio based on number of columns
-    // Magic number source: https://github.com/flutter/flutter/issues/29035
-    var maxWidth = 500.0;
-    var width = MediaQuery.of(context).size.width;
-    var columns = (width ~/ maxWidth) + columnCount;
-    var columnWidth = width / columns;
-    var aspectRatio = columnWidth / 20;
-
-    GridView grid = GridView.count(
-      // Setting primary to false disables scrolling within the gridview
-      primary: false,
-      shrinkWrap: true,
-      childAspectRatio: aspectRatio,
-      crossAxisCount: columnCount,
-      children: _getExerciseGridWidgets(data),
-    );
-
-    return grid;
-  }
-
-  List<Widget> _getExerciseGridWidgets(List<ExerciseRowData> rowData) {
-    List<Widget> result = <Widget>[];
-    rowData.forEach((exerciseRow) {
-      result.add(ExerciseGridWidget(exerciseRow.setNum, ''));
-      if (exerciseRow.weight.isNotEmpty) {
-        result.add(ExerciseGridWidget(exerciseRow.weight, 'kgs'));
-      }
-      if (exerciseRow.band.isNotEmpty) {
-        result.add(ExerciseGridWidget(exerciseRow.band, 'band'));
-      }
-      if (exerciseRow.tool.isNotEmpty) {
-        result.add(ExerciseGridWidget(exerciseRow.tool, ''));
-      }
-      if (exerciseRow.reps.isNotEmpty) {
-        result.add(ExerciseGridWidget(exerciseRow.reps, 'reps'));
-      }
-    });
-    return result;
-  }
-}
-
-class ExerciseGridWidget extends StatelessWidget {
-  final String text;
-  final String subText;
-  const ExerciseGridWidget(
-    this.text,
-    this.subText, {
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        BodyText2(text),
-        SubTitleText2(
-          ' ' + this.subText,
-        ),
-      ],
     );
   }
 }

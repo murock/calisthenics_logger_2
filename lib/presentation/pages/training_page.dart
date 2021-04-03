@@ -1,61 +1,54 @@
 import 'package:calisthenics_logger_2/core/util/theme.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart';
-import 'package:calisthenics_logger_2/presentation/pages/charts_page.dart';
 import 'package:flutter/material.dart';
 
 class TrainingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Training Page"),
-      // ),
-      body: new StyledContainer(
-        child: StyledScaffold(
-          title: 'Training',
-          completedSetDrawerItems: createSampleDrawerItems(),
-          body: new Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Center(
-                child: Text(
-                  'Pull Up - Today',
-                  style: Theme.of(context).textTheme.headline1,
-                  //  style: TextStyle(color: Colors.red),
-                ),
+    return StyledScaffold.withSampleData(
+      title: 'Training',
+      body: StyledContainer(
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Center(
+              child: Text(
+                'Pull Up - Today',
+                style: Theme.of(context).textTheme.headline1,
+                //  style: TextStyle(color: Colors.red),
               ),
-              ExerciseInput(
-                mainText: '10',
-                subText: 'Reps',
-              ),
-              ExerciseInput(
-                mainText: '20',
-                subText: 'kgs',
-              ),
-              BandDropdown(),
-              AddRemoveRow(),
-              Flexible(
-                child: Container(
-                  height: 200,
-                  child: ListView.separated(
-                    separatorBuilder: (BuildContext context, int index) =>
-                        Divider(
-                      color: Colors.white,
-                    ),
-                    itemCount: 3,
-                    itemBuilder: (context, index) => Padding(
-                      padding: EdgeInsets.all(1),
-                      child: RecordedExerciseItem(
-                        setNum: (index + 1).toString(),
-                        reps: (index + 7).toString(),
-                      ),
+            ),
+            ExerciseInput(
+              mainText: '10',
+              subText: 'Reps',
+            ),
+            ExerciseInput(
+              mainText: '20',
+              subText: 'kgs',
+            ),
+            BandDropdown(),
+            AddRemoveRow(),
+            Flexible(
+              child: Container(
+                height: 200,
+                child: ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) =>
+                      Divider(
+                    color: Colors.white,
+                  ),
+                  itemCount: 3,
+                  itemBuilder: (context, index) => Padding(
+                    padding: EdgeInsets.all(1),
+                    child: RecordedExerciseItem(
+                      setNum: (index + 1).toString(),
+                      reps: (index + 7).toString(),
                     ),
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );

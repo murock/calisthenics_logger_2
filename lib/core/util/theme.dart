@@ -10,7 +10,7 @@ ThemeData basicTheme() {
         fontSize: FONT_SIZE_HEADLINE1.toDouble(),
         color: FONT_COLOUR,
       ),
-      headline2: base.subtitle1!.copyWith(
+      headline2: base.headline2!.copyWith(
         fontFamily: FONT_FAMILY,
         fontSize: 12,
         color: Colors.white,
@@ -25,12 +25,12 @@ ThemeData basicTheme() {
         fontSize: 10,
         color: Colors.grey,
       ),
-      bodyText1: base.subtitle1!.copyWith(
+      bodyText1: base.bodyText1!.copyWith(
         fontFamily: FONT_FAMILY,
         fontSize: FONT_SIZE_BODY_TEXT1.toDouble(),
         color: Colors.grey,
       ),
-      bodyText2: base.subtitle1!.copyWith(
+      bodyText2: base.bodyText2!.copyWith(
         fontFamily: FONT_FAMILY,
         fontSize: FONT_SIZE_BODY_TEXT1.toDouble(),
         color: Colors.white,
@@ -67,10 +67,27 @@ ThemeData pinkTheme() {
     return base.copyWith(
       foregroundColor: Colors.white,
       backgroundColor: CONTRAST_COLOUR,
+      shape: CircleBorder(
+        side: BorderSide(
+          color: CONTRAST_COLOUR,
+        ),
+      ),
     );
   }
 
-  final ThemeData base = ThemeData.light();
+  final ThemeData base = basicTheme();
   return base.copyWith(
-      floatingActionButtonTheme: _fabPinkTheme(base.floatingActionButtonTheme));
+    floatingActionButtonTheme: _fabPinkTheme(base.floatingActionButtonTheme),
+    iconTheme: base.iconTheme.copyWith(
+      color: CONTRAST_COLOUR,
+    ),
+  );
+}
+
+ThemeData blueTheme() {
+  final ThemeData base = basicTheme();
+  return base.copyWith(
+      iconTheme: base.iconTheme.copyWith(
+    color: Color(0Xff3A83AC),
+  ));
 }
