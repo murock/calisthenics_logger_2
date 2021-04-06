@@ -1,6 +1,5 @@
 import 'package:calisthenics_logger_2/core/constants.dart';
 import 'package:calisthenics_logger_2/core/util/theme.dart';
-import 'package:calisthenics_logger_2/presentation/widgets/headline_text_1.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/workout_list.dart';
