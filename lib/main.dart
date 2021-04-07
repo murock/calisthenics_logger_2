@@ -29,10 +29,11 @@ class MyApp extends StatelessWidget {
       //  home: ChartsPage.withSampleData(), //TrainingPage(), //
       initialRoute: '/',
       routes: {
-        '/': (context) => SearchPage(), //HomePage(),
+        '/': (context) => HomePage(),
         '/tools': (context) => ChartsPage.withSampleData(),
         '/calender': (context) => CalendarPage(),
         '/training': (context) => TrainingPage(),
+        '/search': (context) => SearchPage(),
       },
     );
   }

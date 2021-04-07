@@ -78,7 +78,12 @@ class StyledScaffold extends StatelessWidget {
                 title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: this.completedSetDrawerItems),
+              ),
+              ListTile(
+                leading: Icon(Icons.add),
+                title: BodyText2('Add Exercise'),
                 onTap: () {
+                  Navigator.pushNamed(context, '/search');
                   // Update the state of the app.
                   // ...
                 },
