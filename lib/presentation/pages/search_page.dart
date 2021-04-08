@@ -1,25 +1,20 @@
 import 'package:calisthenics_logger_2/presentation/widgets/body_text_2.dart';
+import 'package:calisthenics_logger_2/presentation/widgets/headline_text_2.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/sub_title_text_2.dart';
 import 'package:flutter/material.dart';
 
-List<FilterItem> progressions = [
-  FilterItem(text: 'Standalone'),
-  FilterItem(text: 'Pistol Squat'),
-  FilterItem(
-    text: 'L-Sit',
-    selected: true,
-  ),
-  FilterItem(text: 'Back Lever'),
-  FilterItem(text: 'Front Lever'),
-  FilterItem(text: 'Planche'),
-  FilterItem(text: 'Muscle up'),
-  FilterItem(
-    text: 'Handstand',
-    selected: true,
-  ),
-  FilterItem(text: 'Human Flag'),
+List<String> progressionsList = [
+  'Standalone',
+  'Pistol Squat',
+  'L-Sit',
+  'Back Lever',
+  'Front Lever',
+  'Planche',
+  'Muscle up',
+  'Handstand',
+  'Human Flag',
 ];
 
 List<FilterItem> muscleGroups = [
@@ -42,6 +37,8 @@ List<String> allExercises = [
   'Push Up',
 ];
 
+List<String> selectedProgressions = [];
+
 class SearchPage extends StatefulWidget {
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -61,11 +58,11 @@ class _SearchPageState extends State<SearchPage> {
             children: [
               FilterDropDown(
                 title: 'Progression',
-                children: progressions,
+                items: progressions,
               ),
               FilterDropDown(
                 title: 'Muscle Group',
-                children: muscleGroups,
+                items: muscleGroups,
               ),
               SizedBox(
                 height: 10,
@@ -103,11 +100,11 @@ class _SearchPageState extends State<SearchPage> {
 }
 
 class FilterDropDown extends StatefulWidget {
-  final List<FilterItem> children;
+  final List<String> items;
   final String title;
   const FilterDropDown({
     Key? key,
-    required this.children,
+    required this.items,
     required this.title,
   }) : super(key: key);
 
@@ -116,24 +113,70 @@ class FilterDropDown extends StatefulWidget {
 }
 
 class _FilterDropDownState extends State<FilterDropDown> {
+  List<FilterItem> filterItems = []; //createFilterItems(allExercises);
+
+  List<FilterItem> createFilterItems(List<String> itemList) {
+    List<FilterItem> result = [];
+    itemList.forEach((item) {
+      bool selected = false;
+      if (selectedProgressions.contains(item)) {
+        selected = true;
+      }
+      result.add(FilterItem(
+        text: item,
+        addSelectedItem: addSelectedItem,
+        removeSelectedItem: removeSelectedItem,
+        selected: selected,
+      ));
+    });
+    return result;
+  }
+
+  addSelectedItem(String item) {
+    setState(() {
+      selectedProgressions.add(item);
+    });
+  }
+
+  removeSelectedItem(String item) {
+    setState(() {
+      if (selectedProgressions.contains(item)) {
+        selectedProgressions.remove(item);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(title: SubTitleText2(this.widget.title), children: [
-      Wrap(
-        children: this.widget.children,
-      ),
-    ]);
+    filterItems = createFilterItems(progressionsList);
+    return ExpansionTile(
+        title: Row(
+          children: [
+            SubTitleText2(this.widget.title),
+            SizedBox(width: 10),
+            HeadlineText2(selectedProgressions.join(', ')),
+          ],
+        ),
+        children: [
+          Wrap(
+            children: filterItems, //this.widget.children,
+          ),
+        ]);
   }
 }
 
 class FilterItem extends StatefulWidget {
   final String text;
   final bool selected;
+  final addSelectedItem;
+  final removeSelectedItem;
 
   const FilterItem({
     Key? key,
     required this.text,
     this.selected = false,
+    this.addSelectedItem,
+    this.removeSelectedItem,
   }) : super(key: key);
 
   @override
@@ -155,6 +198,11 @@ class _FilterItemState extends State<FilterItem> {
           onTap: () {
             setState(() {
               this.isSelected = !this.isSelected!;
+              if (this.isSelected!) {
+                widget.addSelectedItem(widget.text);
+              } else {
+                widget.removeSelectedItem(widget.text);
+              }
             });
           },
           selected: this.isSelected!,
