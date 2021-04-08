@@ -5,7 +5,7 @@ import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart'
 import 'package:calisthenics_logger_2/presentation/widgets/sub_title_text_2.dart';
 import 'package:flutter/material.dart';
 
-List<String> progressionsList = [
+List<String> progressions = [
   'Standalone',
   'Pistol Squat',
   'L-Sit',
@@ -17,15 +17,15 @@ List<String> progressionsList = [
   'Human Flag',
 ];
 
-List<FilterItem> muscleGroups = [
-  FilterItem(text: 'Shoulders'),
-  FilterItem(text: 'Triceps'),
-  FilterItem(text: 'Biceps'),
-  FilterItem(text: 'Chest'),
-  FilterItem(text: 'Back'),
-  FilterItem(text: 'Legs'),
-  FilterItem(text: 'Abs'),
-  FilterItem(text: 'Cardio'),
+List<String> muscleGroups = [
+  'Shoulders',
+  'Triceps',
+  'Biceps',
+  'Chest',
+  'Back',
+  'Legs',
+  'Abs',
+  'Cardio',
 ];
 
 List<String> allExercises = [
@@ -36,8 +36,6 @@ List<String> allExercises = [
   'Pull Up',
   'Push Up',
 ];
-
-List<String> selectedProgressions = [];
 
 class SearchPage extends StatefulWidget {
   @override
@@ -113,7 +111,8 @@ class FilterDropDown extends StatefulWidget {
 }
 
 class _FilterDropDownState extends State<FilterDropDown> {
-  List<FilterItem> filterItems = []; //createFilterItems(allExercises);
+  List<FilterItem> filterItems = [];
+  List<String> selectedProgressions = [];
 
   List<FilterItem> createFilterItems(List<String> itemList) {
     List<FilterItem> result = [];
@@ -148,13 +147,13 @@ class _FilterDropDownState extends State<FilterDropDown> {
 
   @override
   Widget build(BuildContext context) {
-    filterItems = createFilterItems(progressionsList);
+    filterItems = createFilterItems(this.widget.items);
     return ExpansionTile(
         title: Row(
           children: [
             SubTitleText2(this.widget.title),
             SizedBox(width: 10),
-            HeadlineText2(selectedProgressions.join(', ')),
+            Expanded(child: HeadlineText2(selectedProgressions.join(', '))),
           ],
         ),
         children: [
