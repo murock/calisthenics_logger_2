@@ -29,9 +29,6 @@ ExerciseData _exampleDeadliftData =
   ExerciseRowData('4', '20', '125', '', ''),
 ]);
 
-/// Example events.
-///
-/// Using a [LinkedHashMap] is highly recommended if you decide to use a map.
 final kEvents = LinkedHashMap<DateTime, List>(
   equals: isSameDay,
   hashCode: getHashCode,
@@ -77,7 +74,6 @@ class _CalendarPageState extends State<CalendarPage>
   }
 
   List _getEventsForDay(DateTime day) {
-    // Implementation example
     return kEvents[day] ?? [];
   }
 
