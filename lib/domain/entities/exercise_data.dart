@@ -4,7 +4,7 @@ class ExerciseData extends Equatable {
   final String exerciseName;
   final int numPopulatedFields;
   final List<ExerciseRowData> rowData;
-  final date;
+  final DateTime date;
 
   ExerciseData(
       {required this.exerciseName,
@@ -24,5 +24,10 @@ class ExerciseRowData {
   final String band;
   final String tool;
 
-  ExerciseRowData(this.setNum, this.reps, this.weight, this.band, this.tool);
+  ExerciseRowData(
+      {required this.setNum,
+      required this.reps,
+      required this.weight,
+      required this.band,
+      required this.tool});
 }
