@@ -108,9 +108,9 @@ class WorkoutList extends StatelessWidget {
   ]);
 
   static final ExerciseData _examplePushUpData =
-      new ExerciseData('Push Up', 3, DateTime.now(), [
-    ExerciseRowData('1', '15', '', 'red', ''),
-    ExerciseRowData('2', '20', '', 'purple', ''),
+      new ExerciseData('Push Up', 4, DateTime.now(), [
+    ExerciseRowData('1', '15', '5', '-', ''),
+    ExerciseRowData('2', '20', '-', 'purple', ''),
   ]);
 
   static final ExerciseData _exampleDeadliftData =
@@ -126,7 +126,7 @@ class ExerciseData {
   final String exerciseName;
   final int numPopulatedFields;
   final List<ExerciseRowData> rowData;
-  final date;
+  final DateTime date;
 
   ExerciseData(
       this.exerciseName, this.numPopulatedFields, this.date, this.rowData);
