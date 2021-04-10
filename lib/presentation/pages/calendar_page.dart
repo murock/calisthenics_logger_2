@@ -63,59 +63,16 @@ class _CalendarPageState extends State<CalendarPage>
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
-  // late Map<DateTime, List> _events;
-  // //late List _selectedEvents;
-  // late AnimationController _animationController;
-  // late CalendarController _calendarController;
-
   @override
   void initState() {
     super.initState();
     _selectedDay = _focusedDay;
-    ExerciseData _examplePullUpData =
-        new ExerciseData('Pull Up', 4, DateTime.now(), [
-      ExerciseRowData('1', '4', '5', '', 'wide'),
-      ExerciseRowData('2', '5', '5', '', 'wide'),
-      ExerciseRowData('3', '4', '10', '', 'wide'),
-    ]);
-
-    ExerciseData _examplePushUpData =
-        new ExerciseData('Push Up', 3, DateTime.now(), [
-      ExerciseRowData('1', '15', '', 'red', ''),
-      ExerciseRowData('2', '20', '', 'purple', ''),
-    ]);
-
-    ExerciseData _exampleDeadliftData =
-        new ExerciseData('Deadlift', 3, DateTime.now(), [
-      ExerciseRowData('1', '15', '5', '', ''),
-      ExerciseRowData('2', '20', '15', '', ''),
-      ExerciseRowData('3', '15', '25', '', ''),
-      ExerciseRowData('4', '20', '125', '', ''),
-    ]);
-
-    _events = {
-      _selectedDay.subtract(Duration(days: 0)): [
-        _examplePullUpData,
-        _examplePushUpData,
-        _exampleDeadliftData,
-      ],
-    };
-
-    _selectedEvents = _events[_selectedDay] ?? [];
-    _calendarController = CalendarController();
-
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 400),
-    );
-
-    _animationController.forward();
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
-    _calendarController.dispose();
+    _selectedEvents.dispose();
     super.dispose();
   }
 
@@ -168,8 +125,6 @@ class _CalendarPageState extends State<CalendarPage>
       selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
       calendarFormat: _calendarFormat,
       eventLoader: _getEventsForDay,
-      //   calendarController: _calendarController,
-      //   events: _events,
       startingDayOfWeek: StartingDayOfWeek.monday,
       calendarStyle: CalendarStyle(
         selectedDecoration: const BoxDecoration(
@@ -180,10 +135,10 @@ class _CalendarPageState extends State<CalendarPage>
           color: CONTRAST_COLOUR_LIGHTER,
           shape: BoxShape.circle,
         ),
-        // markerDecoration: const BoxDecoration(
-        //   color: Colors.grey[700],
-        //   shape: BoxShape.circle,
-        // ),
+        markerDecoration: const BoxDecoration(
+          color: Color(0xFF616161),
+          shape: BoxShape.circle,
+        ),
         outsideDaysVisible: false,
         weekendTextStyle: TextStyle().copyWith(color: Colors.white),
       ),
@@ -198,6 +153,13 @@ class _CalendarPageState extends State<CalendarPage>
           borderRadius: BorderRadius.circular(16.0),
         ),
       ),
+      onFormatChanged: (format) {
+        if (_calendarFormat != format) {
+          setState(() {
+            _calendarFormat = format;
+          });
+        }
+      },
       onDaySelected: _onDaySelected,
     );
   }
