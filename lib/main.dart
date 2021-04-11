@@ -7,7 +7,7 @@ import 'package:calisthenics_logger_2/presentation/pages/training_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+void main() async {
   // We need to call it manually,
   // because we going to call setPreferredOrientations()
   // before the runApp() call
