@@ -57,7 +57,20 @@ class DataHelper {
       ''');
   }
 
-  Future<int> insert(Map<String,dynamic> row) async {
-    Database db
+  Future<int> insert(Map<String, dynamic> row) async {
+    Database? db = await instance.database;
+    return await db!.insert(_trackedTableName, row);
+  }
+
+  Future<List<Map<String, dynamic>>> queryAll() async {
+    Database? db = await instance.database;
+    return await db!.query(_trackedTableName);
+  }
+
+  Future<int> update(Map<String, dynamic> row) async {
+    Database? db = await instance.database;
+    int idToUpdate = row[id];
+    return await db!.update(_trackedTableName, row,
+        where: '$id = ?', whereArgs: [idToUpdate]);
   }
 }
