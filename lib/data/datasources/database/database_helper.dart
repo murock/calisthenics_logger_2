@@ -6,8 +6,8 @@ import 'package:path/path.dart';
 class DatabaseHelper {
   static final _dbName = 'loggerDb.db';
   static final _dbVersion = 1;
-  static final _trackedTableName = 'trackedExercises';
 
+  static final _trackedTableName = 'trackedExercises';
   static final id = '_id';
   static final name = '_name';
   static final timestamp = '_timestamp';
