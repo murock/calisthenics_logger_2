@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class DataHelper {
+class DatabaseHelper {
   static final _dbName = 'loggerDb.db';
   static final _dbVersion = 1;
   static final _trackedTableName = 'trackedExercises';
@@ -22,8 +22,8 @@ class DataHelper {
   static final cluster = '_cluster';
 
   // Singleton
-  DataHelper._privateConstructor();
-  static final DataHelper instance = DataHelper._privateConstructor();
+  DatabaseHelper._privateConstructor();
+  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
 
   static Database? _database;
   Future<Database?> get database async {
@@ -39,8 +39,8 @@ class DataHelper {
     return await openDatabase(path, version: _dbVersion, onCreate: _onCreate);
   }
 
-  Future _onCreate(Database db, int version) {
-    db.query('''
+  Future _onCreate(Database db, int version) async {
+    db.execute('''
       CREATE TABLE $_trackedTableName(
       $id INTEGER PRIMARY KEY,
       $name TEXT NOT NULL,
@@ -49,11 +49,11 @@ class DataHelper {
       $reps INTEGER,
       $weight REAL,
       $holdTime INTEGER,
-      $band TEXT NOT NULL,
-      $tempo TEXT NOT NULL,
-      $tool TEXT NOT NULL,
+      $band TEXT DEFAULT "" NOT NULL,
+      $tempo TEXT DEFAULT "" NOT NULL,
+      $tool TEXT DEFAULT "" NOT NULL,
       $rest INTEGER,
-      $cluster TEXT NOT NULL)      
+      $cluster TEXT DEFAULT "" NOT NULL)      
       ''');
   }
 
@@ -72,5 +72,11 @@ class DataHelper {
     int idToUpdate = row[id];
     return await db!.update(_trackedTableName, row,
         where: '$id = ?', whereArgs: [idToUpdate]);
+  }
+
+  Future<int> delete(int idToDelete) async {
+    Database? db = await instance.database;
+    return await db!
+        .delete(_trackedTableName, where: '$id= ?', whereArgs: [idToDelete]);
   }
 }

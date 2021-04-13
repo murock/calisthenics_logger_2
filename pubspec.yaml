@@ -39,6 +39,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  sqflite_common_ffi:
+
 flutter:
 
   # The following line ensures that the Material Icons font is
