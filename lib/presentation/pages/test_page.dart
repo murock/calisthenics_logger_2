@@ -1,6 +1,7 @@
 // A page purely to test functions
 // TODO: delete before release
-import 'package:calisthenics_logger_2/data/datasources/database/database_helper.dart';
+import 'package:calisthenics_logger_2/data/datasources/database/tracked_exercise_db_helper.dart';
+import 'package:calisthenics_logger_2/data/datasources/models/tracked_exercise_model.dart';
 import 'package:flutter/material.dart';
 
 class TestPage extends StatelessWidget {
@@ -12,12 +13,13 @@ class TestPage extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () async {
-              int i = await DatabaseHelper.instance.insert({
-                DatabaseHelper.name: 'Pull up',
-                DatabaseHelper.timestamp: '20210413164012',
-                DatabaseHelper.setNum: 1,
-                DatabaseHelper.reps: 3,
-                DatabaseHelper.rest: 30
+              int i = await TrackedExerciseDbHelper.insert({
+                TrackedExerciseDbHelper.name: 'Pull up',
+                TrackedExerciseDbHelper.timestamp:
+                    (DateTime.now().millisecondsSinceEpoch / 1000).round(),
+                TrackedExerciseDbHelper.setNum: 1,
+                TrackedExerciseDbHelper.reps: 3,
+                TrackedExerciseDbHelper.rest: 30
               });
 
               print('the inserted id is $i');
@@ -27,22 +29,25 @@ class TestPage extends StatelessWidget {
           ElevatedButton(
             onPressed: () async {
               List<Map<String, dynamic>> queryRows =
-                  await DatabaseHelper.instance.queryAll();
+                  await TrackedExerciseDbHelper.queryAll();
               print(queryRows);
+              TrackedExerciseModel.fromRows(queryRows);
             },
             child: Text('Load'),
           ),
           ElevatedButton(
             onPressed: () async {
-              int rowsUpdated = await DatabaseHelper.instance.update(
-                  {DatabaseHelper.id: 1, DatabaseHelper.name: "Human Flag"});
+              int rowsUpdated = await TrackedExerciseDbHelper.update({
+                TrackedExerciseDbHelper.id: 1,
+                TrackedExerciseDbHelper.name: "Human Flag"
+              });
               print(rowsUpdated);
             },
             child: Text('Update'),
           ),
           ElevatedButton(
             onPressed: () async {
-              int rowsEffected = await DatabaseHelper.instance.delete(2);
+              int rowsEffected = await TrackedExerciseDbHelper.delete(2);
               print(rowsEffected);
             },
             child: Text('Delete'),

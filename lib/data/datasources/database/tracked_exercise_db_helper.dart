@@ -1,3 +1,6 @@
+import 'package:calisthenics_logger_2/data/datasources/database/database_helper.dart';
+import 'package:sqflite/sqflite.dart';
+
 class TrackedExerciseDbHelper {
   static final _trackedTableName = 'trackedExercises';
   static final id = '_id';
@@ -17,14 +20,37 @@ class TrackedExerciseDbHelper {
       CREATE TABLE $_trackedTableName(
       $id INTEGER PRIMARY KEY,
       $name TEXT NOT NULL,
-      $timestamp TEXT NOT NULL,
-      $setNum INTEGER,
+      $timestamp INTEGER NOT NULL,
+      $setNum INTEGER NOT NULL,
       $reps INTEGER,
       $weight REAL,
       $holdTime INTEGER,
-      $band TEXT DEFAULT "" NOT NULL,
-      $tempo TEXT DEFAULT "" NOT NULL,
-      $tool TEXT DEFAULT "" NOT NULL,
+      $band TEXT,
+      $tempo TEXT,
+      $tool TEXT,
       $rest INTEGER,
-      $cluster TEXT DEFAULT "" NOT NULL)      ''';
+      $cluster TEXT)''';
+
+  static Future<int> insert(Map<String, dynamic> row) async {
+    Database? db = await DatabaseHelper.instance.database;
+    return await db!.insert(_trackedTableName, row);
+  }
+
+  static Future<List<Map<String, dynamic>>> queryAll() async {
+    Database? db = await DatabaseHelper.instance.database;
+    return await db!.query(_trackedTableName);
+  }
+
+  static Future<int> update(Map<String, dynamic> row) async {
+    Database? db = await DatabaseHelper.instance.database;
+    int idToUpdate = row[id];
+    return await db!.update(_trackedTableName, row,
+        where: '$id = ?', whereArgs: [idToUpdate]);
+  }
+
+  static Future<int> delete(int idToDelete) async {
+    Database? db = await DatabaseHelper.instance.database;
+    return await db!
+        .delete(_trackedTableName, where: '$id= ?', whereArgs: [idToDelete]);
+  }
 }
