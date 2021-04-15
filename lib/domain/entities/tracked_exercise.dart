@@ -1,6 +1,18 @@
 import 'package:equatable/equatable.dart';
 
-class TrackedExercise extends Equatable {
+// Holds all saved workout data with each entry being a specific exercise on a specific day
+class GroupedTrackedExercises extends Equatable {
+  final List<TrackedExercise> trackedExercises;
+
+  GroupedTrackedExercises({required this.trackedExercises});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
+
+// Represents a group of sets for 1 exercise on a specific day
+class TrackedExercise {
   final int numPopulatedFields;
   final String exerciseName;
   final DateTime date;
@@ -11,12 +23,9 @@ class TrackedExercise extends Equatable {
       required this.exerciseName,
       required this.date,
       required this.rows});
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
 }
 
+// Represents one set
 class TrackedExerciseRow {
   final String setNum;
   final String reps;

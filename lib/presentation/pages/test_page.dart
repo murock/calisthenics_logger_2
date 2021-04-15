@@ -39,7 +39,7 @@ class TestPage extends StatelessWidget {
             onPressed: () async {
               int rowsUpdated = await TrackedExerciseDbHelper.update({
                 TrackedExerciseDbHelper.id: 1,
-                TrackedExerciseDbHelper.name: "Human Flag"
+                TrackedExerciseDbHelper.reps: 1100
               });
               print(rowsUpdated);
             },
