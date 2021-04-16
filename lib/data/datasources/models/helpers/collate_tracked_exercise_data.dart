@@ -17,8 +17,6 @@ class CollateTrackedExerciseData {
       return;
     }
     _populateRestOfData(exerciseData);
-    // TODO put this in a better place?
-    _saveTrackedExercise();
   }
 
   void _populateInitialData(Map<String, dynamic> firstSet) {
@@ -47,6 +45,8 @@ class CollateTrackedExerciseData {
       _updateTrackedExerciseRows(workoutSet);
       _updateNumPopulatedFields(workoutSet);
     });
+    // Final save on the last sets of the data
+    _saveTrackedExercise();
   }
 
   bool _isNewDate(DateTime dateToCheck) {
