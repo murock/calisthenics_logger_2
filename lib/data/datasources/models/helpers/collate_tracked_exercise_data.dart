@@ -103,7 +103,9 @@ class CollateTrackedExerciseData {
   void _updateNumPopulatedFields(Map<String, dynamic> workoutSetFields) {
     int numPopFields = -3;
     workoutSetFields.forEach((key, value) {
-      value ?? numPopFields++;
+      if (value != null) {
+        numPopFields++;
+      }
     });
     if (numPopFields > this._numPopulatedFields) {
       this._numPopulatedFields = numPopFields;

@@ -8,11 +8,11 @@ class GroupedTrackedExercises extends Equatable {
 
   @override
   // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [trackedExercises];
 }
 
 // Represents a group of sets for 1 exercise on a specific day
-class TrackedExercise {
+class TrackedExercise extends Equatable {
   final int numPopulatedFields;
   final String exerciseName;
   final DateTime date;
@@ -23,10 +23,14 @@ class TrackedExercise {
       required this.exerciseName,
       required this.date,
       required this.rows});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [numPopulatedFields, exerciseName, date, rows];
 }
 
 // Represents one set
-class TrackedExerciseRow {
+class TrackedExerciseRow extends Equatable {
   final String setNum;
   final String reps;
   final String weight;
@@ -48,4 +52,9 @@ class TrackedExerciseRow {
     this.rest = '',
     this.cluster = '',
   });
+
+  @override
+  // TODO: implement props
+  List<Object?> get props =>
+      [setNum, reps, weight, holdTime, band, tempo, tool, rest, cluster];
 }
