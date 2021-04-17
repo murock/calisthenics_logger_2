@@ -3,7 +3,7 @@ import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 List<Map<String, dynamic>> regularData = [
   {
     '_id': 1,
-    '_name': 'Pull up',
+    '_name': 'Pull Up',
     '_timestamp': 1618415024,
     '_setNum': 1,
     '_reps': 10,
@@ -17,7 +17,7 @@ List<Map<String, dynamic>> regularData = [
   },
   {
     '_id': 2,
-    '_name': 'Pull up',
+    '_name': 'Pull Up',
     '_timestamp': 1618415124,
     '_setNum': 2,
     '_reps': 10,
@@ -31,7 +31,7 @@ List<Map<String, dynamic>> regularData = [
   },
   {
     '_id': 3,
-    '_name': 'Pull up',
+    '_name': 'Pull Up',
     '_timestamp': 1618415500,
     '_setNum': 3,
     '_reps': 8,
@@ -68,10 +68,12 @@ List<TrackedExerciseRow> regularDataTrackExRowsPullUp = [
   TrackedExerciseRow(
     setNum: '2',
     reps: '10',
+    band: '-',
   ),
   TrackedExerciseRow(
     setNum: '3',
     reps: '8',
+    band: '-',
   )
 ];
 
@@ -81,7 +83,7 @@ List<TrackedExerciseRow> regularDataTrackExRowsHumanFlag = [
 
 List<TrackedExercise> regularDataTrackExs = [
   new TrackedExercise(
-    numPopulatedFields: 4,
+    numPopulatedFields: 3,
     exerciseName: 'Pull Up',
     date: new DateTime(2021, 04, 14),
     rows: regularDataTrackExRowsPullUp,

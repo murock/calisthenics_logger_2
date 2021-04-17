@@ -1,12 +1,11 @@
-import 'package:calisthenics_logger_2/data/datasources/models/tracked_exercise_model.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 
 class CollateTrackedExerciseData {
   late String _exerciseName;
   late DateTime _date;
   List<TrackedExerciseRow> _trackedExerciseRows = [];
-  // start at -3 as we don't want to count '_id','_timestamp' or '_name' field
-  int _numPopulatedFields = -3;
+  Map<String, bool> _populatedFields = new Map();
+  List<Map<String, dynamic>> _currentExerciseSets = [];
 
   List<TrackedExercise> trackedExercises = [];
 
@@ -22,8 +21,9 @@ class CollateTrackedExerciseData {
   void _populateInitialData(Map<String, dynamic> firstSet) {
     this._exerciseName = firstSet['_name'];
     this._date = _getDate(firstSet['_timestamp']);
-    this._numPopulatedFields = -3;
     this._trackedExerciseRows = [];
+    this._populatedFields.clear();
+    this._currentExerciseSets.clear();
   }
 
   static DateTime _getDate(int unixTime) {
@@ -39,14 +39,16 @@ class CollateTrackedExerciseData {
     exerciseData.forEach((workoutSet) {
       if (_isNewDate(_getDate(workoutSet['_timestamp'])) ||
           _isNewExercise(workoutSet['_name'])) {
-        _saveTrackedExercise();
-        _populateInitialData(workoutSet);
+        this._populateTrackedExerciseRows(this._currentExerciseSets);
+        this._saveTrackedExercise();
+        this._populateInitialData(workoutSet);
       }
-      _updateTrackedExerciseRows(workoutSet);
-      _updateNumPopulatedFields(workoutSet);
+      this._updatePopulatedFields(workoutSet);
+      this._currentExerciseSets.add(workoutSet);
     });
     // Final save on the last sets of the data
-    _saveTrackedExercise();
+    this._populateTrackedExerciseRows(this._currentExerciseSets);
+    this._saveTrackedExercise();
   }
 
   bool _isNewDate(DateTime dateToCheck) {
@@ -67,7 +69,8 @@ class CollateTrackedExerciseData {
 
   void _saveTrackedExercise() {
     TrackedExercise trackedExercise = new TrackedExercise(
-      numPopulatedFields: this._numPopulatedFields,
+      // -3 as id, name and timestamp are not counted
+      numPopulatedFields: this._populatedFields.length - 3,
       exerciseName: this._exerciseName,
       date: this._date,
       rows: this._trackedExerciseRows,
@@ -75,40 +78,67 @@ class CollateTrackedExerciseData {
     trackedExercises.add(trackedExercise);
   }
 
-  void _updateTrackedExerciseRows(Map<String, dynamic> workoutSetFields) {
+  void _updatePopulatedFields(Map<String, dynamic> workoutSetFields) {
+    workoutSetFields.forEach((key, value) {
+      if (value != null) {
+        this._populatedFields[key] = true;
+      }
+    });
+  }
+
+  void _populateTrackedExerciseRows(
+      List<Map<String, dynamic>> currentExerciseSets) {
+    currentExerciseSets.forEach((workoutSet) {
+      this._insertTrackedExerciseRow(workoutSet);
+    });
+  }
+
+  void _insertTrackedExerciseRow(Map<String, dynamic> workoutSetFields) {
     _trackedExerciseRows.add(
       new TrackedExerciseRow(
         setNum: _extractStringFromNumRowElement(workoutSetFields['_setNum']),
-        reps: _extractStringFromNumRowElement(workoutSetFields['_reps']),
-        weight: _extractStringFromNumRowElement(workoutSetFields['_weight']),
-        holdTime:
-            _extractStringFromNumRowElement(workoutSetFields['_holdTime']),
-        band: workoutSetFields['_band'] ?? '',
-        tempo: workoutSetFields['_tempo'] ?? '',
-        tool: workoutSetFields['_tool'] ?? '',
-        rest: _extractStringFromNumRowElement(workoutSetFields['_rest']),
-        cluster: workoutSetFields['_cluster'] ?? '',
+        reps: this._getNumFieldValue('_reps', workoutSetFields),
+        weight: this._getNumFieldValue('_weight', workoutSetFields),
+        holdTime: this._getNumFieldValue('_holdTime', workoutSetFields),
+        band: this._getStringFieldValue('_band', workoutSetFields),
+        tempo: this._getStringFieldValue('_tempo', workoutSetFields),
+        tool: this._getStringFieldValue('_tool', workoutSetFields),
+        rest: this._getNumFieldValue('_rest', workoutSetFields),
+        cluster: this._getStringFieldValue('_cluster', workoutSetFields),
       ),
     );
   }
 
+  String _getNumFieldValue(String key, Map<String, dynamic> workoutSetFields) {
+    if (this._populatedFields[key] != null && this._populatedFields[key]!) {
+      return _extractStringFromNumRowElement(workoutSetFields[key]);
+    } else {
+      return '';
+    }
+  }
+
   static String _extractStringFromNumRowElement(num? element) {
-    String result = '';
+    String result = '-';
     if (element != null) {
       result = element.toString();
     }
     return result;
   }
 
-  void _updateNumPopulatedFields(Map<String, dynamic> workoutSetFields) {
-    int numPopFields = -3;
-    workoutSetFields.forEach((key, value) {
-      if (value != null) {
-        numPopFields++;
-      }
-    });
-    if (numPopFields > this._numPopulatedFields) {
-      this._numPopulatedFields = numPopFields;
+  String _getStringFieldValue(
+      String key, Map<String, dynamic> workoutSetFields) {
+    if (this._populatedFields[key] != null && this._populatedFields[key]!) {
+      return _extractStringFromStringRowElement(workoutSetFields[key]);
+    } else {
+      return '';
     }
+  }
+
+  static String _extractStringFromStringRowElement(String? element) {
+    String result = '-';
+    if (element != null) {
+      result = element;
+    }
+    return result;
   }
 }
