@@ -1,7 +1,7 @@
 // A page purely to test functions
 // TODO: delete before release
 import 'package:calisthenics_logger_2/data/datasources/database/tracked_exercise_db_helper.dart';
-import 'package:calisthenics_logger_2/data/datasources/models/tracked_exercise_model.dart';
+import 'package:calisthenics_logger_2/data/models/tracked_exercise_model.dart';
 import 'package:flutter/material.dart';
 
 class TestPage extends StatelessWidget {

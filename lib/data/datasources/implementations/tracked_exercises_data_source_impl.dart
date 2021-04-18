@@ -1,6 +1,6 @@
 import 'package:calisthenics_logger_2/data/datasources/database/tracked_exercise_db_helper.dart';
 import 'package:calisthenics_logger_2/data/datasources/interfaces/tracked_exercise_data_source.dart';
-import 'package:calisthenics_logger_2/data/datasources/models/tracked_exercise_model.dart';
+import 'package:calisthenics_logger_2/data/models/tracked_exercise_model.dart';
 
 class TrackedExerciseDataSourceImpl implements TrackedExerciseDataSource {
   @override

@@ -1,4 +1,4 @@
-import 'package:calisthenics_logger_2/data/datasources/models/tracked_exercise_model.dart';
+import 'package:calisthenics_logger_2/data/models/tracked_exercise_model.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -25,8 +25,19 @@ void main() {
         //act
         final result = TrackedExerciseModel.fromRows(queryRows);
         //assert
-        expect(1, 1);
         expect(result, tTrackedExerciseModel);
+      },
+    );
+
+    test(
+      'should return an empty GroupedtrackedExercises when given an empty array',
+      () async {
+        //arrange
+        final expected = [];
+        //act
+        final result = TrackedExerciseModel.fromRows([]);
+        //assert
+        expect(result.trackedExercises, expected);
       },
     );
   });

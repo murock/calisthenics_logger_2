@@ -7,7 +7,6 @@ class GroupedTrackedExercises extends Equatable {
   GroupedTrackedExercises({required this.trackedExercises});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [trackedExercises];
 }
 
@@ -25,7 +24,6 @@ class TrackedExercise extends Equatable {
       required this.rows});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [numPopulatedFields, exerciseName, date, rows];
 }
 
@@ -54,7 +52,6 @@ class TrackedExerciseRow extends Equatable {
   });
 
   @override
-  // TODO: implement props
   List<Object?> get props =>
       [setNum, reps, weight, holdTime, band, tempo, tool, rest, cluster];
 }
