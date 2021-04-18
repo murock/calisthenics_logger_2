@@ -30,7 +30,7 @@ void main() {
     );
 
     test(
-      'should return an empty GroupedtrackedExercises when given an empty array',
+      'should return an empty GroupedTrackedExercises when given an empty array',
       () async {
         //arrange
         final expected = [];

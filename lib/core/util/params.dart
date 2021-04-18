@@ -1,11 +1,14 @@
 import 'package:equatable/equatable.dart';
 
-// TODO: update this replace number with required params for repo calls
 class Params extends Equatable {
-  final int number;
+  final String? exerciseName;
+  final DateTime? date;
 
-  Params({required this.number});
+  Params({
+    this.exerciseName,
+    this.date,
+  });
 
   @override
-  List<Object> get props => [number];
+  List<Object?> get props => [exerciseName, this.date];
 }

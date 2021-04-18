@@ -5,6 +5,9 @@ abstract class Failure extends Equatable {
 }
 
 class DatabaseFailure extends Failure {
+  final String message;
+
+  DatabaseFailure(this.message);
   @override
   // TODO: implement props
   List<Object> get props => [];

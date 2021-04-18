@@ -4,7 +4,8 @@ import 'package:calisthenics_logger_2/data/models/tracked_exercise_model.dart';
 
 class TrackedExerciseDataSourceImpl implements TrackedExerciseDataSource {
   @override
-  Future<TrackedExerciseModel> getAllTrackedExercises() async {
+  Future<TrackedExerciseModel> getSpecificTrackedExerciseOnDate(
+      String exerciseName, DateTime date) async {
     List<Map<String, dynamic>> queryRows =
         await TrackedExerciseDbHelper.queryAll();
 

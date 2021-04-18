@@ -1,7 +1,7 @@
-import 'package:calisthenics_logger_2/core/util/no_params.dart';
+import 'package:calisthenics_logger_2/core/util/params.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:calisthenics_logger_2/domain/repos/tracked_exercise_repo.dart';
-import 'package:calisthenics_logger_2/domain/usecases/get_all_tracked_exercise_data.dart';
+import 'package:calisthenics_logger_2/domain/usecases/get_specific_tracked_exercise_on_date.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -10,12 +10,12 @@ class MockTrackedExerciseRepo extends Mock implements TrackedExerciseRepo {}
 
 void main() {
   MockTrackedExerciseRepo mockExerciseRepo = MockTrackedExerciseRepo();
-  GetAllTrackedExerciseData usecase =
-      GetAllTrackedExerciseData(mockExerciseRepo);
+  GetSpecificTrackedExerciseOnDate usecase =
+      GetSpecificTrackedExerciseOnDate(mockExerciseRepo);
 
   setUp(() {
     mockExerciseRepo = MockTrackedExerciseRepo();
-    usecase = GetAllTrackedExerciseData(mockExerciseRepo);
+    usecase = GetSpecificTrackedExerciseOnDate(mockExerciseRepo);
   });
 
   final tExerciseRowDatas = [
@@ -34,13 +34,13 @@ void main() {
     'should get all tracked exercises from the repo',
     () async {
       // arrange
-      when(mockExerciseRepo.getAllExerciseData())
+      when(mockExerciseRepo.getSpecificTrackedExerciseOnDate(any, any))
           .thenAnswer((_) async => Right(tExerciseData));
       // act
-      final result = await usecase(NoParams());
+      final result = await usecase(Params());
       //assert
       expect(result, Right(tExerciseData));
-      verify(mockExerciseRepo.getAllExerciseData());
+      verify(mockExerciseRepo.getSpecificTrackedExerciseOnDate(any, any));
       verifyNoMoreInteractions(mockExerciseRepo);
     },
   );
