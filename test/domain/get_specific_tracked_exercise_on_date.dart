@@ -30,16 +30,19 @@ void main() {
       date: DateTime(2021, 1, 1),
       rows: tExerciseRowDatas);
 
+  final tGroupedTrackedExercise =
+      new GroupedTrackedExercises(trackedExercises: [tExerciseData]);
+
   test(
     'should get all tracked exercises from the repo',
     () async {
       // arrange
       when(mockExerciseRepo.getSpecificTrackedExerciseOnDate(any, any))
-          .thenAnswer((_) async => Right(tExerciseData));
+          .thenAnswer((_) async => Right(tGroupedTrackedExercise));
       // act
       final result = await usecase(Params());
       //assert
-      expect(result, Right(tExerciseData));
+      expect(result, Right(tGroupedTrackedExercise));
       verify(mockExerciseRepo.getSpecificTrackedExerciseOnDate(any, any));
       verifyNoMoreInteractions(mockExerciseRepo);
     },

@@ -10,33 +10,23 @@ class TrackedExerciseRepoImpl implements TrackedExerciseRepo {
 
   TrackedExerciseRepoImpl({required this.trackedExerciseDataSource});
   @override
-  Future<Either<Failure, TrackedExercise>> getSpecificTrackedExerciseOnDate(
-      String? exerciseName, DateTime? date) async {
+  Future<Either<Failure, GroupedTrackedExercises>>
+      getSpecificTrackedExerciseOnDate(
+          String? exerciseName, DateTime? date) async {
     if (exerciseName == null || date == null) {
       return Left(DatabaseFailure(
           'Attempted to get all tracked exercises with null exercise name or null date'));
     }
-    try {} on DatabaseException {
-      return Left(DatabaseFailure(
-        'Problem retrieving all exercises given an exercise name and date',
-      ));
+    try {
+      final trackedExercise = await trackedExerciseDataSource
+          .getSpecificTrackedExerciseOnDate(exerciseName, date);
+      return Right(trackedExercise);
+    } on DatabaseException {
+      return Left(
+        DatabaseFailure(
+          'Problem retrieving all exercises given an exercise name: $exerciseName and date: $date',
+        ),
+      );
     }
-    // return trackedExerciseDataSource.getSpecificTrackedExerciseOnDate(exerciseName, date);
   }
 }
-
-//     try {
-//       final remoteTrivia = await getConcreteOrRandom();
-//       localDataSource.cacheNumberTrivia(remoteTrivia);
-//       return Right(remoteTrivia);
-//     } on ServerException {
-//       return Left(ServerFailure());
-//     }
-//   } else {
-//     try {
-//       return Right(await localDataSource.getLastNumberTrivia());
-//     } on CacheException {
-//       return Left(CacheFailure());
-//     }
-//   }
-// }

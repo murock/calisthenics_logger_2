@@ -6,13 +6,13 @@ import 'package:calisthenics_logger_2/domain/repos/tracked_exercise_repo.dart';
 import 'package:dartz/dartz.dart';
 
 class GetSpecificTrackedExerciseOnDate
-    implements UseCase<TrackedExercise, Params> {
+    implements UseCase<GroupedTrackedExercises, Params> {
   final TrackedExerciseRepo repo;
 
   GetSpecificTrackedExerciseOnDate(this.repo);
 
   @override
-  Future<Either<Failure, TrackedExercise>> call(Params params) async {
+  Future<Either<Failure, GroupedTrackedExercises>> call(Params params) async {
     return await this
         .repo
         .getSpecificTrackedExerciseOnDate(params.exerciseName, params.date);
