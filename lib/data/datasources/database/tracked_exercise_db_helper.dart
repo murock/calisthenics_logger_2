@@ -41,6 +41,12 @@ class TrackedExerciseDbHelper {
     return await db!.query(_trackedTableName);
   }
 
+  static Future<List<Map<String, dynamic>>> queryAllGivenNameAndDate(
+      String name, int timestamp) async {
+    Database? db = await DatabaseHelper.instance.database;
+    return await db!.query(_trackedTableName);
+  }
+
   static Future<int> update(Map<String, dynamic> row) async {
     Database? db = await DatabaseHelper.instance.database;
     int idToUpdate = row[id];

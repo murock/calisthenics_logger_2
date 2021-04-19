@@ -1,5 +1,6 @@
 // A page purely to test functions
 // TODO: delete before release
+import 'package:calisthenics_logger_2/core/util/timestamp_converter.dart';
 import 'package:calisthenics_logger_2/data/datasources/database/tracked_exercise_db_helper.dart';
 import 'package:calisthenics_logger_2/data/models/tracked_exercise_model.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class TestPage extends StatelessWidget {
               int i = await TrackedExerciseDbHelper.insert({
                 TrackedExerciseDbHelper.name: 'Pull up',
                 TrackedExerciseDbHelper.timestamp:
-                    (DateTime.now().millisecondsSinceEpoch / 1000).round(),
+                    getUnixTimeFromDateTime(DateTime.now()),
                 TrackedExerciseDbHelper.setNum: 1,
                 TrackedExerciseDbHelper.reps: 3,
                 TrackedExerciseDbHelper.rest: 30

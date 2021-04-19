@@ -1,3 +1,4 @@
+import 'package:calisthenics_logger_2/core/util/timestamp_converter.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 
 class CollateTrackedExerciseData {
@@ -20,24 +21,15 @@ class CollateTrackedExerciseData {
 
   void _populateInitialData(Map<String, dynamic> firstSet) {
     this._exerciseName = firstSet['_name'];
-    this._date = _getDate(firstSet['_timestamp']);
+    this._date = getDateTimeFromUnix(firstSet['_timestamp']);
     this._trackedExerciseRows = [];
     this._populatedFields.clear();
     this._currentExerciseSets.clear();
   }
 
-  static DateTime _getDate(int unixTime) {
-    int unixTimeInMilliseconds = unixTime * 1000;
-    DateTime dateTime =
-        DateTime.fromMillisecondsSinceEpoch(unixTimeInMilliseconds);
-    DateTime roundedDate =
-        new DateTime(dateTime.year, dateTime.month, dateTime.day);
-    return roundedDate;
-  }
-
   void _populateRestOfData(List<Map<String, dynamic>> exerciseData) {
     exerciseData.forEach((workoutSet) {
-      if (_isNewDate(_getDate(workoutSet['_timestamp'])) ||
+      if (_isNewDate(getDateTimeFromUnix(workoutSet['_timestamp'])) ||
           _isNewExercise(workoutSet['_name'])) {
         this._populateTrackedExerciseRows(this._currentExerciseSets);
         this._saveTrackedExercise();
