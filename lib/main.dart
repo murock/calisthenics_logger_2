@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       //  home: ChartsPage.withSampleData(), //TrainingPage(), //
       initialRoute: '/',
       routes: {
-        '/': (context) => TestPage(), //HomePage(),
+        '/': (context) => TrainingPage(), //HomePage(),
         '/tools': (context) => ChartsPage.withSampleData(),
         '/calender': (context) => CalendarPage(),
         '/training': (context) => TrainingPage(),
