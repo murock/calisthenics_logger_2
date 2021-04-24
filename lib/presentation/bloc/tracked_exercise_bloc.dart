@@ -13,10 +13,12 @@ part 'tracked_exercise_state.dart';
 
 class TrackedExerciseBloc
     extends Bloc<TrackedExerciseEvent, TrackedExerciseState> {
-  final GetSpecificTrackedExerciseOnDate getSpecificTrackedExerciseOnDate;
+  //final GetSpecificTrackedExerciseOnDate getSpecificTrackedExerciseOnDate;
 
-  TrackedExerciseBloc({required this.getSpecificTrackedExerciseOnDate})
-      : super(TrackedExerciseEmpty());
+  TrackedExerciseBloc() : super(TrackedExerciseEmpty());
+
+  //TrackedExerciseBloc({required this.getSpecificTrackedExerciseOnDate})
+  //  : super(TrackedExerciseEmpty());
 
   @override
   Stream<TrackedExerciseState> mapEventToState(
@@ -24,10 +26,10 @@ class TrackedExerciseBloc
   ) async* {
     if (event is GetTrackedExerciseForDateAndName) {
       yield TrackedExerciseLoading();
-      final failureOrTrackedExercises = await getSpecificTrackedExerciseOnDate(
-        Params(exerciseName: event.exerciseName, date: event.date),
-      );
-      yield* _eitherLoadedOrErrorState(failureOrTrackedExercises);
+      // final failureOrTrackedExercises = await getSpecificTrackedExerciseOnDate(
+      //   Params(exerciseName: event.exerciseName, date: event.date),
+      // );
+      // yield* _eitherLoadedOrErrorState(failureOrTrackedExercises);
     }
   }
 

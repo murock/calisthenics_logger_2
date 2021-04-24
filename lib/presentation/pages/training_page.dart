@@ -20,7 +20,7 @@ class TrainingPage extends StatelessWidget {
 
   BlocProvider<TrackedExerciseBloc> buildBody(BuildContext context) {
     return BlocProvider(
-        create: (_) => sl<TrackedExerciseBloc>(),
+        create: (context) => TrackedExerciseBloc(),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(10.0),

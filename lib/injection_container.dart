@@ -13,7 +13,7 @@ Future<void> init() async {
   //! Tracked Exercises
   // Bloc - Factory means can have more than 1 instance. Useful for objects where you need to dispose of things like streams
   sl.registerFactory(() => TrackedExerciseBloc(
-        getSpecificTrackedExerciseOnDate: sl(),
+      //  getSpecificTrackedExerciseOnDate: sl(),
       ));
 
   // Use cases
