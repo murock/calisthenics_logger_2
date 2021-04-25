@@ -27,6 +27,7 @@ class TrainingPage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 10),
+                // TODO: move the bloc building to just above the list widget
                 BlocBuilder<TrackedExerciseBloc, TrackedExerciseState>(
                   builder: (context, state) {
                     if (state is TrackedExerciseEmpty) {
