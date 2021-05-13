@@ -39,7 +39,7 @@ class TrainingDisplay extends StatelessWidget {
         BlocBuilder<TrackedExerciseBloc, TrackedExerciseState>(
           builder: (context, state) {
             if (state is TrackedExerciseEmpty) {
-              return MessageDisplay(message: 'Empty tracked exercise state');
+              return MessageDisplay(message: 'Enter first set');
             } else if (state is TrackedExerciseLoading) {
               return LoadingWidget();
             } else if (state is TrackedExerciseLoaded) {

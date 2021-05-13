@@ -1,5 +1,9 @@
+import 'dart:js';
+
 import 'package:calisthenics_logger_2/core/util/theme.dart';
+import 'package:calisthenics_logger_2/presentation/bloc/tracked_exercise_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddRemoveRow extends StatelessWidget {
   const AddRemoveRow({
@@ -26,5 +30,10 @@ class AddRemoveRow extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void addButtonClick(BuildContext context) {
+    BlocProvider.of<TrackedExerciseBloc>(context)
+        .add(GetTrackedExerciseForDateAndName('Pull Up', DateTime.now()));
   }
 }
