@@ -4,7 +4,9 @@ import 'package:calisthenics_logger_2/data/datasources/interfaces/tracked_exerci
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:calisthenics_logger_2/domain/repos/tracked_exercise_repo.dart';
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: TrackedExerciseRepo)
 class TrackedExerciseRepoImpl implements TrackedExerciseRepo {
   final TrackedExerciseDataSource trackedExerciseDataSource;
 

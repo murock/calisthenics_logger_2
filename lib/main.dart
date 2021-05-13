@@ -1,4 +1,5 @@
 import 'package:calisthenics_logger_2/core/util/theme.dart';
+import 'package:calisthenics_logger_2/injection.dart';
 import 'package:calisthenics_logger_2/presentation/pages/calendar_page.dart';
 import 'package:calisthenics_logger_2/presentation/pages/charts_page.dart';
 import 'package:calisthenics_logger_2/presentation/pages/search_page.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() async {
+  configureDependencies();
   // We need to call it manually,
   // because we going to call setPreferredOrientations()
   // before the runApp() call

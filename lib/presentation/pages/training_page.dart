@@ -1,5 +1,5 @@
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
-import 'package:calisthenics_logger_2/injection_container.dart';
+import 'package:calisthenics_logger_2/injection.dart';
 import 'package:calisthenics_logger_2/presentation/bloc/tracked_exercise_bloc.dart';
 import 'package:calisthenics_logger_2/presentation/pages/trainingPageWidgets/training_display.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/loading_widget.dart';
@@ -20,7 +20,7 @@ class TrainingPage extends StatelessWidget {
 
   BlocProvider<TrackedExerciseBloc> buildBody(BuildContext context) {
     return BlocProvider(
-        create: (context) => TrackedExerciseBloc(),
+        create: (_) => getIt<TrackedExerciseBloc>(),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
