@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:calisthenics_logger_2/core/error/failures.dart';
+import 'package:calisthenics_logger_2/core/util/params.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:calisthenics_logger_2/domain/usecases/get_specific_tracked_exercise_on_date.dart';
 import 'package:dartz/dartz.dart';
@@ -27,10 +28,10 @@ class TrackedExerciseBloc
   ) async* {
     if (event is GetTrackedExerciseForDateAndName) {
       yield TrackedExerciseLoading();
-      // final failureOrTrackedExercises = await getSpecificTrackedExerciseOnDate(
-      //   Params(exerciseName: event.exerciseName, date: event.date),
-      // );
-      // yield* _eitherLoadedOrErrorState(failureOrTrackedExercises);
+      final failureOrTrackedExercises = await getSpecificTrackedExerciseOnDate(
+        Params(exerciseName: event.exerciseName, date: event.date),
+      );
+      yield* _eitherLoadedOrErrorState(failureOrTrackedExercises);
     }
   }
 

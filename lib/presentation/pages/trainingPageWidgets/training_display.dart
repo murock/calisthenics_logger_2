@@ -39,11 +39,14 @@ class TrainingDisplay extends StatelessWidget {
         BlocBuilder<TrackedExerciseBloc, TrackedExerciseState>(
           builder: (context, state) {
             if (state is TrackedExerciseEmpty) {
+              // Kick off request to get the TrackedExercises for selected day and exercise
+              BlocProvider.of<TrackedExerciseBloc>(context).add(
+                  GetTrackedExerciseForDateAndName('Pull Up', DateTime.now()));
               return MessageDisplay(message: 'Enter first set');
             } else if (state is TrackedExerciseLoading) {
               return LoadingWidget();
             } else if (state is TrackedExerciseLoaded) {
-              return ExerciseListView();
+              return ExerciseListView(trackedExercises: state.trackedExercises);
             } else if (state is TrackedExerciseError) {
               return MessageDisplay(message: state.message);
             }
@@ -59,8 +62,11 @@ class TrainingDisplay extends StatelessWidget {
 }
 
 class ExerciseListView extends StatelessWidget {
+  final GroupedTrackedExercises trackedExercises;
+
   const ExerciseListView({
     Key? key,
+    required this.trackedExercises,
   }) : super(key: key);
 
   @override
@@ -72,12 +78,13 @@ class ExerciseListView extends StatelessWidget {
           separatorBuilder: (BuildContext context, int index) => Divider(
             color: Colors.white,
           ),
-          itemCount: 3,
+          // TODO: DO NOT ASSUME THERE IS ONE TRACKEDEXERCISE #ASKINGFORTROUBLE
+          itemCount: trackedExercises.trackedExercises[0].rows.length,
           itemBuilder: (context, index) => Padding(
             padding: EdgeInsets.all(1),
             child: RecordedExerciseItem(
-              setNum: (index + 1).toString(),
-              reps: (index + 7).toString(),
+              setNum: trackedExercises.trackedExercises[0].rows[index].setNum,
+              reps: trackedExercises.trackedExercises[0].rows[index].reps,
             ),
           ),
         ),
