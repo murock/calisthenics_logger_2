@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:calisthenics_logger_2/core/util/theme.dart';
 import 'package:calisthenics_logger_2/presentation/bloc/tracked_exercise_bloc.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +16,9 @@ class AddRemoveRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              addButtonClick(context);
+            },
             child: const Icon(Icons.add),
             heroTag: null,
           ),
