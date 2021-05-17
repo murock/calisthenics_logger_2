@@ -1,3 +1,4 @@
+import 'package:calisthenics_logger_2/core/util/timestamp_converter.dart';
 import 'package:calisthenics_logger_2/data/datasources/database/database_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -41,10 +42,22 @@ class TrackedExerciseDbHelper {
     return await db!.query(_trackedTableName);
   }
 
+  // TODO: Make this check for exercise name aswell as timestamp
   static Future<List<Map<String, dynamic>>> queryAllGivenNameAndDate(
-      String name, int timestamp) async {
+      String name, int requestTimestamp) async {
     Database? db = await DatabaseHelper.instance.database;
-    return await db!.query(_trackedTableName);
+    DateTime date = getDateTimeFromUnix(requestTimestamp);
+    int unixStartDay =
+        getUnixTimeFromDateTime(new DateTime(date.year, date.month, date.day));
+    int unixEndDay = unixStartDay + 86400;
+    return await db!.rawQuery('SELECT * FROM ' +
+        _trackedTableName +
+        ' WHERE ' +
+        timestamp +
+        ' BETWEEN ' +
+        unixStartDay.toString() +
+        ' AND ' +
+        unixEndDay.toString());
   }
 
   static Future<int> update(Map<String, dynamic> row) async {
@@ -58,5 +71,22 @@ class TrackedExerciseDbHelper {
     Database? db = await DatabaseHelper.instance.database;
     return await db!
         .delete(_trackedTableName, where: '$id= ?', whereArgs: [idToDelete]);
+  }
+
+  static Future<void> DELETEtODAYSeXERCISEStodoDELETETHISMETHOD(
+      int requestTimestamp) async {
+    Database? db = await DatabaseHelper.instance.database;
+    DateTime date = getDateTimeFromUnix(requestTimestamp);
+    int unixStartDay =
+        getUnixTimeFromDateTime(new DateTime(date.year, date.month, date.day));
+    int unixEndDay = unixStartDay + 86400;
+    await db!.rawQuery('DELETE FROM ' +
+        _trackedTableName +
+        ' WHERE ' +
+        timestamp +
+        ' BETWEEN ' +
+        unixStartDay.toString() +
+        ' AND ' +
+        unixEndDay.toString());
   }
 }

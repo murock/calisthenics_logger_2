@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddRemoveRow extends StatelessWidget {
+  final Function onAddClick;
+  final Function onRemoveClick;
+
   const AddRemoveRow({
     Key? key,
+    required this.onAddClick,
+    required this.onRemoveClick,
   }) : super(key: key);
 
   @override
@@ -16,24 +21,17 @@ class AddRemoveRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           FloatingActionButton(
-            onPressed: () {
-              addButtonClick(context);
-            },
+            onPressed: () => onAddClick(),
             child: const Icon(Icons.add),
             heroTag: null,
           ),
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: () => onRemoveClick(),
             child: const Icon(Icons.delete),
             heroTag: null,
           ),
         ],
       ),
     );
-  }
-
-  void addButtonClick(BuildContext context) {
-    BlocProvider.of<TrackedExerciseBloc>(context)
-        .add(GetTrackedExerciseForDateAndName('Pull Up', DateTime.now()));
   }
 }

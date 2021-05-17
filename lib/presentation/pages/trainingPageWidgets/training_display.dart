@@ -1,3 +1,5 @@
+import 'package:calisthenics_logger_2/core/util/timestamp_converter.dart';
+import 'package:calisthenics_logger_2/data/datasources/database/tracked_exercise_db_helper.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:calisthenics_logger_2/presentation/bloc/tracked_exercise_bloc.dart';
 import 'package:calisthenics_logger_2/presentation/pages/trainingPageWidgets/add_remove_row.dart';
@@ -35,7 +37,10 @@ class TrainingDisplay extends StatelessWidget {
           subText: 'kgs',
         ),
         BandDropdown(),
-        AddRemoveRow(),
+        AddRemoveRow(
+          onAddClick: () => AddExerciseToDbTEMPMETHODTOREMOVE(),
+          onRemoveClick: () => RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(),
+        ),
         BlocBuilder<TrackedExerciseBloc, TrackedExerciseState>(
           builder: (context, state) {
             if (state is TrackedExerciseEmpty) {
@@ -61,6 +66,23 @@ class TrainingDisplay extends StatelessWidget {
   }
 }
 
+Future<void> AddExerciseToDbTEMPMETHODTOREMOVE() async {
+  int i = await TrackedExerciseDbHelper.insert({
+    TrackedExerciseDbHelper.name: 'Pull up',
+    TrackedExerciseDbHelper.timestamp: getUnixTimeFromDateTime(DateTime.now()),
+    TrackedExerciseDbHelper.setNum: 1,
+    TrackedExerciseDbHelper.reps: 10,
+    TrackedExerciseDbHelper.rest: 30,
+    TrackedExerciseDbHelper.weight: 20,
+  });
+
+  print('the inserted id is $i');
+}
+
+Future<void> RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE() async {
+  await TrackedExerciseDbHelper.DELETEtODAYSeXERCISEStodoDELETETHISMETHOD(getUnixTimeFromDateTime(DateTime.now()));
+}
+
 class ExerciseListView extends StatelessWidget {
   final GroupedTrackedExercises trackedExercises;
 
@@ -71,23 +93,27 @@ class ExerciseListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isPopulated = trackedExercises.trackedExercises.length > 0;
     return Flexible(
       child: Container(
         height: 200,
-        child: ListView.separated(
-          separatorBuilder: (BuildContext context, int index) => Divider(
-            color: Colors.white,
-          ),
-          // TODO: DO NOT ASSUME THERE IS ONE TRACKEDEXERCISE #ASKINGFORTROUBLE
-          itemCount: trackedExercises.trackedExercises[0].rows.length,
-          itemBuilder: (context, index) => Padding(
-            padding: EdgeInsets.all(1),
-            child: RecordedExerciseItem(
-              setNum: trackedExercises.trackedExercises[0].rows[index].setNum,
-              reps: trackedExercises.trackedExercises[0].rows[index].reps,
-            ),
-          ),
-        ),
+        child: !isPopulated
+            ? Container()
+            : ListView.separated(
+                separatorBuilder: (BuildContext context, int index) => Divider(
+                  color: Colors.white,
+                ),
+                // TODO: DO NOT ASSUME THERE IS ONE TRACKEDEXERCISE #ASKINGFORTROUBLE
+                itemCount: trackedExercises.trackedExercises[0].rows.length,
+                itemBuilder: (context, index) => Padding(
+                  padding: EdgeInsets.all(1),
+                  child: RecordedExerciseItem(
+                    setNum:
+                        trackedExercises.trackedExercises[0].rows[index].setNum,
+                    reps: trackedExercises.trackedExercises[0].rows[index].reps,
+                  ),
+                ),
+              ),
       ),
     );
   }
