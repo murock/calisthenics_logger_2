@@ -17,8 +17,6 @@ class TrackedExerciseBloc
     extends Bloc<TrackedExerciseEvent, TrackedExerciseState> {
   final GetSpecificTrackedExerciseOnDate getSpecificTrackedExerciseOnDate;
 
-  //TrackedExerciseBloc() : super(TrackedExerciseEmpty());
-
   TrackedExerciseBloc({required this.getSpecificTrackedExerciseOnDate})
       : super(TrackedExerciseEmpty());
 
@@ -30,6 +28,17 @@ class TrackedExerciseBloc
       yield TrackedExerciseLoading();
       final failureOrTrackedExercises = await getSpecificTrackedExerciseOnDate(
         Params(exerciseName: event.exerciseName, date: event.date),
+      );
+      yield* _eitherLoadedOrErrorState(failureOrTrackedExercises);
+    }
+    if (event is AddTrackedExercise) {
+      // TODO: Call and await usecase to add trackedExercise to Db
+
+      // TODO: Remove hardcoded Params and get from AddTrackedExercise event instead
+      // Apply DRY(Don't Repeat Yourself) here
+      yield TrackedExerciseLoading();
+      final failureOrTrackedExercises = await getSpecificTrackedExerciseOnDate(
+        Params(exerciseName: 'Pull up', date: DateTime.now()),
       );
       yield* _eitherLoadedOrErrorState(failureOrTrackedExercises);
     }

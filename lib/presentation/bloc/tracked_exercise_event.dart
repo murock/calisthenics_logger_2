@@ -13,3 +13,9 @@ class GetTrackedExerciseForDateAndName extends TrackedExerciseEvent {
   @override
   List<Object?> get props => [this.exerciseName, this.date];
 }
+
+class AddTrackedExercise extends TrackedExerciseEvent {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}

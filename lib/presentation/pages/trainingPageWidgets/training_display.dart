@@ -38,8 +38,9 @@ class TrainingDisplay extends StatelessWidget {
         ),
         BandDropdown(),
         AddRemoveRow(
-          onAddClick: () => AddExerciseToDbTEMPMETHODTOREMOVE(),
-          onRemoveClick: () => RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(),
+          onAddClick: () => AddExerciseToDbTEMPMETHODTOREMOVE(context),
+          onRemoveClick: () =>
+              RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(context),
         ),
         BlocBuilder<TrackedExerciseBloc, TrackedExerciseState>(
           builder: (context, state) {
@@ -47,7 +48,7 @@ class TrainingDisplay extends StatelessWidget {
               // Kick off request to get the TrackedExercises for selected day and exercise
               BlocProvider.of<TrackedExerciseBloc>(context).add(
                   GetTrackedExerciseForDateAndName('Pull Up', DateTime.now()));
-              return MessageDisplay(message: 'Enter first set');
+              return MessageDisplay(message: 'Connecting to workouts Database');
             } else if (state is TrackedExerciseLoading) {
               return LoadingWidget();
             } else if (state is TrackedExerciseLoaded) {
@@ -66,7 +67,7 @@ class TrainingDisplay extends StatelessWidget {
   }
 }
 
-Future<void> AddExerciseToDbTEMPMETHODTOREMOVE() async {
+Future<void> AddExerciseToDbTEMPMETHODTOREMOVE(BuildContext context) async {
   int i = await TrackedExerciseDbHelper.insert({
     TrackedExerciseDbHelper.name: 'Pull up',
     TrackedExerciseDbHelper.timestamp: getUnixTimeFromDateTime(DateTime.now()),
@@ -76,11 +77,17 @@ Future<void> AddExerciseToDbTEMPMETHODTOREMOVE() async {
     TrackedExerciseDbHelper.weight: 20,
   });
 
+  BlocProvider.of<TrackedExerciseBloc>(context).add(AddTrackedExercise());
   print('the inserted id is $i');
 }
 
-Future<void> RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE() async {
-  await TrackedExerciseDbHelper.DELETEtODAYSeXERCISEStodoDELETETHISMETHOD(getUnixTimeFromDateTime(DateTime.now()));
+Future<void> RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(
+    BuildContext context) async {
+  await TrackedExerciseDbHelper.DELETEtODAYSeXERCISEStodoDELETETHISMETHOD(
+      getUnixTimeFromDateTime(DateTime.now()));
+
+  // Temp use of Add event just to refresh the list with everything deleted
+  BlocProvider.of<TrackedExerciseBloc>(context).add(AddTrackedExercise());
 }
 
 class ExerciseListView extends StatelessWidget {
