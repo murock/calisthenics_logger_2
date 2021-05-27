@@ -4,13 +4,13 @@ import 'package:calisthenics_logger_2/domain/usecases/get_specific_tracked_exerc
 import 'package:calisthenics_logger_2/presentation/bloc/tracked_exercise_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../fixtures/trackedExerciseDbData.dart';
+import 'tracked_exercise_bloc_test.mocks.dart';
 
-class MockGetSpecificTrackedExerciseOnDate extends Mock
-    implements GetSpecificTrackedExerciseOnDate {}
-
+@GenerateMocks([GetSpecificTrackedExerciseOnDate])
 void main() {
   late TrackedExerciseBloc bloc;
   late MockGetSpecificTrackedExerciseOnDate
@@ -33,17 +33,20 @@ void main() {
   );
 
   group('GetSpecificTrackedExerciseOnDate', () {
-    final tTrackedExercises = regularDataGroupTrackEx;
+    final GroupedTrackedExercises tTrackedExercises = regularDataGroupTrackEx;
 
     test(
-      'should get data from use case',
+      'should get data from GetSpecificTrackedExerciseOnDate use case',
       () async {
         //arrange
-        when(mockGetSpecificTrackedExerciseOnDate(
-                Params(exerciseName: 'Pull Up', date: new DateTime(2021))))
+        Params params =
+            Params(exerciseName: 'Pull Up', date: new DateTime(2021));
+        when(mockGetSpecificTrackedExerciseOnDate(any))
             .thenAnswer((_) async => Right(tTrackedExercises));
         //act
-
+        bloc.add(
+            GetTrackedExerciseForDateAndName('Pull Up', new DateTime(2021)));
+        await untilCalled(mockGetSpecificTrackedExerciseOnDate(params));
         //assert
       },
     );

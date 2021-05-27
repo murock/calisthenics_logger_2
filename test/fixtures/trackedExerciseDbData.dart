@@ -1,5 +1,7 @@
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 
+import '../presentation/bloc/tracked_exercise_bloc_test.mocks.dart';
+
 List<Map<String, dynamic>> regularData = [
   {
     '_id': 1,
