@@ -1,3 +1,4 @@
+import 'package:calisthenics_logger_2/core/error/failures.dart';
 import 'package:calisthenics_logger_2/core/util/params.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:calisthenics_logger_2/domain/usecases/get_specific_tracked_exercise_on_date.dart';
@@ -34,6 +35,25 @@ void main() {
 
   group('GetSpecificTrackedExerciseOnDate', () {
     final GroupedTrackedExercises tTrackedExercises = regularDataGroupTrackEx;
+
+    test(
+      'should emit [Error] when either exerciseName or date are null',
+      () async {
+        //arrange
+        when(mockGetSpecificTrackedExerciseOnDate(any)).thenAnswer((_) async =>
+            Left(DatabaseFailure(
+                'Attempted to get all tracked exercises with null exercise name or null date')));
+        //assert later
+        final expected = [
+          TrackedExerciseLoading(),
+          TrackedExerciseError(message: 'Error getting tracked exercises')
+        ];
+        expectLater(bloc.stream, emitsInOrder(expected));
+        //act
+        bloc.add(
+            GetTrackedExerciseForDateAndName('Pull Up', new DateTime(2021)));
+      },
+    );
 
     test(
       'should get data from GetSpecificTrackedExerciseOnDate use case',
