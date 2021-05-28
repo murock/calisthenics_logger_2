@@ -28,7 +28,7 @@ void main() {
   test(
     'initialState should be ',
     () async {
-      //assert
+      // Assert
       expect(bloc.state, equals(TrackedExerciseEmpty()));
     },
   );
@@ -39,17 +39,17 @@ void main() {
     test(
       'should emit [Error] when either exerciseName or date are null',
       () async {
-        //arrange
+        // Arrange
         when(mockGetSpecificTrackedExerciseOnDate(any)).thenAnswer((_) async =>
             Left(DatabaseFailure(
                 'Attempted to get all tracked exercises with null exercise name or null date')));
-        //assert later
+        // Assert later
         final expected = [
           TrackedExerciseLoading(),
           TrackedExerciseError(message: 'Error getting tracked exercises')
         ];
         expectLater(bloc.stream, emitsInOrder(expected));
-        //act
+        // Act
         bloc.add(
             GetTrackedExerciseForDateAndName('Pull Up', new DateTime(2021)));
       },
@@ -58,16 +58,35 @@ void main() {
     test(
       'should get data from GetSpecificTrackedExerciseOnDate use case',
       () async {
-        //arrange
+        // Arrange
         Params params =
             Params(exerciseName: 'Pull Up', date: new DateTime(2021));
         when(mockGetSpecificTrackedExerciseOnDate(any))
             .thenAnswer((_) async => Right(tTrackedExercises));
-        //act
+        // Act
         bloc.add(
             GetTrackedExerciseForDateAndName('Pull Up', new DateTime(2021)));
-        await untilCalled(mockGetSpecificTrackedExerciseOnDate(params));
-        //assert
+        await untilCalled(mockGetSpecificTrackedExerciseOnDate(any));
+        // Assert
+        verify(mockGetSpecificTrackedExerciseOnDate(params));
+      },
+    );
+
+    test(
+      'should emit [Loading, Loaded] when data is gotten successfully',
+      () async {
+        // Arrange
+        when(mockGetSpecificTrackedExerciseOnDate(any))
+            .thenAnswer((_) async => Right(tTrackedExercises));
+        // Assert later
+        final expected = [
+          TrackedExerciseLoading(),
+          TrackedExerciseLoaded(trackedExercises: tTrackedExercises)
+        ];
+        expectLater(bloc.stream, emitsInOrder(expected));
+        // Act
+        bloc.add(
+            GetTrackedExerciseForDateAndName('Pull Up', new DateTime(2021)));
       },
     );
   });

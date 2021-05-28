@@ -4,10 +4,12 @@ import 'package:calisthenics_logger_2/domain/repos/tracked_exercise_repo.dart';
 import 'package:calisthenics_logger_2/domain/usecases/get_specific_tracked_exercise_on_date.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-class MockTrackedExerciseRepo extends Mock implements TrackedExerciseRepo {}
+import 'get_specific_tracked_exercise_on_date_test.mocks.dart';
 
+@GenerateMocks([TrackedExerciseRepo])
 void main() {
   MockTrackedExerciseRepo mockExerciseRepo = MockTrackedExerciseRepo();
   GetSpecificTrackedExerciseOnDate usecase =
