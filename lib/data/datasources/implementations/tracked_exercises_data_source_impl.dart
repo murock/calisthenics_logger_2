@@ -6,12 +6,14 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: TrackedExerciseDataSource)
 class TrackedExerciseDataSourceImpl implements TrackedExerciseDataSource {
+  final TrackedExerciseDbHelper dbHelper;
+
+  TrackedExerciseDataSourceImpl({required this.dbHelper});
   @override
   Future<TrackedExerciseModel> getSpecificTrackedExerciseOnDate(
       String exerciseName, DateTime date) async {
-    List<Map<String, dynamic>> queryRows =
-        await TrackedExerciseDbHelper.queryAllGivenNameAndDate(
-            exerciseName, getUnixTimeFromDateTime(date));
+    List<Map<String, dynamic>> queryRows = await dbHelper
+        .queryAllGivenNameAndDate(exerciseName, getUnixTimeFromDateTime(date));
     return TrackedExerciseModel.fromRows(queryRows);
   }
 }

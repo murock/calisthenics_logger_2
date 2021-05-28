@@ -100,3 +100,20 @@ List<TrackedExercise> regularDataTrackExs = [
 
 GroupedTrackedExercises regularDataGroupTrackEx =
     new GroupedTrackedExercises(trackedExercises: regularDataTrackExs);
+
+Map<String, dynamic> rawDbRow = {
+  '_id': 1,
+  '_name': 'Pull up',
+  '_timestamp': 16221662,
+  '_setNum': 1,
+  '_reps': 10,
+  '_weight': 20.0,
+  '_holdTime': null,
+  '_band': null,
+  '_tempo': null,
+  '_tool': null,
+  '_rest': 30,
+  '_cluster': null
+};
+
+List<Map<String, dynamic>> rawDbData = [rawDbRow];

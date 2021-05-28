@@ -1,7 +1,9 @@
 import 'package:calisthenics_logger_2/core/util/timestamp_converter.dart';
 import 'package:calisthenics_logger_2/data/datasources/database/database_helper.dart';
+import 'package:injectable/injectable.dart';
 import 'package:sqflite/sqflite.dart';
 
+@lazySingleton
 class TrackedExerciseDbHelper {
   static final _trackedTableName = 'trackedExercises';
   static final id = '_id';
@@ -43,7 +45,7 @@ class TrackedExerciseDbHelper {
   }
 
   // TODO: Make this check for exercise name aswell as timestamp
-  static Future<List<Map<String, dynamic>>> queryAllGivenNameAndDate(
+  Future<List<Map<String, dynamic>>> queryAllGivenNameAndDate(
       String name, int requestTimestamp) async {
     Database? db = await DatabaseHelper.instance.database;
     DateTime date = getDateTimeFromUnix(requestTimestamp);
