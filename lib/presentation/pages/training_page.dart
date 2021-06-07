@@ -23,8 +23,8 @@ class TrainingPage extends StatelessWidget {
         child: TrainingDisplay(
           trackedExercise: new TrackedExercise(
               numPopulatedFields: 1,
-              exerciseName: 'test',
-              date: new DateTime(1993),
+              exerciseName: 'Pull Up',
+              date: DateTime.now(),
               rows: []),
         ));
   }

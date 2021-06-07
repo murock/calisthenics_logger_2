@@ -10,6 +10,7 @@ import 'package:calisthenics_logger_2/presentation/widgets/loading_widget.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/message_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class TrainingDisplay extends StatelessWidget {
   final TrackedExercise trackedExercise;
@@ -23,17 +24,17 @@ class TrainingDisplay extends StatelessWidget {
       children: [
         Center(
           child: Text(
-            'Pull Up - Today',
+            _getTitle(trackedExercise),
             style: Theme.of(context).textTheme.headline1,
             //  style: TextStyle(color: Colors.red),
           ),
         ),
         ExerciseInput(
-          mainText: '10',
+          value: 9,
           subText: 'Reps',
         ),
         ExerciseInput(
-          mainText: '20',
+          value: 120,
           subText: 'kgs',
         ),
         BandDropdown(),
@@ -65,6 +66,34 @@ class TrainingDisplay extends StatelessWidget {
       ],
     );
   }
+}
+
+String _getTitle(TrackedExercise trackedExercise) {
+  String result = '';
+  if (_isDateTimeToday(trackedExercise.date)) {
+    result = trackedExercise.exerciseName + ' - Today';
+  } else {
+    result = trackedExercise.exerciseName +
+        ' - ' +
+        _formatDateTimeToString(trackedExercise.date);
+  }
+  return result;
+}
+
+bool _isDateTimeToday(DateTime dateTime) {
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final dateToCheck = DateTime(dateTime.year, dateTime.month, dateTime.day);
+  if (dateToCheck == today) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+String _formatDateTimeToString(DateTime dateTime) {
+  final DateFormat formatter = DateFormat('dd-MM-yyyy');
+  return formatter.format(dateTime);
 }
 
 Future<void> AddExerciseToDbTEMPMETHODTOREMOVE(BuildContext context) async {
