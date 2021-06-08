@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 class RecordedExerciseItem extends StatelessWidget {
   final String? reps;
   final String? setNum;
+  final String? weight;
+
   const RecordedExerciseItem({
     Key? key,
     @required this.reps,
     this.setNum,
+    this.weight,
   }) : super(key: key);
 
   @override
@@ -18,6 +21,7 @@ class RecordedExerciseItem extends StatelessWidget {
           padding: const EdgeInsets.only(right: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // TODO: Only show text if value is not null. i.e don't show weight if it is not entered
             children: [
               Text(
                 '$setNum',
@@ -28,7 +32,7 @@ class RecordedExerciseItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               Text(
-                '20kgs',
+                '$weight kgs',
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               Text(

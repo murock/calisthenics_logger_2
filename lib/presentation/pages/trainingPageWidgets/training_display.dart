@@ -6,17 +6,26 @@ import 'package:calisthenics_logger_2/presentation/pages/trainingPageWidgets/add
 import 'package:calisthenics_logger_2/presentation/pages/trainingPageWidgets/band_dropdown.dart';
 import 'package:calisthenics_logger_2/presentation/pages/trainingPageWidgets/exercise_input.dart';
 import 'package:calisthenics_logger_2/presentation/pages/trainingPageWidgets/recorded_exercise_item.dart';
+import 'package:calisthenics_logger_2/presentation/pages/trainingPageWidgets/user_entered_data.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/loading_widget.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/message_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-class TrainingDisplay extends StatelessWidget {
+class TrainingDisplay extends StatefulWidget {
   final TrackedExercise trackedExercise;
 
   const TrainingDisplay({Key? key, required this.trackedExercise})
       : super(key: key);
+
+  @override
+  _TrainingDisplayState createState() => _TrainingDisplayState();
+}
+
+class _TrainingDisplayState extends State<TrainingDisplay> {
+  UserEnteredData userEnteredData = UserEnteredData();
+
   @override
   Widget build(BuildContext context) {
     return new Column(
@@ -24,7 +33,7 @@ class TrainingDisplay extends StatelessWidget {
       children: [
         Center(
           child: Text(
-            _getTitle(trackedExercise),
+            _getTitle(widget.trackedExercise),
             style: Theme.of(context).textTheme.headline1,
             //  style: TextStyle(color: Colors.red),
           ),
@@ -32,14 +41,17 @@ class TrainingDisplay extends StatelessWidget {
         ExerciseInput(
           value: 9,
           subText: 'Reps',
+          valueCallback: userEnteredData.setReps,
         ),
         ExerciseInput(
           value: 120,
           subText: 'kgs',
+          valueCallback: userEnteredData.setWeight,
         ),
         BandDropdown(),
         AddRemoveRow(
-          onAddClick: () => AddExerciseToDbTEMPMETHODTOREMOVE(context),
+          onAddClick: () =>
+              AddExerciseToDbTEMPMETHODTOREMOVE(context, userEnteredData),
           onRemoveClick: () =>
               RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(context),
         ),
@@ -96,14 +108,15 @@ String _formatDateTimeToString(DateTime dateTime) {
   return formatter.format(dateTime);
 }
 
-Future<void> AddExerciseToDbTEMPMETHODTOREMOVE(BuildContext context) async {
+Future<void> AddExerciseToDbTEMPMETHODTOREMOVE(
+    BuildContext context, UserEnteredData userEnteredData) async {
   int i = await TrackedExerciseDbHelper.insert({
     TrackedExerciseDbHelper.name: 'Pull up',
     TrackedExerciseDbHelper.timestamp: getUnixTimeFromDateTime(DateTime.now()),
     TrackedExerciseDbHelper.setNum: 1,
-    TrackedExerciseDbHelper.reps: 10,
+    TrackedExerciseDbHelper.reps: userEnteredData.reps,
     TrackedExerciseDbHelper.rest: 30,
-    TrackedExerciseDbHelper.weight: 20,
+    TrackedExerciseDbHelper.weight: userEnteredData.weight,
   });
 
   BlocProvider.of<TrackedExerciseBloc>(context).add(AddTrackedExercise());
@@ -139,7 +152,6 @@ class ExerciseListView extends StatelessWidget {
                 separatorBuilder: (BuildContext context, int index) => Divider(
                   color: Colors.white,
                 ),
-                // TODO: DO NOT ASSUME THERE IS ONE TRACKEDEXERCISE #ASKINGFORTROUBLE
                 itemCount: trackedExercises.trackedExercises[0].rows.length,
                 itemBuilder: (context, index) => Padding(
                   padding: EdgeInsets.all(1),
@@ -147,6 +159,8 @@ class ExerciseListView extends StatelessWidget {
                     setNum:
                         trackedExercises.trackedExercises[0].rows[index].setNum,
                     reps: trackedExercises.trackedExercises[0].rows[index].reps,
+                    weight:
+                        trackedExercises.trackedExercises[0].rows[index].weight,
                   ),
                 ),
               ),
