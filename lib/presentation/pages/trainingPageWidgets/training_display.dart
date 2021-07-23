@@ -25,6 +25,7 @@ class TrainingDisplay extends StatefulWidget {
 
 class _TrainingDisplayState extends State<TrainingDisplay> {
   UserEnteredData userEnteredData = UserEnteredData();
+  int setCountTemp = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +45,17 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
           valueCallback: userEnteredData.setReps,
         ),
         ExerciseInput(
-          value: 120,
+          value: 10,
           subText: 'kgs',
           valueCallback: userEnteredData.setWeight,
         ),
         BandDropdown(),
         AddRemoveRow(
-          onAddClick: () =>
-              AddExerciseToDbTEMPMETHODTOREMOVE(context, userEnteredData),
+          onAddClick: () {
+            AddExerciseToDbTEMPMETHODTOREMOVE(
+                context, userEnteredData, setCountTemp);
+            setCountTemp++;
+          },
           onRemoveClick: () =>
               RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(context),
         ),
@@ -109,11 +113,11 @@ String _formatDateTimeToString(DateTime dateTime) {
 }
 
 Future<void> AddExerciseToDbTEMPMETHODTOREMOVE(
-    BuildContext context, UserEnteredData userEnteredData) async {
+    BuildContext context, UserEnteredData userEnteredData, int setCount) async {
   int i = await TrackedExerciseDbHelper.insert({
     TrackedExerciseDbHelper.name: 'Pull up',
     TrackedExerciseDbHelper.timestamp: getUnixTimeFromDateTime(DateTime.now()),
-    TrackedExerciseDbHelper.setNum: 1,
+    TrackedExerciseDbHelper.setNum: setCount,
     TrackedExerciseDbHelper.reps: userEnteredData.reps,
     TrackedExerciseDbHelper.rest: 30,
     TrackedExerciseDbHelper.weight: userEnteredData.weight,
