@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.alfiepagedev.calisthenics_logger_2">
+    package="com.alfiepagedev.smart_lifts_logger">
    <application
-        android:label="calisthenics_logger_2"
+        android:label="smart_lifts_logger"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

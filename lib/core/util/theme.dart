@@ -51,14 +51,26 @@ ThemeData basicTheme() {
     );
   }
 
+  ElevatedButtonThemeData _elevatedButtonTheme(ElevatedButtonThemeData base) {
+    return ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+      primary: Colors.black38,
+      shape:
+          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15.0)),
+    ));
+  }
+
   final ThemeData base = ThemeData.dark();
   return base.copyWith(
-      textTheme: _basicTextTheme(base.textTheme),
-      accentColor: CONTRAST_COLOUR,
-      iconTheme: base.iconTheme.copyWith(
-        color: Colors.white,
-      ),
-      floatingActionButtonTheme: _fabTheme(base.floatingActionButtonTheme));
+    textTheme: _basicTextTheme(base.textTheme),
+    accentColor: CONTRAST_COLOUR,
+    iconTheme: base.iconTheme.copyWith(
+      color: Colors.white,
+    ),
+    floatingActionButtonTheme: _fabTheme(base.floatingActionButtonTheme),
+    elevatedButtonTheme: _elevatedButtonTheme(base.elevatedButtonTheme),
+    // hintColor: CONTRAST_COLOUR,
+  );
 }
 
 ThemeData pinkTheme() {

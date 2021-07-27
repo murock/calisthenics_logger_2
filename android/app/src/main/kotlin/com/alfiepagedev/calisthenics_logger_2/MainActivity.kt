@@ -1,4 +1,4 @@
-package com.alfiepagedev.calisthenics_logger_2
+package com.alfiepagedev.smart_lifts_logger
 
 import io.flutter.embedding.android.FlutterActivity
 
