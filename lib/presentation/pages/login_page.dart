@@ -26,6 +26,7 @@ class LoginPage extends StatelessWidget {
                 headerText: 'Password',
               ),
               LoginButton(),
+              NewAccountRow(),
             ],
           ),
         ));
@@ -130,7 +131,8 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 20),
+      padding:
+          const EdgeInsets.only(left: 16.0, right: 16.0, top: 20, bottom: 20.0),
       child: ElevatedButton(
         onPressed: () {},
         child: Padding(
@@ -142,6 +144,27 @@ class LoginButton extends StatelessWidget {
         ),
         style: ElevatedButton.styleFrom(primary: CONTRAST_COLOUR),
       ),
+    );
+  }
+}
+
+class NewAccountRow extends StatelessWidget {
+  const NewAccountRow({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Don't have an account?",
+          style: TextStyle(color: Colors.grey),
+        ),
+        SizedBox(width: 5),
+        Text('Sign up'),
+      ],
     );
   }
 }
