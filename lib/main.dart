@@ -19,7 +19,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // TODO: Handle this when it fails
-  await Firebase.initializeApp();
+  //await Firebase.initializeApp();
 
   // Than we setup preferred orientations,
   // and only after it finished we run our app

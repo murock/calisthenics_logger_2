@@ -69,7 +69,6 @@ ThemeData basicTheme() {
     ),
     floatingActionButtonTheme: _fabTheme(base.floatingActionButtonTheme),
     elevatedButtonTheme: _elevatedButtonTheme(base.elevatedButtonTheme),
-    // hintColor: CONTRAST_COLOUR,
   );
 }
 
