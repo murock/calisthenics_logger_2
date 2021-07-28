@@ -4,17 +4,27 @@ import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  final bool isSignUp;
+
+  const LoginPage({Key? key, required this.isSignUp}) : super(key: key);
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return StyledScaffold.withSampleData(
-        title: 'Log in',
+        title: this.widget.isSignUp ? 'Sign up' : 'Log in',
         body: StyledContainer(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SocialLoginRow(),
+              SocialLoginRow(
+                isSignUp: this.widget.isSignUp,
+              ),
               LoginTextField(
                 hintText: 'Enter your email',
                 iconData: Icons.mail_outline,
@@ -25,8 +35,19 @@ class LoginPage extends StatelessWidget {
                 iconData: Icons.password_outlined,
                 headerText: 'Password',
               ),
-              LoginButton(),
-              NewAccountRow(),
+              this.widget.isSignUp
+                  ? LoginTextField(
+                      hintText: 'Re-enter your password',
+                      iconData: Icons.password_outlined,
+                      headerText: 'Confirm Password',
+                    )
+                  : Container(),
+              LoginButton(
+                isSignUp: this.widget.isSignUp,
+              ),
+              NewAccountRow(
+                isSignUp: this.widget.isSignUp,
+              ),
             ],
           ),
         ));
@@ -34,8 +55,10 @@ class LoginPage extends StatelessWidget {
 }
 
 class SocialLoginRow extends StatelessWidget {
+  final bool isSignUp;
   const SocialLoginRow({
     Key? key,
+    required this.isSignUp,
   }) : super(key: key);
 
   @override
@@ -45,7 +68,9 @@ class SocialLoginRow extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Log in with one of the following options'),
+          isSignUp
+              ? Text('Sign up with one of the following options')
+              : Text('Log in with one of the following options'),
           SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -124,8 +149,10 @@ class LoginTextField extends StatelessWidget {
 }
 
 class LoginButton extends StatelessWidget {
+  final bool isSignUp;
   const LoginButton({
     Key? key,
+    required this.isSignUp,
   }) : super(key: key);
 
   @override
@@ -137,10 +164,15 @@ class LoginButton extends StatelessWidget {
         onPressed: () {},
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0),
-          child: Text(
-            'Log in',
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
+          child: isSignUp
+              ? Text(
+                  'Sign Up',
+                  style: Theme.of(context).textTheme.subtitle1,
+                )
+              : Text(
+                  'Log in',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
         ),
         style: ElevatedButton.styleFrom(primary: CONTRAST_COLOUR),
       ),
@@ -149,8 +181,10 @@ class LoginButton extends StatelessWidget {
 }
 
 class NewAccountRow extends StatelessWidget {
+  final bool isSignUp;
   const NewAccountRow({
     Key? key,
+    required this.isSignUp,
   }) : super(key: key);
 
   @override
@@ -158,12 +192,25 @@ class NewAccountRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          "Don't have an account?",
-          style: TextStyle(color: Colors.grey),
-        ),
+        isSignUp
+            ? Text(
+                "Already have an account?",
+                style: TextStyle(color: Colors.grey),
+              )
+            : Text(
+                "Don't have an account?",
+                style: TextStyle(color: Colors.grey),
+              ),
         SizedBox(width: 5),
-        Text('Sign up'),
+        isSignUp
+            ? InkWell(
+                child: Text('Log in'),
+                onTap: () {},
+              )
+            : InkWell(
+                child: Text('Sign up'),
+                onTap: () {},
+              ),
       ],
     );
   }

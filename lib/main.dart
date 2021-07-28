@@ -19,7 +19,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // TODO: Handle this when it fails
-  //await Firebase.initializeApp();
+  await Firebase.initializeApp();
 
   // Than we setup preferred orientations,
   // and only after it finished we run our app
@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
       //  home: ChartsPage.withSampleData(), //TrainingPage(), //
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginPage(), //TrainingPage(), //HomePage(),
+        '/': (context) =>
+            LoginPage(isSignUp: true), //TrainingPage(), //HomePage(),
         '/tools': (context) => ChartsPage.withSampleData(),
         '/calender': (context) => CalendarPage(),
         '/training': (context) => TrainingPage(),

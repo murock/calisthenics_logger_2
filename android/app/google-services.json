@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "713683727302-pa9pb4bc53kbftrc9ojsrt5u1lvrif58.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alfiepagedev.smart_lifts_logger",
+            "certificate_hash": "825b991cac03e552c05018c29ddf5e6f14a2baf1"
+          }
+        },
+        {
           "client_id": "713683727302-dnilgn1uvea2pb682vlpmdopa1dt4akj.apps.googleusercontent.com",
           "client_type": 3
         }
