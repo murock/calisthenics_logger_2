@@ -90,12 +90,12 @@ class SocialLoginRow extends StatelessWidget {
             children: [
               SocialLoginButton(
                 iconData: CustomIcons.google,
-                onPressed: _googleLogin(),
+                onPressed: _googleLogin,
               ),
               SizedBox(width: 16),
               SocialLoginButton(
                 iconData: CustomIcons.facebook,
-                onPressed: () {},
+                onPressed: _googleLogin,
               ),
             ],
           ),
@@ -107,7 +107,7 @@ class SocialLoginRow extends StatelessWidget {
 
 class SocialLoginButton extends StatelessWidget {
   final IconData iconData;
-  final Function() onPressed;
+  final VoidCallback onPressed;
   const SocialLoginButton({
     Key? key,
     required this.iconData,
