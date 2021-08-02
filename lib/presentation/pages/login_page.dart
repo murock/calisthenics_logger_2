@@ -1,6 +1,6 @@
 import 'package:calisthenics_logger_2/core/authentication/firebase/firebase_service.dart';
 import 'package:calisthenics_logger_2/core/authentication/firebase/my_facebook_sign_in.dart';
-import 'package:calisthenics_logger_2/core/authentication/firebase/my_google_sign_in.dart';
+import 'package:calisthenics_logger_2/core/authentication/firebase/sign_in_base.dart';
 import 'package:calisthenics_logger_2/core/constants.dart';
 import 'package:calisthenics_logger_2/presentation/custom_icons_icons.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
@@ -62,22 +62,21 @@ class _LoginPageState extends State<LoginPage> {
 
 class SocialLoginRow extends StatelessWidget {
   _googleLogin() async {
-    //FirebaseService service = new FirebaseService();
-    MyGoogleSignIn googleSignIn = new MyGoogleSignIn();
+    SignInBase googleSignIn = new SignInBase();
     try {
-      // await service.signInWithGoogle();
       await googleSignIn.signIn();
     } catch (e) {
+      // TODO: handle this?
       print(e);
     }
   }
 
   _facebookLogin() async {
-    //FirebaseService service = new FirebaseService();
     MyFacebookSignIn facebookSignIn = new MyFacebookSignIn();
     try {
       await facebookSignIn.signIn();
     } catch (e) {
+      // TODO: handle this?
       print(e);
     }
   }
