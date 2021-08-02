@@ -1,3 +1,4 @@
+import 'package:calisthenics_logger_2/core/error/exceptions/auth_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -13,6 +14,9 @@ class SignInBase {
           e.credential != null) {
         _signInToGoogle(link: true);
       }
+    } on AuthException catch (e) {
+      // TODO: handle this in front end
+      print(e.status);
     }
   }
 

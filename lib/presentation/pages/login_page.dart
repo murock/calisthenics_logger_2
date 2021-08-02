@@ -16,17 +16,32 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late bool isSignUp;
+
+  void _toggleSignUpState() {
+    setState(() {
+      isSignUp = !isSignUp;
+    });
+  }
+
+  @override
+  void initState() {
+    isSignUp = widget.isSignUp;
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StyledScaffold.withSampleData(
-        title: this.widget.isSignUp ? 'Sign up' : 'Log in',
+        title: isSignUp ? 'Sign up' : 'Log in',
         body: StyledContainer(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SocialLoginRow(
-                isSignUp: this.widget.isSignUp,
+                isSignUp: isSignUp,
               ),
               LoginTextField(
                 hintText: 'Enter your email',
@@ -40,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                 headerText: 'Password',
                 isPassword: true,
               ),
-              this.widget.isSignUp
+              isSignUp
                   ? LoginTextField(
                       hintText: 'Re-enter your password',
                       iconData: Icons.password_outlined,
@@ -49,10 +64,11 @@ class _LoginPageState extends State<LoginPage> {
                     )
                   : Container(),
               LoginButton(
-                isSignUp: this.widget.isSignUp,
+                isSignUp: isSignUp,
               ),
               NewAccountRow(
-                isSignUp: this.widget.isSignUp,
+                isSignUp: isSignUp,
+                toggleSignUpState: _toggleSignUpState,
               ),
             ],
           ),
@@ -223,9 +239,11 @@ class LoginButton extends StatelessWidget {
 
 class NewAccountRow extends StatelessWidget {
   final bool isSignUp;
+  final VoidCallback toggleSignUpState;
   const NewAccountRow({
     Key? key,
     required this.isSignUp,
+    required this.toggleSignUpState,
   }) : super(key: key);
 
   @override
@@ -246,11 +264,11 @@ class NewAccountRow extends StatelessWidget {
         isSignUp
             ? InkWell(
                 child: Text('Log in'),
-                onTap: () {},
+                onTap: toggleSignUpState,
               )
             : InkWell(
                 child: Text('Sign up'),
-                onTap: () {},
+                onTap: toggleSignUpState,
               ),
       ],
     );

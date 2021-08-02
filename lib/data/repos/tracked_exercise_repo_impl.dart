@@ -1,4 +1,4 @@
-import 'package:calisthenics_logger_2/core/error/exceptions.dart';
+import '../../core/error/exceptions/database_exception.dart';
 import 'package:calisthenics_logger_2/core/error/failures.dart';
 import 'package:calisthenics_logger_2/data/datasources/interfaces/tracked_exercise_data_source.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
