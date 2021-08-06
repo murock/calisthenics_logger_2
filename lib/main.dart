@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) =>
             LoginPage(isSignUp: true), //TrainingPage(), //HomePage(),
+        '/home': (context) => HomePage(),
         '/tools': (context) => ChartsPage.withSampleData(),
         '/calender': (context) => CalendarPage(),
         '/training': (context) => TrainingPage(),

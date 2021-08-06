@@ -1,11 +1,13 @@
 import 'package:calisthenics_logger_2/core/authentication/firebase/firebase_service.dart';
 import 'package:calisthenics_logger_2/core/authentication/firebase/my_facebook_sign_in.dart';
 import 'package:calisthenics_logger_2/core/authentication/firebase/sign_in_base.dart';
+import 'package:calisthenics_logger_2/core/authentication/state_management/auth_provider.dart';
 import 'package:calisthenics_logger_2/core/constants.dart';
 import 'package:calisthenics_logger_2/presentation/custom_icons_icons.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   final bool isSignUp;
@@ -16,87 +18,58 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late bool isSignUp;
-
-  void _toggleSignUpState() {
-    setState(() {
-      isSignUp = !isSignUp;
-    });
-  }
-
-  @override
-  void initState() {
-    isSignUp = widget.isSignUp;
-    // TODO: implement initState
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return StyledScaffold.withSampleData(
-        title: isSignUp ? 'Sign up' : 'Log in',
-        body: StyledContainer(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SocialLoginRow(
-                isSignUp: isSignUp,
-              ),
-              LoginTextField(
-                hintText: 'Enter your email',
-                iconData: Icons.mail_outline,
-                headerText: 'Email',
-                isPassword: false,
-              ),
-              LoginTextField(
-                hintText: 'Enter your password',
-                iconData: Icons.password_outlined,
-                headerText: 'Password',
-                isPassword: true,
-              ),
-              isSignUp
-                  ? LoginTextField(
-                      hintText: 'Re-enter your password',
-                      iconData: Icons.password_outlined,
-                      headerText: 'Confirm Password',
-                      isPassword: true,
-                    )
-                  : Container(),
-              LoginButton(
-                isSignUp: isSignUp,
-              ),
-              NewAccountRow(
-                isSignUp: isSignUp,
-                toggleSignUpState: _toggleSignUpState,
-              ),
-            ],
-          ),
-        ));
+    return ChangeNotifierProvider(
+      create: (context) => AuthProvider(),
+      child: Selector<AuthProvider, bool>(
+          selector: (_, provider) => provider.isSignUpScreen,
+          builder: (_, isLogInScreen, __) {
+            return StyledScaffold.withSampleData(
+              title: isLogInScreen ? 'Sign up' : 'Log in',
+              body: StyledContainer(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SocialLoginRow(
+                    isSignUp: isLogInScreen,
+                  ),
+                  LoginTextField(
+                    hintText: 'Enter your email',
+                    iconData: Icons.mail_outline,
+                    headerText: 'Email',
+                    isPassword: false,
+                  ),
+                  LoginTextField(
+                    hintText: 'Enter your password',
+                    iconData: Icons.password_outlined,
+                    headerText: 'Password',
+                    isPassword: true,
+                  ),
+                  isLogInScreen
+                      ? LoginTextField(
+                          hintText: 'Re-enter your password',
+                          iconData: Icons.password_outlined,
+                          headerText: 'Confirm Password',
+                          isPassword: true,
+                        )
+                      : Container(),
+                  LoginButton(
+                    isSignUp: isLogInScreen,
+                  ),
+                  NewAccountRow(
+                    isSignUp: isLogInScreen,
+                  ),
+                ],
+              )),
+            );
+          }),
+    );
   }
 }
 
 class SocialLoginRow extends StatelessWidget {
-  _googleLogin() async {
-    SignInBase googleSignIn = new SignInBase();
-    try {
-      await googleSignIn.signIn();
-    } catch (e) {
-      // TODO: handle this?
-      print(e);
-    }
-  }
-
-  _facebookLogin() async {
-    MyFacebookSignIn facebookSignIn = new MyFacebookSignIn();
-    try {
-      await facebookSignIn.signIn();
-    } catch (e) {
-      // TODO: handle this?
-      print(e);
-    }
-  }
-
   final bool isSignUp;
   const SocialLoginRow({
     Key? key,
@@ -119,12 +92,12 @@ class SocialLoginRow extends StatelessWidget {
             children: [
               SocialLoginButton(
                 iconData: CustomIcons.google,
-                onPressed: _googleLogin,
+                signInBase: new SignInBase(),
               ),
               SizedBox(width: 16),
               SocialLoginButton(
                 iconData: CustomIcons.facebook,
-                onPressed: _facebookLogin,
+                signInBase: new MyFacebookSignIn(),
               ),
             ],
           ),
@@ -136,18 +109,21 @@ class SocialLoginRow extends StatelessWidget {
 
 class SocialLoginButton extends StatelessWidget {
   final IconData iconData;
-  final VoidCallback onPressed;
+  final SignInBase signInBase;
   const SocialLoginButton({
     Key? key,
     required this.iconData,
-    required this.onPressed,
+    required this.signInBase,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ElevatedButton(
-          onPressed: onPressed,
+          onPressed: () {
+            Provider.of<AuthProvider>(context, listen: false)
+                .signIn(signInBase, context);
+          }, //onPressed,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Icon(iconData),
@@ -239,11 +215,9 @@ class LoginButton extends StatelessWidget {
 
 class NewAccountRow extends StatelessWidget {
   final bool isSignUp;
-  final VoidCallback toggleSignUpState;
   const NewAccountRow({
     Key? key,
     required this.isSignUp,
-    required this.toggleSignUpState,
   }) : super(key: key);
 
   @override
@@ -264,11 +238,17 @@ class NewAccountRow extends StatelessWidget {
         isSignUp
             ? InkWell(
                 child: Text('Log in'),
-                onTap: toggleSignUpState,
+                onTap: () {
+                  Provider.of<AuthProvider>(context, listen: false)
+                      .toggleSignUpScreen();
+                },
               )
             : InkWell(
                 child: Text('Sign up'),
-                onTap: toggleSignUpState,
+                onTap: () {
+                  Provider.of<AuthProvider>(context, listen: false)
+                      .toggleSignUpScreen();
+                },
               ),
       ],
     );
