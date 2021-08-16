@@ -1,4 +1,5 @@
 import 'package:calisthenics_logger_2/core/util/timestamp_converter.dart';
+import 'package:calisthenics_logger_2/data/datasources/database/firestore/tracked_exercise_db.dart';
 import 'package:calisthenics_logger_2/data/datasources/database/tracked_exercise_db_helper.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:calisthenics_logger_2/presentation/bloc/tracked_exercise_bloc.dart';
@@ -56,8 +57,8 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
                 context, userEnteredData, setCountTemp);
             setCountTemp++;
           },
-          onRemoveClick: () =>
-              RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(context),
+          onRemoveClick: () => QueryFirebaseTEMPMETHODTOREMOVE(),
+          //RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(context),
         ),
         BlocBuilder<TrackedExerciseBloc, TrackedExerciseState>(
           builder: (context, state) {
@@ -129,11 +130,18 @@ Future<void> AddExerciseToDbTEMPMETHODTOREMOVE(
 
 Future<void> RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(
     BuildContext context) async {
-  await TrackedExerciseDbHelper.DELETEtODAYSeXERCISEStodoDELETETHISMETHOD(
-      getUnixTimeFromDateTime(DateTime.now()));
+  print('getting here2');
+  // await TrackedExerciseDbHelper.DELETEtODAYSeXERCISEStodoDELETETHISMETHOD(
+  //     getUnixTimeFromDateTime(DateTime.now()));
+  //
+  // // Temp use of Add event just to refresh the list with everything deleted
+  // BlocProvider.of<TrackedExerciseBloc>(context).add(AddTrackedExercise());
+}
 
-  // Temp use of Add event just to refresh the list with everything deleted
-  BlocProvider.of<TrackedExerciseBloc>(context).add(AddTrackedExercise());
+Future<void> QueryFirebaseTEMPMETHODTOREMOVE() async {
+  // print('getting here');
+  TrackedExerciseDb trackedExerciseDb = TrackedExerciseDb();
+  trackedExerciseDb.getAllGivenNameAndDate("Pull Ups", 1629068400);
 }
 
 class ExerciseListView extends StatelessWidget {

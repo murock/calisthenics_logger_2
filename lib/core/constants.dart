@@ -13,3 +13,5 @@ const FONT_SIZE_BODY_TEXT1 = 15;
 const FONT_COLOUR = Colors.white;
 
 const DEFAULT_WEIGHT_INCREMENT = 1.25;
+
+const TRACKED_EXERCISES = "tracked_exercises";
