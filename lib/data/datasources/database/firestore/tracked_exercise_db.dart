@@ -19,12 +19,12 @@ class TrackedExerciseDb {
   }
 
   getAllGivenNameAndDate(String exerciseName, int unixDate) async {
-    QuerySnapshot<Object?> result = await _trackedExercises.get();
-    var results = result.docs
-        .map((exercise) =>
-            _trackedExercises.doc(exercise.id).collection(exerciseName).get())
-        .toList();
-    List<QuerySnapshot> exercisesSnapshot = await Future.wait(results);
-    print(exercisesSnapshot);
+    _trackedExercises.get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        print(doc['name']);
+        print(doc['setNum']);
+        print(doc['timestamp']);
+      });
+    });
   }
 }
