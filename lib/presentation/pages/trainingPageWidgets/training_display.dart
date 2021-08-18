@@ -141,7 +141,7 @@ Future<void> RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(
 Future<void> QueryFirebaseTEMPMETHODTOREMOVE() async {
   // print('getting here');
   TrackedExerciseDb trackedExerciseDb = TrackedExerciseDb();
-  trackedExerciseDb.getAllGivenNameAndDate("Pull Ups", 1629068400);
+  trackedExerciseDb.getAllGivenNameAndDate("Pull Ups", 1626994800);
 }
 
 class ExerciseListView extends StatelessWidget {
