@@ -99,33 +99,57 @@ class CollateTrackedExerciseSnapshotData {
 
   void _insertRow(QueryDocumentSnapshot setData) {
     _rows.add(new TrackedExerciseRow(
-      setNum: _extractStringFromNumRowElement(setData['setNum']),
-      reps: _extractStringFromNumRowElement(setData['reps']),
+      setNum: _extractStringFromNumRowElement(setData, 'setNum'),
+      reps: _extractStringFromNumRowElement(setData, 'reps'),
+      weight: _extractStringFromNumRowElement(setData, 'weight'),
+      holdTime: _extractStringFromNumRowElement(setData, 'holdTime'),
+      band: _extractStringFromStringRowElement(setData, 'band'),
+      tempo: _extractStringFromStringRowElement(setData, 'tempo'),
+      tool: _extractStringFromStringRowElement(setData, 'tool'),
+      rest: _extractStringFromNumRowElement(setData, 'rest'),
+      cluster: _extractStringFromStringRowElement(setData, 'cluster'),
     ));
   }
 
-  static String _extractStringFromNumRowElement(num? element) {
+  static String _extractStringFromNumRowElement(
+      QueryDocumentSnapshot setData, String field) {
     String result = '-';
-    if (element != null) {
-      result = element.toString();
+    Map data = (setData.data() as Map);
+    if (data.containsKey(field)) {
+      num? element = setData[field];
+      if (element != null) {
+        result = element.toString();
+      }
     }
     return result;
   }
 
-  String _getStringFieldValue(
-      String key, Map<String, dynamic> workoutSetFields) {
-    if (this._populatedFields[key] != null && this._populatedFields[key]!) {
-      return _extractStringFromStringRowElement(workoutSetFields[key]);
-    } else {
-      return '';
-    }
-  }
+  // static String _extractStringFromNumRowElement(num? element) {
+  //   String result = '-';
+  //   if (element != null) {
+  //     result = element.toString();
+  //   }
+  //   return result;
+  // }
 
-  static String _extractStringFromStringRowElement(String? element) {
+  static String _extractStringFromStringRowElement(
+      QueryDocumentSnapshot setData, String field) {
     String result = '-';
-    if (element != null) {
-      result = element;
+    Map data = (setData.data() as Map);
+    if (data.containsKey(field)) {
+      String? element = setData[field];
+      if (element != null) {
+        result = element;
+      }
     }
     return result;
   }
+
+  // static String _extractStringFromStringRowElement(String? element) {
+  //   String result = '-';
+  //   if (element != null) {
+  //     result = element;
+  //   }
+  //   return result;
+  // }
 }
