@@ -1,3 +1,4 @@
+import 'package:calisthenics_logger_2/data/datasources/database/firestore/tracked_exercise_db.dart';
 import 'package:calisthenics_logger_2/data/datasources/database/tracked_exercise_db_helper.dart';
 import 'package:calisthenics_logger_2/data/datasources/implementations/tracked_exercises_data_source_impl.dart';
 import 'package:calisthenics_logger_2/data/models/tracked_exercise_model.dart';
@@ -8,19 +9,20 @@ import 'package:mockito/mockito.dart';
 import '../../../fixtures/trackedExerciseDbData.dart';
 import 'tracked_exercise_data_source_impl_test.mocks.dart';
 
-@GenerateMocks([TrackedExerciseDbHelper])
+@GenerateMocks([TrackedExerciseDb])
 void main() {
   late TrackedExerciseDataSourceImpl dataSource;
-  late MockTrackedExerciseDbHelper mockTrackedExerciseDbHelper;
+  late TrackedExerciseDb mockTrackedExerciseDb;
 
   setUp(() {
-    mockTrackedExerciseDbHelper = MockTrackedExerciseDbHelper();
-    dataSource =
-        TrackedExerciseDataSourceImpl(dbHelper: mockTrackedExerciseDbHelper);
+    mockTrackedExerciseDb = MockTrackedExerciseDb();
+     dataSource =
+         TrackedExerciseDataSourceImpl(trackedExerciseDb: mockTrackedExerciseDb);
   });
 
   group('getSpecificTrackedExerciseOnDate', () {
-    final tTrackedExerciseModel = TrackedExerciseModel.fromRows(rawDbData);
+    rawDbData
+    final tTrackedExerciseModel = TrackedExerciseModel.fromQueryDocumentSnapshot(snapshots);
 
     test(
       'should return a list of TrackedExercises when getSpecificTrackedExerciseOnDate is called',

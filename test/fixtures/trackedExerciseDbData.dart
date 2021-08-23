@@ -1,4 +1,6 @@
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mockito/mockito.dart';
 
 import '../presentation/bloc/tracked_exercise_bloc_test.mocks.dart';
 
@@ -117,3 +119,5 @@ Map<String, dynamic> rawDbRow = {
 };
 
 List<Map<String, dynamic>> rawDbData = [rawDbRow];
+
+QueryDocumentSnapshot<Object?> rawFirestoreRow = test.firestore
