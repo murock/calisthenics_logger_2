@@ -12,29 +12,29 @@ import 'tracked_exercise_data_source_impl_test.mocks.dart';
 @GenerateMocks([TrackedExerciseDb])
 void main() {
   late TrackedExerciseDataSourceImpl dataSource;
-  late TrackedExerciseDb mockTrackedExerciseDb;
+  late MockTrackedExerciseDb mockTrackedExerciseDb;
 
   setUp(() {
     mockTrackedExerciseDb = MockTrackedExerciseDb();
-     dataSource =
-         TrackedExerciseDataSourceImpl(trackedExerciseDb: mockTrackedExerciseDb);
+    dataSource =
+        TrackedExerciseDataSourceImpl(trackedExerciseDb: mockTrackedExerciseDb);
   });
 
   group('getSpecificTrackedExerciseOnDate', () {
-    rawDbData
-    final tTrackedExerciseModel = TrackedExerciseModel.fromQueryDocumentSnapshot(snapshots);
-
     test(
       'should return a list of TrackedExercises when getSpecificTrackedExerciseOnDate is called',
       () async {
         // Arrange
-        when(mockTrackedExerciseDbHelper.queryAllGivenNameAndDate(any, any))
-            .thenAnswer((_) async => rawDbData);
+        await populateFakeFirestore();
+        final tTrackedExerciseModel =
+            TrackedExerciseModel.fromQueryDocumentSnapshot(rawFirestoreData);
+        when(mockTrackedExerciseDb.getAllGivenNameAndDate(any, any))
+            .thenAnswer((_) async => rawFirestoreData);
         // Act
         final result = await dataSource.getSpecificTrackedExerciseOnDate(
             'Pull Up', new DateTime(2021));
         //assert
-        verify(mockTrackedExerciseDbHelper.queryAllGivenNameAndDate(
+        verify(mockTrackedExerciseDb.getAllGivenNameAndDate(
             'Pull Up', 1609459200));
         expect(result, equals(tTrackedExerciseModel));
       },

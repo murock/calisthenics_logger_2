@@ -1,5 +1,6 @@
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:mockito/mockito.dart';
 
 import '../presentation/bloc/tracked_exercise_bloc_test.mocks.dart';
@@ -120,4 +121,33 @@ Map<String, dynamic> rawDbRow = {
 
 List<Map<String, dynamic>> rawDbData = [rawDbRow];
 
-QueryDocumentSnapshot<Object?> rawFirestoreRow = test.firestore
+final fakeFirestore = FakeFirebaseFirestore();
+
+late QueryDocumentSnapshot<Object?> rawFirestoreRow;
+late List<QueryDocumentSnapshot<Object?>> rawFirestoreData;
+
+Future<void> populateFakeFirestore() async {
+  await fakeFirestore.collection('tracked_exercises').add({
+    'id': 1,
+    'name': 'Pull Up',
+    'timestamp': 16221662,
+    'setNum': 1,
+    'reps': 10,
+    'weight': 20.0,
+    'holdTime': null,
+    'band': null,
+    'tempo': null,
+    'tool': null,
+    'rest': 30,
+    'cluster': null
+  });
+  CollectionReference trackedExercises =
+      fakeFirestore.collection('tracked_exercises');
+  await trackedExercises
+      .where('name', isEqualTo: 'Pull Up')
+      .get()
+      .then((QuerySnapshot querySnapshot) {
+    rawFirestoreData = querySnapshot.docs;
+  });
+  return;
+}

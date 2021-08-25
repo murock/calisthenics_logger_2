@@ -35,11 +35,6 @@ class TrackedExerciseDb {
         .get()
         .then((QuerySnapshot querySnapshot) {
       result = querySnapshot.docs;
-      querySnapshot.docs.forEach((doc) {
-        print(doc['name']);
-        print(doc['setNum']);
-        print(doc['timestamp']);
-      });
     });
     return result;
   }
