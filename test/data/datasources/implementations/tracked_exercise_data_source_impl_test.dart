@@ -1,5 +1,4 @@
 import 'package:calisthenics_logger_2/data/datasources/database/firestore/tracked_exercise_db.dart';
-import 'package:calisthenics_logger_2/data/datasources/database/tracked_exercise_db_helper.dart';
 import 'package:calisthenics_logger_2/data/datasources/implementations/tracked_exercises_data_source_impl.dart';
 import 'package:calisthenics_logger_2/data/models/tracked_exercise_model.dart';
 import 'package:flutter_test/flutter_test.dart';

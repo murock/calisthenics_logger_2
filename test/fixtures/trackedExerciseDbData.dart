@@ -1,9 +1,6 @@
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:mockito/mockito.dart';
-
-import '../presentation/bloc/tracked_exercise_bloc_test.mocks.dart';
 
 List<Map<String, dynamic>> regularData = [
   {

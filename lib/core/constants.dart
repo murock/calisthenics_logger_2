@@ -14,4 +14,15 @@ const FONT_COLOUR = Colors.white;
 
 const DEFAULT_WEIGHT_INCREMENT = 1.25;
 
-const TRACKED_EXERCISES = "tracked_exercises";
+const TRACKED_EXERCISES = 'tracked_exercises';
+const DB_FIELDS = [
+  'setNum',
+  'reps',
+  'weight',
+  'holdTime',
+  'band',
+  'tempo',
+  'tool',
+  'rest',
+  'cluster'
+];

@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import 'exercise_list_view.dart';
+
 class TrainingDisplay extends StatefulWidget {
   final TrackedExercise trackedExercise;
 
@@ -142,41 +144,4 @@ Future<void> QueryFirebaseTEMPMETHODTOREMOVE() async {
   // print('getting here');
   TrackedExerciseDb trackedExerciseDb = TrackedExerciseDb();
   trackedExerciseDb.getAllGivenNameAndDate("Pull Ups", 1626994800);
-}
-
-class ExerciseListView extends StatelessWidget {
-  final GroupedTrackedExercises trackedExercises;
-
-  const ExerciseListView({
-    Key? key,
-    required this.trackedExercises,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    bool isPopulated = trackedExercises.trackedExercises.length > 0;
-    return Flexible(
-      child: Container(
-        height: 200,
-        child: !isPopulated
-            ? Container()
-            : ListView.separated(
-                separatorBuilder: (BuildContext context, int index) => Divider(
-                  color: Colors.white,
-                ),
-                itemCount: trackedExercises.trackedExercises[0].rows.length,
-                itemBuilder: (context, index) => Padding(
-                  padding: EdgeInsets.all(1),
-                  child: RecordedExerciseItem(
-                    setNum:
-                        trackedExercises.trackedExercises[0].rows[index].setNum,
-                    reps: trackedExercises.trackedExercises[0].rows[index].reps,
-                    weight:
-                        trackedExercises.trackedExercises[0].rows[index].weight,
-                  ),
-                ),
-              ),
-      ),
-    );
-  }
 }

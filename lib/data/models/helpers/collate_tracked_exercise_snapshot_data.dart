@@ -1,4 +1,6 @@
+import 'package:calisthenics_logger_2/core/constants.dart';
 import 'package:calisthenics_logger_2/core/util/timestamp_converter.dart';
+import 'package:calisthenics_logger_2/data/models/helpers/populated_fields.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -36,17 +38,26 @@ class CollateTrackedExerciseSnapshotData {
     _date =
         DateTime(timestampDate.year, timestampDate.month, timestampDate.day);
     snapshots.forEach((doc) {
+      this._updatePopulatedFields(doc);
       if (_isNewDay(getDateTimeFromUnix(doc['timestamp'])) ||
           _isNewExercise(doc['name'])) {
         this._populateRows(currentSets);
         this._saveTrackedExercise();
         this._populateInitialData(doc);
       }
-      this._updatePopulatedFields(doc);
       currentSets.add(doc);
     });
     this._populateRows(currentSets);
     this._saveTrackedExercise();
+  }
+
+  void _updatePopulatedFields(QueryDocumentSnapshot<Object?> doc) {
+    Map data = (doc.data() as Map);
+    data.forEach((key, value) {
+      if (value != null) {
+        this._populatedFields[key] = true;
+      }
+    });
   }
 
   bool _isNewDay(DateTime dateToCheck) {
@@ -82,20 +93,31 @@ class CollateTrackedExerciseSnapshotData {
     trackedExercises.add(trackedExercise);
   }
 
-  void _updatePopulatedFields(QueryDocumentSnapshot<Object?> doc) {
-    Map data = (doc.data() as Map);
-    data.forEach((key, value) {
-      if (value != null) {
-        this._populatedFields[key] = true;
-      }
-    });
-  }
-
   void _populateRows(List<QueryDocumentSnapshot<Object?>> currentSets) {
     currentSets.forEach((setData) {
       _insertRow(setData);
     });
   }
+  // void _findPopulatedFields(List<QueryDocumentSnapshot<Object?>> currentSets) {
+  //   this._populatedFields.clear();
+  //   currentSets.forEach((setData) {
+  //     _checkSetActiveFields(setData);
+  //   });
+  // }
+  //
+  // void _checkSetActiveFields(QueryDocumentSnapshot setData) {
+  //   DB_FIELDS.forEach((field) {
+  //     _isFieldActive(setData, field);
+  //   });
+  // }
+  //
+  // bool _isFieldActive(QueryDocumentSnapshot setData, String field) {
+  //   Map data = (setData.data() as Map);
+  //   if (data.containsKey(field)) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   void _insertRow(QueryDocumentSnapshot setData) {
     _rows.add(new TrackedExerciseRow(
@@ -111,9 +133,9 @@ class CollateTrackedExerciseSnapshotData {
     ));
   }
 
-  static String _extractStringFromNumRowElement(
+  String _extractStringFromNumRowElement(
       QueryDocumentSnapshot setData, String field) {
-    String result = '-';
+    String result = this._populatedFields.containsKey(field) ? '-' : '';
     Map data = (setData.data() as Map);
     if (data.containsKey(field)) {
       num? element = setData[field];
@@ -132,9 +154,9 @@ class CollateTrackedExerciseSnapshotData {
   //   return result;
   // }
 
-  static String _extractStringFromStringRowElement(
+  String _extractStringFromStringRowElement(
       QueryDocumentSnapshot setData, String field) {
-    String result = '-';
+    String result = this._populatedFields.containsKey(field) ? '-' : '';
     Map data = (setData.data() as Map);
     if (data.containsKey(field)) {
       String? element = setData[field];
