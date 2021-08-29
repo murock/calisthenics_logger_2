@@ -1,6 +1,6 @@
 import 'package:calisthenics_logger_2/core/constants.dart';
 import 'package:calisthenics_logger_2/core/util/timestamp_converter.dart';
-import 'package:calisthenics_logger_2/data/models/helpers/collate_tracked_exercise_snapshot_data.dart';
+import 'package:calisthenics_logger_2/data/models/tracked_exercise_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
@@ -10,6 +10,7 @@ class TrackedExerciseDb {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late CollectionReference _trackedExercises;
+  late TrackedExerciseModel _trackedExercisesRef;
 
   TrackedExerciseDb() {
     User? user = _auth.currentUser;
@@ -37,5 +38,10 @@ class TrackedExerciseDb {
       result = querySnapshot.docs;
     });
     return result;
+  }
+
+  Future<void> addTrackedExercise(
+      TrackedExerciseModel trackedExerciseModel) async {
+    return;
   }
 }

@@ -24,4 +24,20 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
     return TrackedExerciseModel(
         trackedExercises: collatedData.trackedExercises);
   }
+
+  Map<String, Object?> rowToJson() {
+    int index = trackedExercises.length - 1;
+    int rowIndex = trackedExercises[index].rows.length - 1;
+    return {
+      'setNum': trackedExercises[index].rows[rowIndex].setNum,
+      'reps': trackedExercises[index].rows[rowIndex].reps,
+      'weight': trackedExercises[index].rows[rowIndex].weight,
+      'holdTime': trackedExercises[index].rows[rowIndex].holdTime,
+      'band': trackedExercises[index].rows[rowIndex].band,
+      'tempo': trackedExercises[index].rows[rowIndex].tempo,
+      'tool': trackedExercises[index].rows[rowIndex].tool,
+      'rest': trackedExercises[index].rows[rowIndex].rest,
+      'cluster': trackedExercises[index].rows[rowIndex].cluster,
+    };
+  }
 }

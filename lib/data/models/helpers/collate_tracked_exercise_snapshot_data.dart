@@ -98,26 +98,6 @@ class CollateTrackedExerciseSnapshotData {
       _insertRow(setData);
     });
   }
-  // void _findPopulatedFields(List<QueryDocumentSnapshot<Object?>> currentSets) {
-  //   this._populatedFields.clear();
-  //   currentSets.forEach((setData) {
-  //     _checkSetActiveFields(setData);
-  //   });
-  // }
-  //
-  // void _checkSetActiveFields(QueryDocumentSnapshot setData) {
-  //   DB_FIELDS.forEach((field) {
-  //     _isFieldActive(setData, field);
-  //   });
-  // }
-  //
-  // bool _isFieldActive(QueryDocumentSnapshot setData, String field) {
-  //   Map data = (setData.data() as Map);
-  //   if (data.containsKey(field)) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
 
   void _insertRow(QueryDocumentSnapshot setData) {
     _rows.add(new TrackedExerciseRow(
@@ -146,14 +126,6 @@ class CollateTrackedExerciseSnapshotData {
     return result;
   }
 
-  // static String _extractStringFromNumRowElement(num? element) {
-  //   String result = '-';
-  //   if (element != null) {
-  //     result = element.toString();
-  //   }
-  //   return result;
-  // }
-
   String _extractStringFromStringRowElement(
       QueryDocumentSnapshot setData, String field) {
     String result = this._populatedFields.containsKey(field) ? '-' : '';
@@ -166,12 +138,4 @@ class CollateTrackedExerciseSnapshotData {
     }
     return result;
   }
-
-  // static String _extractStringFromStringRowElement(String? element) {
-  //   String result = '-';
-  //   if (element != null) {
-  //     result = element;
-  //   }
-  //   return result;
-  // }
 }
