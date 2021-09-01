@@ -10,7 +10,7 @@ class TrackedExerciseDb {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late CollectionReference _trackedExercises;
-  late TrackedExerciseModel _trackedExercisesRef;
+  late CollectionReference<TrackedExerciseModel> _trackedExercisesRowRef;
 
   TrackedExerciseDb() {
     User? user = _auth.currentUser;
@@ -19,6 +19,13 @@ class TrackedExerciseDb {
       _trackedExercises =
           _firestore.collection('users/$email/$TRACKED_EXERCISES');
       print(email);
+
+      _trackedExercisesRowRef =
+          _trackedExercises.withConverter<TrackedExerciseModel>(
+              fromFirestore: (snapshot, _) =>
+                  TrackedExerciseModel.rowFromJson(snapshot.data()!),
+              toFirestore: (trackedExercises, _) =>
+                  trackedExercises.rowToJson());
     }
   }
 
@@ -42,6 +49,6 @@ class TrackedExerciseDb {
 
   Future<void> addTrackedExercise(
       TrackedExerciseModel trackedExerciseModel) async {
-    return;
+    _trackedExercisesRowRef.add(trackedExerciseModel);
   }
 }

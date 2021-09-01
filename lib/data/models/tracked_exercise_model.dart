@@ -25,6 +25,11 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
         trackedExercises: collatedData.trackedExercises);
   }
 
+  // TODO: Implement this
+  factory TrackedExerciseModel.rowFromJson(Map<String, Object?> json) {
+    return TrackedExerciseModel(trackedExercises: []);
+  }
+
   Map<String, Object?> rowToJson() {
     int index = trackedExercises.length - 1;
     int rowIndex = trackedExercises[index].rows.length - 1;
