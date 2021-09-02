@@ -1,6 +1,7 @@
 import 'package:calisthenics_logger_2/core/util/timestamp_converter.dart';
 import 'package:calisthenics_logger_2/data/datasources/database/firestore/tracked_exercise_db.dart';
 import 'package:calisthenics_logger_2/data/datasources/database/tracked_exercise_db_helper.dart';
+import 'package:calisthenics_logger_2/data/models/tracked_exercise_model.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:calisthenics_logger_2/presentation/bloc/tracked_exercise_bloc.dart';
 import 'package:calisthenics_logger_2/presentation/pages/trainingPageWidgets/add_remove_row.dart';
@@ -59,7 +60,8 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
                 context, userEnteredData, setCountTemp);
             setCountTemp++;
           },
-          onRemoveClick: () => QueryFirebaseTEMPMETHODTOREMOVE(),
+          onRemoveClick: () =>
+              QueryFirebaseTEMPMETHODTOREMOVE(userEnteredData, setCountTemp),
           //RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(context),
         ),
         BlocBuilder<TrackedExerciseBloc, TrackedExerciseState>(
@@ -132,7 +134,6 @@ Future<void> AddExerciseToDbTEMPMETHODTOREMOVE(
 
 Future<void> RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(
     BuildContext context) async {
-  print('getting here2');
   // await TrackedExerciseDbHelper.DELETEtODAYSeXERCISEStodoDELETETHISMETHOD(
   //     getUnixTimeFromDateTime(DateTime.now()));
   //
@@ -140,10 +141,24 @@ Future<void> RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(
   // BlocProvider.of<TrackedExerciseBloc>(context).add(AddTrackedExercise());
 }
 
-Future<void> QueryFirebaseTEMPMETHODTOREMOVE() async {
+Future<void> QueryFirebaseTEMPMETHODTOREMOVE(
+    UserEnteredData userEnteredData, int setCount) async {
   // print('getting here');
   TrackedExerciseDb trackedExerciseDb = TrackedExerciseDb();
   //trackedExerciseDb.getAllGivenNameAndDate("Pull Ups", 1626994800);
-
+  List<TrackedExerciseRow> trackedExerciseRows = [];
+  trackedExerciseRows.add(TrackedExerciseRow(
+      setNum: setCount.toString(),
+      reps: userEnteredData.reps.toString(),
+      rest: '30',
+      weight: userEnteredData.weight.toString()));
+  List<TrackedExercise> trackedExercises = [];
+  trackedExercises.add(TrackedExercise(
+      numPopulatedFields: 3,
+      exerciseName: "Pull Ups",
+      date: DateTime.now(),
+      rows: trackedExerciseRows));
+  TrackedExerciseModel trackedExerciseModel =
+      TrackedExerciseModel(trackedExercises: trackedExercises);
   trackedExerciseDb.addTrackedExercise(trackedExerciseModel);
 }

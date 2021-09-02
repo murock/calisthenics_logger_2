@@ -1,3 +1,4 @@
+import 'package:calisthenics_logger_2/core/util/timestamp_converter.dart';
 import 'package:calisthenics_logger_2/data/models/helpers/collate_tracked_exercise_data.dart';
 import 'package:calisthenics_logger_2/data/models/helpers/collate_tracked_exercise_snapshot_data.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
@@ -34,6 +35,8 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
     int index = trackedExercises.length - 1;
     int rowIndex = trackedExercises[index].rows.length - 1;
     return {
+      'name': trackedExercises[index].exerciseName,
+      'timestamp': getUnixTimeFromDateTime(trackedExercises[index].date),
       'setNum': trackedExercises[index].rows[rowIndex].setNum,
       'reps': trackedExercises[index].rows[rowIndex].reps,
       'weight': trackedExercises[index].rows[rowIndex].weight,
