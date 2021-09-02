@@ -34,7 +34,6 @@ class RecordedExerciseItem extends StatelessWidget {
           padding: const EdgeInsets.only(right: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // TODO: Only show text if value is not null. i.e don't show weight if it is not entered
             children: _createGridRow(),
           ),
         ),

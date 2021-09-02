@@ -155,7 +155,7 @@ Future<void> QueryFirebaseTEMPMETHODTOREMOVE(
   List<TrackedExercise> trackedExercises = [];
   trackedExercises.add(TrackedExercise(
       numPopulatedFields: 3,
-      exerciseName: "Pull Ups",
+      exerciseName: "Pull Up",
       date: DateTime.now(),
       rows: trackedExerciseRows));
   TrackedExerciseModel trackedExerciseModel =

@@ -118,6 +118,8 @@ class CollateTrackedExerciseSnapshotData {
     String result = this._populatedFields.containsKey(field) ? '-' : '';
     Map data = (setData.data() as Map);
     if (data.containsKey(field)) {
+      print('field is ' + field);
+      print('data is ' + setData[field].toString());
       num? element = setData[field];
       if (element != null) {
         result = element.toString();

@@ -37,14 +37,16 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
     return {
       'name': trackedExercises[index].exerciseName,
       'timestamp': getUnixTimeFromDateTime(trackedExercises[index].date),
-      'setNum': trackedExercises[index].rows[rowIndex].setNum,
-      'reps': trackedExercises[index].rows[rowIndex].reps,
-      'weight': trackedExercises[index].rows[rowIndex].weight,
-      'holdTime': trackedExercises[index].rows[rowIndex].holdTime,
+      'setNum': int.parse(trackedExercises[index].rows[rowIndex].setNum),
+      'reps': int.parse(trackedExercises[index].rows[rowIndex].reps),
+      'weight': double.parse(trackedExercises[index].rows[rowIndex].weight),
+      'holdTime': trackedExercises[index].rows[rowIndex].holdTime.isNotEmpty
+          ? int.parse(trackedExercises[index].rows[rowIndex].holdTime)
+          : null,
       'band': trackedExercises[index].rows[rowIndex].band,
       'tempo': trackedExercises[index].rows[rowIndex].tempo,
       'tool': trackedExercises[index].rows[rowIndex].tool,
-      'rest': trackedExercises[index].rows[rowIndex].rest,
+      'rest': int.parse(trackedExercises[index].rows[rowIndex].rest),
       'cluster': trackedExercises[index].rows[rowIndex].cluster,
     };
   }
