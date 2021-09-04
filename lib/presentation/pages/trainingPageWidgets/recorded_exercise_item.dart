@@ -1,15 +1,15 @@
-import 'package:calisthenics_logger_2/data/datasources/database/tracked_exercise_db_helper.dart';
+import 'package:calisthenics_logger_2/core/constants.dart';
 import 'package:flutter/material.dart';
 
 class RecordedExerciseItem extends StatelessWidget {
-  final String setNum;
-  final String reps;
-  final String weight;
-  final String holdTime;
+  final int setNum;
+  final int reps;
+  final double weight;
+  final int holdTime;
   final String band;
   final String tempo;
   final String tool;
-  final String rest;
+  final int rest;
   final String cluster;
 
   const RecordedExerciseItem({
@@ -43,28 +43,28 @@ class RecordedExerciseItem extends StatelessWidget {
 
   List<FieldText> _createGridRow() {
     List<FieldText> row = [];
-    row.add(FieldText(field: setNum));
-    if (_isFieldPopulated(reps) && _isFieldPopulated(cluster)) {
-      String combinedField = reps + cluster;
+    row.add(FieldText(field: setNum.toString()));
+    if (_isIntFieldPopulated(reps) && _isFieldPopulated(cluster)) {
+      String combinedField = reps.toString() + cluster;
       row.add(FieldText(
         field: combinedField,
         suffix: 'reps',
       ));
-    } else if (_isFieldPopulated(reps)) {
+    } else if (_isIntFieldPopulated(reps)) {
       row.add(FieldText(
-        field: reps,
+        field: reps.toString(),
         suffix: 'reps',
       ));
     }
-    if (_isFieldPopulated(weight)) {
+    if (_isDoubleFieldPopulated(weight)) {
       row.add(FieldText(
-        field: weight,
+        field: weight.toString(),
         suffix: 'kgs',
       ));
     }
-    if (_isFieldPopulated(holdTime)) {
+    if (_isIntFieldPopulated(holdTime)) {
       row.add(FieldText(
-        field: holdTime,
+        field: holdTime.toString(),
         suffix: 's',
       ));
     }
@@ -84,14 +84,28 @@ class RecordedExerciseItem extends StatelessWidget {
         field: tool,
       ));
     }
-    if (_isFieldPopulated(rest)) {
+    if (_isIntFieldPopulated(rest)) {
       row.add(FieldText(
-        field: rest,
+        field: rest.toString(),
         suffix: 's rest',
         hasSpace: false,
       ));
     }
     return row;
+  }
+
+  bool _isDoubleFieldPopulated(double field) {
+    if (field != UNPOPULATED_DOUBLE_VALUE) {
+      return true;
+    }
+    return false;
+  }
+
+  bool _isIntFieldPopulated(int field) {
+    if (field != UNPOPULATED_INT_VALUE) {
+      return true;
+    }
+    return false;
   }
 
   bool _isFieldPopulated(String field) {

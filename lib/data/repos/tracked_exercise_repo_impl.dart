@@ -47,13 +47,27 @@ class TrackedExerciseRepoImpl implements TrackedExerciseRepo {
       String? cluster) async {
     if (name == null || timestamp == null || setNum == null) {
       return Left(DatabaseFailure(
-      'Attempted to add tracked exercise with null exercise name, null setNum or null date'));
+          'Attempted to add tracked exercise with null exercise name, null setNum or null date'));
     }
-    try{
-      return await trackedExerciseDataSource.addTrackedExercise(name, timestamp, setNum, reps, weight, holdTime, band, tempo, tool, rest, cluster
-      )
-    } on DatabaseException{
-      return Left( DatabaseFailure('Problem adding tracked exercise $name',),);
+    try {
+      return Right(await trackedExerciseDataSource.addTrackedExercise(
+          name,
+          timestamp,
+          setNum,
+          reps,
+          weight,
+          holdTime,
+          band,
+          tempo,
+          tool,
+          rest,
+          cluster));
+    } on DatabaseException {
+      return Left(
+        DatabaseFailure(
+          'Problem adding tracked exercise $name',
+        ),
+      );
     }
     throw UnimplementedError();
   }

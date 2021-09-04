@@ -5,7 +5,6 @@ import 'package:calisthenics_logger_2/presentation/pages/charts_page.dart';
 import 'package:calisthenics_logger_2/presentation/pages/login_page.dart';
 import 'package:calisthenics_logger_2/presentation/pages/search_page.dart';
 import 'package:calisthenics_logger_2/presentation/pages/home_page.dart';
-import 'package:calisthenics_logger_2/presentation/pages/test_page.dart';
 import 'package:calisthenics_logger_2/presentation/pages/training_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

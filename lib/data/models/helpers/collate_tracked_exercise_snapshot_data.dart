@@ -96,26 +96,28 @@ class CollateTrackedExerciseSnapshotData {
 
   void _insertRow(QueryDocumentSnapshot setData) {
     _rows.add(new TrackedExerciseRow(
-      setNum: _extractStringFromNumRowElement(setData, 'setNum'),
-      reps: _extractStringFromNumRowElement(setData, 'reps'),
-      weight: _extractStringFromNumRowElement(setData, 'weight'),
-      holdTime: _extractStringFromNumRowElement(setData, 'holdTime'),
+      setNum: _extractNumFromNumRowElement(setData, 'setNum').toInt(),
+      reps: _extractNumFromNumRowElement(setData, 'reps').toInt(),
+      weight: _extractNumFromNumRowElement(setData, 'weight').toDouble(),
+      holdTime: _extractNumFromNumRowElement(setData, 'holdTime').toInt(),
       band: _extractStringFromStringRowElement(setData, 'band'),
       tempo: _extractStringFromStringRowElement(setData, 'tempo'),
       tool: _extractStringFromStringRowElement(setData, 'tool'),
-      rest: _extractStringFromNumRowElement(setData, 'rest'),
+      rest: _extractNumFromNumRowElement(setData, 'rest').toInt(),
       cluster: _extractStringFromStringRowElement(setData, 'cluster'),
     ));
   }
 
-  String _extractStringFromNumRowElement(
+  num _extractNumFromNumRowElement(
       QueryDocumentSnapshot setData, String field) {
-    String result = this._populatedFields.containsKey(field) ? '-' : '';
+    num result = this._populatedFields.containsKey(field)
+        ? BLANK_NUM_VALUE
+        : UNPOPULATED_INT_VALUE;
     Map data = (setData.data() as Map);
     if (data.containsKey(field)) {
       num? element = setData[field];
       if (element != null) {
-        result = element.toString();
+        result = element;
       }
     }
     return result;

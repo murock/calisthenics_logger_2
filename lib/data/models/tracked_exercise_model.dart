@@ -1,5 +1,4 @@
 import 'package:calisthenics_logger_2/core/util/timestamp_converter.dart';
-import 'package:calisthenics_logger_2/data/models/helpers/collate_tracked_exercise_data.dart';
 import 'package:calisthenics_logger_2/data/models/helpers/collate_tracked_exercise_snapshot_data.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,13 +9,6 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
   }) : super(
           trackedExercises: trackedExercises,
         );
-
-  factory TrackedExerciseModel.fromRows(List<Map<String, dynamic>> rows) {
-    CollateTrackedExerciseData collatedData =
-        new CollateTrackedExerciseData(rows);
-    return TrackedExerciseModel(
-        trackedExercises: collatedData.trackedExercises);
-  }
 
   factory TrackedExerciseModel.fromQueryDocumentSnapshot(
       List<QueryDocumentSnapshot<Object?>> snapshots) {
@@ -37,16 +29,14 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
     return {
       'name': trackedExercises[index].exerciseName,
       'timestamp': getUnixTimeFromDateTime(trackedExercises[index].date),
-      'setNum': int.parse(trackedExercises[index].rows[rowIndex].setNum),
-      'reps': int.parse(trackedExercises[index].rows[rowIndex].reps),
-      'weight': double.parse(trackedExercises[index].rows[rowIndex].weight),
-      'holdTime': trackedExercises[index].rows[rowIndex].holdTime.isNotEmpty
-          ? int.parse(trackedExercises[index].rows[rowIndex].holdTime)
-          : null,
+      'setNum': trackedExercises[index].rows[rowIndex].setNum,
+      'reps': trackedExercises[index].rows[rowIndex].reps,
+      'weight': trackedExercises[index].rows[rowIndex].weight,
+      'holdTime': trackedExercises[index].rows[rowIndex].holdTime,
       'band': trackedExercises[index].rows[rowIndex].band,
       'tempo': trackedExercises[index].rows[rowIndex].tempo,
       'tool': trackedExercises[index].rows[rowIndex].tool,
-      'rest': int.parse(trackedExercises[index].rows[rowIndex].rest),
+      'rest': trackedExercises[index].rows[rowIndex].rest,
       'cluster': trackedExercises[index].rows[rowIndex].cluster,
     };
   }

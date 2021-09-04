@@ -18,7 +18,7 @@ class TrackedExercise extends Equatable {
   final List<TrackedExerciseRow> rows;
 
   TrackedExercise(
-      {required this.numPopulatedFields,
+      {this.numPopulatedFields = -1,
       required this.exerciseName,
       required this.date,
       required this.rows});
@@ -29,25 +29,25 @@ class TrackedExercise extends Equatable {
 
 // Represents one set
 class TrackedExerciseRow extends Equatable {
-  final String setNum;
-  final String reps;
-  final String weight;
-  final String holdTime;
+  final int setNum;
+  final int reps;
+  final double weight;
+  final int holdTime;
   final String band;
   final String tempo;
   final String tool;
-  final String rest;
+  final int rest;
   final String cluster;
 
   TrackedExerciseRow({
     required this.setNum,
-    this.reps = '',
-    this.weight = '',
+    this.reps = -1,
+    this.weight = -1,
     this.band = '',
     this.tool = '',
-    this.holdTime = '',
+    this.holdTime = -1,
     this.tempo = '',
-    this.rest = '',
+    this.rest = -1,
     this.cluster = '',
   });
 

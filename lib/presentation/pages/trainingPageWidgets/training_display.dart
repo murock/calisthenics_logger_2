@@ -142,21 +142,21 @@ Future<void> RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(
 
 Future<void> QueryFirebaseTEMPMETHODTOREMOVE(
     UserEnteredData userEnteredData, int setCount) async {
-  TrackedExerciseDb trackedExerciseDb = TrackedExerciseDb();
-  //trackedExerciseDb.getAllGivenNameAndDate("Pull Ups", 1626994800);
-  List<TrackedExerciseRow> trackedExerciseRows = [];
-  trackedExerciseRows.add(TrackedExerciseRow(
-      setNum: setCount.toString(),
-      reps: userEnteredData.reps.toString(),
-      rest: '30',
-      weight: userEnteredData.weight.toString()));
-  List<TrackedExercise> trackedExercises = [];
-  trackedExercises.add(TrackedExercise(
-      numPopulatedFields: 3,
-      exerciseName: "Pull Up",
-      date: DateTime.now(),
-      rows: trackedExerciseRows));
-  TrackedExerciseModel trackedExerciseModel =
-      TrackedExerciseModel(trackedExercises: trackedExercises);
-  trackedExerciseDb.addTrackedExercise(trackedExerciseModel);
+  // TrackedExerciseDb trackedExerciseDb = TrackedExerciseDb();
+  // //trackedExerciseDb.getAllGivenNameAndDate("Pull Ups", 1626994800);
+  // List<TrackedExerciseRow> trackedExerciseRows = [];
+  // trackedExerciseRows.add(TrackedExerciseRow(
+  //     setNum: setCount.toString(),
+  //     reps: userEnteredData.reps.toString(),
+  //     rest: '30',
+  //     weight: userEnteredData.weight.toString()));
+  // List<TrackedExercise> trackedExercises = [];
+  // trackedExercises.add(TrackedExercise(
+  //     numPopulatedFields: 3,
+  //     exerciseName: "Pull Up",
+  //     date: DateTime.now(),
+  //     rows: trackedExerciseRows));
+  // TrackedExerciseModel trackedExerciseModel =
+  //     TrackedExerciseModel(trackedExercises: trackedExercises);
+  // trackedExerciseDb.addTrackedExercise(trackedExerciseModel);
 }

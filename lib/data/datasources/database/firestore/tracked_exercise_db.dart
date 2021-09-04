@@ -45,8 +45,13 @@ class TrackedExerciseDb {
     return result;
   }
 
-  Future<void> addTrackedExercise(
+  Future<bool> addTrackedExercise(
       TrackedExerciseModel trackedExerciseModel) async {
-    _trackedExercisesRowRef.add(trackedExerciseModel);
+    bool result = false;
+    var ref = await _trackedExercisesRowRef
+        .add(trackedExerciseModel)
+        .then((value) => result = true)
+        .catchError((_) => result = false);
+    return result;
   }
 }
