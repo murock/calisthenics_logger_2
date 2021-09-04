@@ -60,7 +60,7 @@ void main() {
       () async {
         // Arrange
         Params params =
-            Params(exerciseName: 'Pull Up', date: new DateTime(2021));
+            Params(exerciseName: 'Pull Up', timestamp: new DateTime(2021));
         when(mockGetSpecificTrackedExerciseOnDate(any))
             .thenAnswer((_) async => Right(tTrackedExercises));
         // Act

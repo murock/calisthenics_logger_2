@@ -129,7 +129,6 @@ Future<void> AddExerciseToDbTEMPMETHODTOREMOVE(
   });
 
   BlocProvider.of<TrackedExerciseBloc>(context).add(AddTrackedExercise());
-  print('the inserted id is $i');
 }
 
 Future<void> RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(
@@ -143,7 +142,6 @@ Future<void> RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(
 
 Future<void> QueryFirebaseTEMPMETHODTOREMOVE(
     UserEnteredData userEnteredData, int setCount) async {
-  // print('getting here');
   TrackedExerciseDb trackedExerciseDb = TrackedExerciseDb();
   //trackedExerciseDb.getAllGivenNameAndDate("Pull Ups", 1626994800);
   List<TrackedExerciseRow> trackedExerciseRows = [];

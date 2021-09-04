@@ -88,6 +88,7 @@ class RecordedExerciseItem extends StatelessWidget {
       row.add(FieldText(
         field: rest,
         suffix: 's rest',
+        hasSpace: false,
       ));
     }
     return row;
@@ -106,10 +107,12 @@ class FieldText extends StatelessWidget {
     Key? key,
     required this.field,
     this.suffix,
+    this.hasSpace = true,
   }) : super(key: key);
 
   final String? field;
   final String? suffix;
+  final bool hasSpace;
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +121,11 @@ class FieldText extends StatelessWidget {
     }
     String? displayText = '$field';
     if (suffix != null) {
-      displayText += ' $suffix';
+      if (hasSpace) {
+        displayText += ' $suffix';
+      } else {
+        displayText += suffix!;
+      }
     }
     return Text(
       '$displayText',

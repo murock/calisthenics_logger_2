@@ -26,8 +26,6 @@ class TrackedExerciseDataSourceImpl implements TrackedExerciseDataSource {
   @override
   Future<TrackedExerciseModel> getSpecificTrackedExerciseOnDate(
       String exerciseName, DateTime date) async {
-    print(getUnixTimeFromDateTime(date));
-    print(exerciseName);
     List<QueryDocumentSnapshot<Object?>> snapshots = await trackedExerciseDb
         .getAllGivenNameAndDate(exerciseName, getUnixTimeFromDateTime(date));
     return TrackedExerciseModel.fromQueryDocumentSnapshot(snapshots);

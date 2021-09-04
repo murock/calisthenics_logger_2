@@ -27,7 +27,7 @@ class TrackedExerciseBloc
     if (event is GetTrackedExerciseForDateAndName) {
       yield TrackedExerciseLoading();
       final failureOrTrackedExercises = await getSpecificTrackedExerciseOnDate(
-        Params(exerciseName: event.exerciseName, date: event.date),
+        Params(exerciseName: event.exerciseName, timestamp: event.date),
       );
       yield* _eitherLoadedOrErrorState(failureOrTrackedExercises);
     }
@@ -38,7 +38,7 @@ class TrackedExerciseBloc
       // Apply DRY(Don't Repeat Yourself) here
       yield TrackedExerciseLoading();
       final failureOrTrackedExercises = await getSpecificTrackedExerciseOnDate(
-        Params(exerciseName: 'Pull up', date: DateTime.now()),
+        Params(exerciseName: 'Pull up', timestamp: DateTime.now()),
       );
       yield* _eitherLoadedOrErrorState(failureOrTrackedExercises);
     }

@@ -84,12 +84,7 @@ class CollateTrackedExerciseSnapshotData {
       date: this._date,
       rows: this._rows,
     );
-    print('pop fields ' + trackedExercise.numPopulatedFields.toString());
-    print('name ' + trackedExercise.exerciseName);
-    trackedExercise.rows.forEach((element) {
-      print(element.setNum);
-      print(element.reps);
-    });
+    trackedExercise.rows.forEach((element) {});
     trackedExercises.add(trackedExercise);
   }
 
@@ -118,8 +113,6 @@ class CollateTrackedExerciseSnapshotData {
     String result = this._populatedFields.containsKey(field) ? '-' : '';
     Map data = (setData.data() as Map);
     if (data.containsKey(field)) {
-      print('field is ' + field);
-      print('data is ' + setData[field].toString());
       num? element = setData[field];
       if (element != null) {
         result = element.toString();

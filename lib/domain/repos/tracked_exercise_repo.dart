@@ -5,4 +5,17 @@ import 'package:dartz/dartz.dart';
 abstract class TrackedExerciseRepo {
   Future<Either<Failure, GroupedTrackedExercises>>
       getSpecificTrackedExerciseOnDate(String? exercise, DateTime? date);
+
+  Future<Either<Failure, bool>> addTrackedExercise(
+      String? name,
+      DateTime? timestamp,
+      int? setNum,
+      int? reps,
+      double? weight,
+      int? holdTime,
+      String? band,
+      String? tempo,
+      String? tool,
+      int? rest,
+      String? cluster);
 }

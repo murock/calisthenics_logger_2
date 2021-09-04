@@ -48,7 +48,6 @@ class FirebaseService {
               FacebookAuthProvider.credential(result.accessToken!.token);
           final userCredential =
               await _auth.signInWithCredential(facebookCredential);
-          print(userCredential.user);
           return Resource(status: Status.Success);
         case LoginStatus.cancelled:
           return Resource(status: Status.Cancelled);

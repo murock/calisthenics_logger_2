@@ -22,8 +22,6 @@ class TestPage extends StatelessWidget {
                 TrackedExerciseDbHelper.reps: 3,
                 TrackedExerciseDbHelper.rest: 30
               });
-
-              print('the inserted id is $i');
             },
             child: Text('Add'),
           ),
@@ -31,7 +29,6 @@ class TestPage extends StatelessWidget {
             onPressed: () async {
               List<Map<String, dynamic>> queryRows =
                   await TrackedExerciseDbHelper.queryAll();
-              print(queryRows);
               TrackedExerciseModel.fromRows(queryRows);
             },
             child: Text('Load'),
@@ -42,14 +39,12 @@ class TestPage extends StatelessWidget {
                 TrackedExerciseDbHelper.id: 1,
                 TrackedExerciseDbHelper.reps: 1100
               });
-              print(rowsUpdated);
             },
             child: Text('Update'),
           ),
           ElevatedButton(
             onPressed: () async {
               int rowsEffected = await TrackedExerciseDbHelper.delete(2);
-              print(rowsEffected);
             },
             child: Text('Delete'),
           )

@@ -14,7 +14,6 @@ class MyFacebookSignIn extends SignInBase {
               FacebookAuthProvider.credential(result.accessToken!.token);
           UserCredential userCredential =
               await auth.signInWithCredential(facebookCredential);
-          print(userCredential.user);
           return userCredential.user!.displayName;
         case LoginStatus.cancelled:
           throw AuthException(Status.Cancelled);

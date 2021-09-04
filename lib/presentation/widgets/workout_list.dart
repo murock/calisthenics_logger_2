@@ -35,7 +35,6 @@ class WorkoutList extends StatelessWidget {
                 exerciseData.rowData, MediaQuery.of(context).size.width),
             dense: true,
             onTap: () {
-              print('$event tapped!');
               Navigator.pushNamed(context, '/training');
             },
           ),

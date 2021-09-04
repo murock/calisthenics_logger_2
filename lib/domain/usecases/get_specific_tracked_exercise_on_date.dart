@@ -15,8 +15,7 @@ class GetSpecificTrackedExerciseOnDate
 
   @override
   Future<Either<Failure, GroupedTrackedExercises>> call(Params params) async {
-    return await this
-        .repo
-        .getSpecificTrackedExerciseOnDate(params.exerciseName, params.date);
+    return await this.repo.getSpecificTrackedExerciseOnDate(
+        params.exerciseName, params.timestamp);
   }
 }

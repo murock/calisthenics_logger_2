@@ -18,8 +18,6 @@ class TrackedExerciseDb {
       String email = user.email!;
       _trackedExercises =
           _firestore.collection('users/$email/$TRACKED_EXERCISES');
-      print(email);
-
       _trackedExercisesRowRef =
           _trackedExercises.withConverter<TrackedExerciseModel>(
               fromFirestore: (snapshot, _) =>
