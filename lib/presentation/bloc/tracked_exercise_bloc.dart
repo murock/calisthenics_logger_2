@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:calisthenics_logger_2/core/error/failures.dart';
 import 'package:calisthenics_logger_2/core/util/params.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
+import 'package:calisthenics_logger_2/domain/usecases/add_tracked_exercise_to_storage.dart';
 import 'package:calisthenics_logger_2/domain/usecases/get_specific_tracked_exercise_on_date.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -16,8 +17,11 @@ part 'tracked_exercise_state.dart';
 class TrackedExerciseBloc
     extends Bloc<TrackedExerciseEvent, TrackedExerciseState> {
   final GetSpecificTrackedExerciseOnDate getSpecificTrackedExerciseOnDate;
+  final AddTrackedExerciseToStorage addTrackedExercise;
 
-  TrackedExerciseBloc({required this.getSpecificTrackedExerciseOnDate})
+  TrackedExerciseBloc(
+      {required this.getSpecificTrackedExerciseOnDate,
+      required this.addTrackedExercise})
       : super(TrackedExerciseEmpty());
 
   @override
@@ -26,22 +30,41 @@ class TrackedExerciseBloc
   ) async* {
     if (event is GetTrackedExerciseForDateAndName) {
       yield TrackedExerciseLoading();
-      final failureOrTrackedExercises = await getSpecificTrackedExerciseOnDate(
-        Params(exerciseName: event.exerciseName, timestamp: event.date),
-      );
-      yield* _eitherLoadedOrErrorState(failureOrTrackedExercises);
-    }
-    if (event is AddTrackedExercise) {
-      // TODO: Call and await usecase to add trackedExercise to Db
-
-      // TODO: Remove hardcoded Params and get from AddTrackedExercise event instead
-      // Apply DRY(Don't Repeat Yourself) here
+      yield* _getTrackedExerciseStream(event);
+    } else if (event is AddTrackedExercise) {
       yield TrackedExerciseLoading();
-      final failureOrTrackedExercises = await getSpecificTrackedExerciseOnDate(
-        Params(exerciseName: 'Pull up', timestamp: DateTime.now()),
-      );
-      yield* _eitherLoadedOrErrorState(failureOrTrackedExercises);
+      final failureOrAddedSuccess = await addTrackedExercise(Params(
+        exerciseName: event.exerciseName,
+        timestamp: event.date,
+        setNum: event.setNum,
+        reps: event.reps,
+        weight: event.weight,
+        holdTime: event.holdTime,
+        band: event.band,
+        tempo: event.tempo,
+        tool: event.tool,
+        rest: event.rest,
+        cluster: event.cluster,
+      ));
+      var addStream = _eitherAddedSuccessOrError(failureOrAddedSuccess);
+      await for (var AddedOrError in addStream) {
+        if (AddedOrError) {
+          GetTrackedExerciseForDateAndName getEvent =
+              GetTrackedExerciseForDateAndName(event.exerciseName, event.date);
+          yield* _getTrackedExerciseStream(getEvent);
+        } else {
+          TrackedExerciseError(message: 'Error adding tracked exercises');
+        }
+      }
     }
+  }
+
+  Stream<TrackedExerciseState> _getTrackedExerciseStream(
+      GetTrackedExerciseForDateAndName event) async* {
+    final failureOrTrackedExercises = await getSpecificTrackedExerciseOnDate(
+      Params(exerciseName: event.exerciseName, timestamp: event.date),
+    );
+    yield* _eitherLoadedOrErrorState(failureOrTrackedExercises);
   }
 
   Stream<TrackedExerciseState> _eitherLoadedOrErrorState(
@@ -52,6 +75,14 @@ class TrackedExerciseBloc
           TrackedExerciseError(message: 'Error getting tracked exercises'),
       (trackedExercises) =>
           TrackedExerciseLoaded(trackedExercises: trackedExercises),
+    );
+  }
+
+  Stream<bool> _eitherAddedSuccessOrError(
+      Either<Failure, bool> failureOrAddedSuccess) async* {
+    yield failureOrAddedSuccess.fold(
+      (failure) => false,
+      (addedSuccess) => true,
     );
   }
 }

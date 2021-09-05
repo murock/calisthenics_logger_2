@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-typedef void IntCallback(int val);
+typedef void IntCallback(num val);
 
 class ExerciseInput extends StatefulWidget {
   final int value;

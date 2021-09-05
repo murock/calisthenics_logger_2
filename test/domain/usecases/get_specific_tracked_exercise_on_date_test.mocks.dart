@@ -41,4 +41,34 @@ class MockTrackedExerciseRepo extends _i1.Mock
                   Future<_i2.Either<_i5.Failure, _i6.GroupedTrackedExercises>>.value(
                       _FakeEither<_i5.Failure, _i6.GroupedTrackedExercises>())) as _i4
               .Future<_i2.Either<_i5.Failure, _i6.GroupedTrackedExercises>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, bool>> addTrackedExercise(
+          String? name,
+          DateTime? timestamp,
+          int? setNum,
+          int? reps,
+          double? weight,
+          int? holdTime,
+          String? band,
+          String? tempo,
+          String? tool,
+          int? rest,
+          String? cluster) =>
+      (super.noSuchMethod(
+              Invocation.method(#addTrackedExercise, [
+                name,
+                timestamp,
+                setNum,
+                reps,
+                weight,
+                holdTime,
+                band,
+                tempo,
+                tool,
+                rest,
+                cluster
+              ]),
+              returnValue: Future<_i2.Either<_i5.Failure, bool>>.value(
+                  _FakeEither<_i5.Failure, bool>()))
+          as _i4.Future<_i2.Either<_i5.Failure, bool>>);
 }

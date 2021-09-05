@@ -3,11 +3,13 @@ import 'package:calisthenics_logger_2/core/util/params.dart';
 import 'package:calisthenics_logger_2/core/util/use_case.dart';
 import 'package:calisthenics_logger_2/domain/repos/tracked_exercise_repo.dart';
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
-class AddTrackedExercise implements UseCase<bool, Params> {
+@lazySingleton
+class AddTrackedExerciseToStorage implements UseCase<bool, Params> {
   final TrackedExerciseRepo repo;
 
-  AddTrackedExercise(this.repo);
+  AddTrackedExerciseToStorage(this.repo);
 
   @override
   Future<Either<Failure, bool>> call(Params params) async {

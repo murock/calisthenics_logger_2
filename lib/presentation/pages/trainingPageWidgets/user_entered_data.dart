@@ -1,12 +1,20 @@
-class UserEnteredData {
-  int reps = -1;
-  int weight = -1;
+import 'package:calisthenics_logger_2/core/constants.dart';
 
-  void setReps(int value) {
-    reps = value;
+class UserEnteredData {
+  int reps = UNPOPULATED_INT_VALUE;
+  double weight = UNPOPULATED_DOUBLE_VALUE;
+  int holdTime = UNPOPULATED_INT_VALUE;
+  String band = '';
+  String tempo = '';
+  String tool = '';
+  int rest = UNPOPULATED_INT_VALUE;
+  String cluster = '';
+
+  void setReps(num value) {
+    reps = value.toInt();
   }
 
-  void setWeight(int value) {
-    weight = value;
+  void setWeight(num value) {
+    weight = value.toDouble();
   }
 }

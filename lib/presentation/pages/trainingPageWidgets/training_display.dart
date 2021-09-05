@@ -56,8 +56,7 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
         BandDropdown(),
         AddRemoveRow(
           onAddClick: () {
-            AddExerciseToDbTEMPMETHODTOREMOVE(
-                context, userEnteredData, setCountTemp);
+            _addTrackedExercise(userEnteredData, setCountTemp);
             setCountTemp++;
           },
           onRemoveClick: () =>
@@ -87,6 +86,21 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
       ],
     );
   }
+
+  void _addTrackedExercise(UserEnteredData userEnteredData, int setCount) {
+    BlocProvider.of<TrackedExerciseBloc>(context).add(AddTrackedExercise(
+        'Pull Up',
+        DateTime.now(),
+        setCount,
+        userEnteredData.reps,
+        userEnteredData.weight,
+        userEnteredData.holdTime,
+        userEnteredData.band,
+        userEnteredData.tempo,
+        userEnteredData.tool,
+        userEnteredData.rest,
+        userEnteredData.cluster));
+  }
 }
 
 String _getTitle(TrackedExercise trackedExercise) {
@@ -115,20 +129,6 @@ bool _isDateTimeToday(DateTime dateTime) {
 String _formatDateTimeToString(DateTime dateTime) {
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
   return formatter.format(dateTime);
-}
-
-Future<void> AddExerciseToDbTEMPMETHODTOREMOVE(
-    BuildContext context, UserEnteredData userEnteredData, int setCount) async {
-  int i = await TrackedExerciseDbHelper.insert({
-    TrackedExerciseDbHelper.name: 'Pull up',
-    TrackedExerciseDbHelper.timestamp: getUnixTimeFromDateTime(DateTime.now()),
-    TrackedExerciseDbHelper.setNum: setCount,
-    TrackedExerciseDbHelper.reps: userEnteredData.reps,
-    TrackedExerciseDbHelper.rest: 30,
-    TrackedExerciseDbHelper.weight: userEnteredData.weight,
-  });
-
-  BlocProvider.of<TrackedExerciseBloc>(context).add(AddTrackedExercise());
 }
 
 Future<void> RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(

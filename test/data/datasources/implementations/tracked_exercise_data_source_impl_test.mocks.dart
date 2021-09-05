@@ -6,6 +6,8 @@ import 'dart:async' as _i3;
 
 import 'package:calisthenics_logger_2/data/datasources/database/firestore/tracked_exercise_db.dart'
     as _i2;
+import 'package:calisthenics_logger_2/data/models/tracked_exercise_model.dart'
+    as _i5;
 import 'package:cloud_firestore/cloud_firestore.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -33,4 +35,10 @@ class MockTrackedExerciseDb extends _i1.Mock implements _i2.TrackedExerciseDb {
           returnValue: Future<List<_i4.QueryDocumentSnapshot<Object?>>>.value(
               <_i4.QueryDocumentSnapshot<Object?>>[])) as _i3
           .Future<List<_i4.QueryDocumentSnapshot<Object?>>>);
+  @override
+  _i3.Future<bool> addTrackedExercise(
+          _i5.TrackedExerciseModel? trackedExerciseModel) =>
+      (super.noSuchMethod(
+          Invocation.method(#addTrackedExercise, [trackedExerciseModel]),
+          returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
 }
