@@ -29,7 +29,7 @@ class TrainingDisplay extends StatefulWidget {
 
 class _TrainingDisplayState extends State<TrainingDisplay> {
   UserEnteredData userEnteredData = UserEnteredData();
-  int maxSetCount = 1;
+  int nextSetNumber = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +56,10 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
         BandDropdown(),
         AddRemoveRow(
           onAddClick: () {
-            _addTrackedExercise(userEnteredData, maxSetCount);
+            _addTrackedExercise(userEnteredData, nextSetNumber);
           },
           onRemoveClick: () =>
-              QueryFirebaseTEMPMETHODTOREMOVE(userEnteredData, maxSetCount),
+              QueryFirebaseTEMPMETHODTOREMOVE(userEnteredData, nextSetNumber),
           //RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(context),
         ),
         BlocBuilder<TrackedExerciseBloc, TrackedExerciseState>(
@@ -72,7 +72,11 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
             } else if (state is TrackedExerciseLoading) {
               return LoadingWidget();
             } else if (state is TrackedExerciseLoaded) {
-              maxSetCount = state.trackedExercises.trackedExercises.length - 1;
+              if (state.trackedExercises.trackedExercises.length > 0) {
+                nextSetNumber =
+                    state.trackedExercises.trackedExercises[0].rows.length + 1;
+              }
+              print('next set num is ' + nextSetNumber.toString());
               return ExerciseListView(trackedExercises: state.trackedExercises);
             } else if (state is TrackedExerciseError) {
               return MessageDisplay(message: state.message);
