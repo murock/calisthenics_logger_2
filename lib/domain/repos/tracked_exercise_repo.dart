@@ -5,6 +5,8 @@ import 'package:dartz/dartz.dart';
 abstract class TrackedExerciseRepo {
   Future<Either<Failure, GroupedTrackedExercises>>
       getSpecificTrackedExerciseOnDate(String? exercise, DateTime? date);
+  Either<Failure, Stream<GroupedTrackedExercises>>
+      getSpecificTrackedExerciseOnDateStream(String? exercise, DateTime? date);
 
   Future<Either<Failure, bool>> addTrackedExercise(
       String? name,

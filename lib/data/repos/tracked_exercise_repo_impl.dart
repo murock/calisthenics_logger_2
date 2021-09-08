@@ -11,6 +11,28 @@ class TrackedExerciseRepoImpl implements TrackedExerciseRepo {
   final TrackedExerciseDataSource trackedExerciseDataSource;
 
   TrackedExerciseRepoImpl({required this.trackedExerciseDataSource});
+
+  @override
+  Either<Failure, Stream<GroupedTrackedExercises>>
+      getSpecificTrackedExerciseOnDateStream(
+          String? exerciseName, DateTime? date) {
+    if (exerciseName == null || date == null) {
+      return Left(DatabaseFailure(
+          'Attempted to get all tracked exercises with null exercise name or null date'));
+    }
+    try {
+      final trackedExerciseStream = trackedExerciseDataSource
+          .getSpecificTrackedExerciseOnDateStream(exerciseName, date);
+      return Right(trackedExerciseStream);
+    } on DatabaseException {
+      return Left(
+        DatabaseFailure(
+          'Problem retrieving all exercises given an exercise name: $exerciseName and date: $date',
+        ),
+      );
+    }
+  }
+
   @override
   Future<Either<Failure, GroupedTrackedExercises>>
       getSpecificTrackedExerciseOnDate(

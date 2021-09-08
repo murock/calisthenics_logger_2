@@ -19,6 +19,8 @@ class TrackedExerciseBloc
   final GetSpecificTrackedExerciseOnDate getSpecificTrackedExerciseOnDate;
   final AddTrackedExerciseToStorage addTrackedExercise;
 
+  final _streamController = StreamController<TrackedExerciseState>()
+
   TrackedExerciseBloc(
       {required this.getSpecificTrackedExerciseOnDate,
       required this.addTrackedExercise})

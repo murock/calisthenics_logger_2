@@ -4,6 +4,9 @@ abstract class TrackedExerciseDataSource {
   Future<TrackedExerciseModel> getSpecificTrackedExerciseOnDate(
       String exerciseName, DateTime date);
 
+  Stream<TrackedExerciseModel> getSpecificTrackedExerciseOnDateStream(
+      String exerciseName, DateTime date);
+
   Future<bool> addTrackedExercise(
       String name,
       DateTime timestamp,

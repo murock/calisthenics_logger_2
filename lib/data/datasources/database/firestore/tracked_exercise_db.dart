@@ -27,9 +27,20 @@ class TrackedExerciseDb {
     }
   }
 
+  Stream<QuerySnapshot> getStreamGivenNameAndDate(
+      String exerciseName, DateTime date) {
+    int unixStartDay =
+        getUnixTimeFromDateTime(new DateTime(date.year, date.month, date.day));
+    int unixEndDay = unixStartDay + 86400;
+    return _trackedExercises
+        .where('name', isEqualTo: exerciseName)
+        .where('timestamp', isGreaterThan: unixStartDay)
+        .where('timestamp', isLessThan: unixEndDay)
+        .snapshots();
+  }
+
   Future<List<QueryDocumentSnapshot<Object?>>> getAllGivenNameAndDate(
-      String exerciseName, int unixDate) async {
-    DateTime date = getDateTimeFromUnix(unixDate);
+      String exerciseName, DateTime date) async {
     int unixStartDay =
         getUnixTimeFromDateTime(new DateTime(date.year, date.month, date.day));
     int unixEndDay = unixStartDay + 86400;
