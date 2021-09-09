@@ -42,6 +42,15 @@ class MockTrackedExerciseRepo extends _i1.Mock
                       _FakeEither<_i5.Failure, _i6.GroupedTrackedExercises>())) as _i4
               .Future<_i2.Either<_i5.Failure, _i6.GroupedTrackedExercises>>);
   @override
+  _i2.Either<_i5.Failure, _i4.Stream<_i6.GroupedTrackedExercises>>
+      getSpecificTrackedExerciseOnDateStream(String? exercise, DateTime? date) =>
+          (super.noSuchMethod(
+                  Invocation.method(
+                      #getSpecificTrackedExerciseOnDateStream, [exercise, date]),
+                  returnValue: _FakeEither<_i5.Failure,
+                      _i4.Stream<_i6.GroupedTrackedExercises>>())
+              as _i2.Either<_i5.Failure, _i4.Stream<_i6.GroupedTrackedExercises>>);
+  @override
   _i4.Future<_i2.Either<_i5.Failure, bool>> addTrackedExercise(
           String? name,
           DateTime? timestamp,

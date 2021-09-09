@@ -18,8 +18,10 @@ import 'domain/repos/tracked_exercise_repo.dart' as _i9;
 import 'domain/usecases/add_tracked_exercise_to_storage.dart' as _i11;
 import 'domain/usecases/get_exercise.dart' as _i3;
 import 'domain/usecases/get_specific_tracked_exercise_on_date.dart' as _i12;
+import 'domain/usecases/get_specific_tracked_exercise_on_date_stream.dart'
+    as _i13;
 import 'presentation/bloc/tracked_exercise_bloc.dart'
-    as _i13; // ignore_for_file: unnecessary_lambdas
+    as _i14; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -40,7 +42,12 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i11.AddTrackedExerciseToStorage(get<_i9.TrackedExerciseRepo>()));
   gh.lazySingleton<_i12.GetSpecificTrackedExerciseOnDate>(() =>
       _i12.GetSpecificTrackedExerciseOnDate(get<_i9.TrackedExerciseRepo>()));
-  gh.factory<_i13.TrackedExerciseBloc>(() => _i13.TrackedExerciseBloc(
+  gh.lazySingleton<_i13.GetSpecificTrackedExerciseOnDateStream>(() =>
+      _i13.GetSpecificTrackedExerciseOnDateStream(
+          get<_i9.TrackedExerciseRepo>()));
+  gh.factory<_i14.TrackedExerciseBloc>(() => _i14.TrackedExerciseBloc(
+      getSpecificTrackedExerciseOnDateStream:
+          get<_i13.GetSpecificTrackedExerciseOnDateStream>(),
       getSpecificTrackedExerciseOnDate:
           get<_i12.GetSpecificTrackedExerciseOnDate>(),
       addTrackedExercise: get<_i11.AddTrackedExerciseToStorage>()));

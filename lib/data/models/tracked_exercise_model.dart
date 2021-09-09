@@ -18,6 +18,17 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
         trackedExercises: collatedData.trackedExercises);
   }
 
+  static Stream<TrackedExerciseModel> fromQuerySnapshotStream(
+      Stream<QuerySnapshot<Object?>> snapshots) async {
+    snapshots.listen((data) {
+      var docs = data.docs;
+      var model = TrackedExerciseModel.fromQueryDocumentSnapshot(docs);
+      print('decrpting the stream');
+      print(model.trackedExercises[0].rows[0].setNum);
+      yield model;
+    });
+  }
+
   // TODO: Implement this
   factory TrackedExerciseModel.rowFromJson(Map<String, Object?> json) {
     return TrackedExerciseModel(trackedExercises: []);

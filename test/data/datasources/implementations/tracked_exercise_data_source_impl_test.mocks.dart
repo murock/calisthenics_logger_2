@@ -28,10 +28,18 @@ class MockTrackedExerciseDb extends _i1.Mock implements _i2.TrackedExerciseDb {
   }
 
   @override
-  _i3.Future<List<_i4.QueryDocumentSnapshot<Object?>>> getAllGivenNameAndDate(
-          String? exerciseName, int? unixDate) =>
+  _i3.Stream<_i4.QuerySnapshot<Object?>> getStreamGivenNameAndDate(
+          String? exerciseName, DateTime? date) =>
       (super.noSuchMethod(
-          Invocation.method(#getAllGivenNameAndDate, [exerciseName, unixDate]),
+          Invocation.method(#getStreamGivenNameAndDate, [exerciseName, date]),
+          returnValue:
+              Stream<_i4.QuerySnapshot<Object?>>.empty()) as _i3
+          .Stream<_i4.QuerySnapshot<Object?>>);
+  @override
+  _i3.Future<List<_i4.QueryDocumentSnapshot<Object?>>> getAllGivenNameAndDate(
+          String? exerciseName, DateTime? date) =>
+      (super.noSuchMethod(
+          Invocation.method(#getAllGivenNameAndDate, [exerciseName, date]),
           returnValue: Future<List<_i4.QueryDocumentSnapshot<Object?>>>.value(
               <_i4.QueryDocumentSnapshot<Object?>>[])) as _i3
           .Future<List<_i4.QueryDocumentSnapshot<Object?>>>);

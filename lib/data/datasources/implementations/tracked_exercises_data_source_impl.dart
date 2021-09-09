@@ -17,8 +17,7 @@ class TrackedExerciseDataSourceImpl implements TrackedExerciseDataSource {
       String exerciseName, DateTime date) {
     var snapshotStream =
         trackedExerciseDb.getStreamGivenNameAndDate(exerciseName, date);
-    // TODO: implement getSpecificTrackedExerciseOnDateStream
-    throw UnimplementedError();
+    return TrackedExerciseModel.fromQuerySnapshotStream(snapshotStream);
   }
 
   @override

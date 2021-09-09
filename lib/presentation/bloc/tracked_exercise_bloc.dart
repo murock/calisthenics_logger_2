@@ -80,16 +80,10 @@ class TrackedExerciseBloc
   Stream<TrackedExerciseState> _eitherLoadedOrErrorState(
       Either<Failure, Stream<GroupedTrackedExercises>>
           failureOrTrackedExercises) async* {
-    yield* failureOrTrackedExercises.fold(
-        (failure) async* {
-          TrackedExerciseError(message: 'Error getting tracked exercises');
-        }
-        (trackedExercises) async* {
+    yield* failureOrTrackedExercises.fold((failure) async* {
+      yield TrackedExerciseError(message: 'Error getting tracked exercises');
+    }, (trackedExercises) async* {
       yield* _test(trackedExercises);
-      // await for(var trackedExercise in trackedExercises){
-      //   return TrackedExerciseLoaded(trackedExercises: trackedExercise),
-      // }
-      // return TrackedExerciseLoading();
     });
   }
 
