@@ -1,9 +1,15 @@
+import 'dart:async';
+
 import 'package:calisthenics_logger_2/core/util/timestamp_converter.dart';
 import 'package:calisthenics_logger_2/data/models/helpers/collate_tracked_exercise_snapshot_data.dart';
 import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TrackedExerciseModel extends GroupedTrackedExercises {
+  //final _streamController = StreamController<TrackedExerciseModel>();
+
+  
+
   TrackedExerciseModel({
     required List<TrackedExercise> trackedExercises,
   }) : super(
@@ -19,7 +25,8 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
   }
 
   static Stream<TrackedExerciseModel> fromQuerySnapshotStream(
-      Stream<QuerySnapshot<Object?>> snapshots) async {
+      Stream<QuerySnapshot<Object?>> snapshots) async* {
+    snapshots.transform(streamTransformer)
     snapshots.listen((data) {
       var docs = data.docs;
       var model = TrackedExerciseModel.fromQueryDocumentSnapshot(docs);
@@ -52,3 +59,18 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
     };
   }
 }
+
+// class QuerySnapshotTransformer implements StreamTransformer {
+//   @override
+//   Stream bind(Stream stream) {
+//     // TODO: implement bind
+//     throw UnimplementedError();
+//   }
+//
+//   @override
+//   StreamTransformer<RS, RT> cast<RS, RT>() {
+//     // TODO: implement cast
+//     throw UnimplementedError();
+//   }
+//
+// }
