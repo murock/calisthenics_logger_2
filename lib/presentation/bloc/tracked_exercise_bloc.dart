@@ -66,6 +66,23 @@ class TrackedExerciseBloc
     }
   }
 
+  void addTrackedExerciseToDb(AddTrackedExercise event) async {
+    print('in here');
+    await addTrackedExercise(Params(
+      exerciseName: event.exerciseName,
+      timestamp: event.date,
+      setNum: event.setNum,
+      reps: event.reps,
+      weight: event.weight,
+      holdTime: event.holdTime,
+      band: event.band,
+      tempo: event.tempo,
+      tool: event.tool,
+      rest: event.rest,
+      cluster: event.cluster,
+    ));
+  }
+
   Stream<TrackedExerciseState> _getTrackedExerciseStream(
       GetTrackedExerciseForDateAndName event) async* {
     // final failureOrTrackedExercises = await getSpecificTrackedExerciseOnDate(
