@@ -33,10 +33,12 @@ class TrackedExerciseBloc
   Stream<TrackedExerciseState> mapEventToState(
     TrackedExerciseEvent event,
   ) async* {
+    print('in map');
     if (event is GetTrackedExerciseForDateAndName) {
       yield TrackedExerciseLoading();
       yield* _getTrackedExerciseStream(event);
     } else if (event is AddTrackedExercise) {
+      print('in add event');
       yield TrackedExerciseLoading();
       final failureOrAddedSuccess = await addTrackedExercise(Params(
         exerciseName: event.exerciseName,
@@ -56,7 +58,7 @@ class TrackedExerciseBloc
         if (AddedOrError) {
           GetTrackedExerciseForDateAndName getEvent =
               GetTrackedExerciseForDateAndName(event.exerciseName, event.date);
-          yield* _getTrackedExerciseStream(getEvent);
+          // yield* _getTrackedExerciseStream(getEvent);
         } else {
           TrackedExerciseError(message: 'Error adding tracked exercises');
         }

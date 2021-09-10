@@ -92,6 +92,7 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
   }
 
   void _addTrackedExercise(UserEnteredData userEnteredData, int setCount) {
+    print('add button hit');
     BlocProvider.of<TrackedExerciseBloc>(context).add(AddTrackedExercise(
         'Pull Up',
         DateTime.now(),
@@ -104,6 +105,7 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
         userEnteredData.tool,
         userEnteredData.rest,
         userEnteredData.cluster));
+    print('end add button method');
   }
 }
 

@@ -6,10 +6,6 @@ import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TrackedExerciseModel extends GroupedTrackedExercises {
-  //final _streamController = StreamController<TrackedExerciseModel>();
-
-  
-
   TrackedExerciseModel({
     required List<TrackedExercise> trackedExercises,
   }) : super(
@@ -26,14 +22,31 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
 
   static Stream<TrackedExerciseModel> fromQuerySnapshotStream(
       Stream<QuerySnapshot<Object?>> snapshots) async* {
-    snapshots.transform(streamTransformer)
-    snapshots.listen((data) {
-      var docs = data.docs;
-      var model = TrackedExerciseModel.fromQueryDocumentSnapshot(docs);
-      print('decrpting the stream');
-      print(model.trackedExercises[0].rows[0].setNum);
-      yield model;
-    });
+    yield* snapshots.map((snapshot) =>
+        TrackedExerciseModel.fromQueryDocumentSnapshot(snapshot.docs));
+
+    // StreamTransformer<QuerySnapshot<Object?>, TrackedExerciseModel>
+    //     _streamTransformer = StreamTransformer<QuerySnapshot<Object?>,
+    //         TrackedExerciseModel>.fromHandlers(
+    //   handleData:
+    //       (QuerySnapshot<Object?> data, EventSink<TrackedExerciseModel> sink) {
+    //     var docs = data.docs;
+    //     var model = TrackedExerciseModel.fromQueryDocumentSnapshot(docs);
+    //     sink.add(model);
+    //   },
+    //   handleError: (Object error, StackTrace stacktrace, EventSink sink) {
+    //     sink.addError('Error getting tracked exercise data $error');
+    //   },
+    //   handleDone: (EventSink sink) => sink.close(),
+    // );
+    //return snapshots.transform(_streamTransformer);
+    // snapshots.listen((data) {
+    //   var docs = data.docs;
+    //   var model = TrackedExerciseModel.fromQueryDocumentSnapshot(docs);
+    //   print('decrpting the stream');
+    //   print(model.trackedExercises[0].rows[0].setNum);
+    //   //  yield model;
+    // });
   }
 
   // TODO: Implement this
