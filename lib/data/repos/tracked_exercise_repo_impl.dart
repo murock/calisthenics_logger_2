@@ -91,6 +91,5 @@ class TrackedExerciseRepoImpl implements TrackedExerciseRepo {
         ),
       );
     }
-    throw UnimplementedError();
   }
 }

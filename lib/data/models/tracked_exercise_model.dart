@@ -24,29 +24,6 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
       Stream<QuerySnapshot<Object?>> snapshots) async* {
     yield* snapshots.map((snapshot) =>
         TrackedExerciseModel.fromQueryDocumentSnapshot(snapshot.docs));
-
-    // StreamTransformer<QuerySnapshot<Object?>, TrackedExerciseModel>
-    //     _streamTransformer = StreamTransformer<QuerySnapshot<Object?>,
-    //         TrackedExerciseModel>.fromHandlers(
-    //   handleData:
-    //       (QuerySnapshot<Object?> data, EventSink<TrackedExerciseModel> sink) {
-    //     var docs = data.docs;
-    //     var model = TrackedExerciseModel.fromQueryDocumentSnapshot(docs);
-    //     sink.add(model);
-    //   },
-    //   handleError: (Object error, StackTrace stacktrace, EventSink sink) {
-    //     sink.addError('Error getting tracked exercise data $error');
-    //   },
-    //   handleDone: (EventSink sink) => sink.close(),
-    // );
-    //return snapshots.transform(_streamTransformer);
-    // snapshots.listen((data) {
-    //   var docs = data.docs;
-    //   var model = TrackedExerciseModel.fromQueryDocumentSnapshot(docs);
-    //   print('decrpting the stream');
-    //   print(model.trackedExercises[0].rows[0].setNum);
-    //   //  yield model;
-    // });
   }
 
   // TODO: Implement this
@@ -72,18 +49,3 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
     };
   }
 }
-
-// class QuerySnapshotTransformer implements StreamTransformer {
-//   @override
-//   Stream bind(Stream stream) {
-//     // TODO: implement bind
-//     throw UnimplementedError();
-//   }
-//
-//   @override
-//   StreamTransformer<RS, RT> cast<RS, RT>() {
-//     // TODO: implement cast
-//     throw UnimplementedError();
-//   }
-//
-// }

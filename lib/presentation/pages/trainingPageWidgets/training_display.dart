@@ -58,9 +58,7 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
           onAddClick: () {
             _addTrackedExercise(userEnteredData, nextSetNumber);
           },
-          onRemoveClick: () =>
-              QueryFirebaseTEMPMETHODTOREMOVE(userEnteredData, nextSetNumber),
-          //RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(context),
+          onRemoveClick: () => print('remove clicked'),
         ),
         BlocBuilder<TrackedExerciseBloc, TrackedExerciseState>(
           builder: (context, state) {
@@ -76,7 +74,6 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
                 nextSetNumber =
                     state.trackedExercises.trackedExercises[0].rows.length + 1;
               }
-              print('next set num is ' + nextSetNumber.toString());
               return ExerciseListView(trackedExercises: state.trackedExercises);
             } else if (state is TrackedExerciseError) {
               return MessageDisplay(message: state.message);
@@ -92,7 +89,6 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
   }
 
   void _addTrackedExercise(UserEnteredData userEnteredData, int setCount) {
-    print('add button hit');
     BlocProvider.of<TrackedExerciseBloc>(context).addTrackedExerciseToDb(
         AddTrackedExercise(
             'Pull Up',
@@ -106,19 +102,6 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
             userEnteredData.tool,
             userEnteredData.rest,
             userEnteredData.cluster));
-    // BlocProvider.of<TrackedExerciseBloc>(context).add(AddTrackedExercise(
-    //     'Pull Up',
-    //     DateTime.now(),
-    //     setCount,
-    //     userEnteredData.reps,
-    //     userEnteredData.weight,
-    //     userEnteredData.holdTime,
-    //     userEnteredData.band,
-    //     userEnteredData.tempo,
-    //     userEnteredData.tool,
-    //     userEnteredData.rest,
-    //     userEnteredData.cluster));
-    print('end add button method');
   }
 }
 
@@ -148,34 +131,4 @@ bool _isDateTimeToday(DateTime dateTime) {
 String _formatDateTimeToString(DateTime dateTime) {
   final DateFormat formatter = DateFormat('dd-MM-yyyy');
   return formatter.format(dateTime);
-}
-
-Future<void> RemoveTodaysExerciseFromDbTEMPMETHODTOREMOVE(
-    BuildContext context) async {
-  // await TrackedExerciseDbHelper.DELETEtODAYSeXERCISEStodoDELETETHISMETHOD(
-  //     getUnixTimeFromDateTime(DateTime.now()));
-  //
-  // // Temp use of Add event just to refresh the list with everything deleted
-  // BlocProvider.of<TrackedExerciseBloc>(context).add(AddTrackedExercise());
-}
-
-Future<void> QueryFirebaseTEMPMETHODTOREMOVE(
-    UserEnteredData userEnteredData, int setCount) async {
-  // TrackedExerciseDb trackedExerciseDb = TrackedExerciseDb();
-  // //trackedExerciseDb.getAllGivenNameAndDate("Pull Ups", 1626994800);
-  // List<TrackedExerciseRow> trackedExerciseRows = [];
-  // trackedExerciseRows.add(TrackedExerciseRow(
-  //     setNum: setCount.toString(),
-  //     reps: userEnteredData.reps.toString(),
-  //     rest: '30',
-  //     weight: userEnteredData.weight.toString()));
-  // List<TrackedExercise> trackedExercises = [];
-  // trackedExercises.add(TrackedExercise(
-  //     numPopulatedFields: 3,
-  //     exerciseName: "Pull Up",
-  //     date: DateTime.now(),
-  //     rows: trackedExerciseRows));
-  // TrackedExerciseModel trackedExerciseModel =
-  //     TrackedExerciseModel(trackedExercises: trackedExercises);
-  // trackedExerciseDb.addTrackedExercise(trackedExerciseModel);
 }

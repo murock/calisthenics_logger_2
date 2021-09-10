@@ -59,12 +59,10 @@ class TrackedExerciseDb {
   Future<bool> addTrackedExercise(
       TrackedExerciseModel trackedExerciseModel) async {
     bool result = false;
-    print('Adding');
-    var ref = await _trackedExercisesRowRef
+    await _trackedExercisesRowRef
         .add(trackedExerciseModel)
         .then((value) => result = true)
         .catchError((_) => result = false);
-    print(result);
     return result;
   }
 }
