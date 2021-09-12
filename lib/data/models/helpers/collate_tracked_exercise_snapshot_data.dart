@@ -110,9 +110,7 @@ class CollateTrackedExerciseSnapshotData {
 
   num _extractNumFromNumRowElement(
       QueryDocumentSnapshot setData, String field) {
-    num result = this._populatedFields.containsKey(field)
-        ? BLANK_NUM_VALUE
-        : UNPOPULATED_INT_VALUE;
+    num result = UNPOPULATED_INT_VALUE;
     Map data = (setData.data() as Map);
     if (data.containsKey(field)) {
       num? element = setData[field];

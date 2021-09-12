@@ -30,5 +30,3 @@ const DB_FIELDS = [
 // The value of an unpopulated numeric field
 const UNPOPULATED_INT_VALUE = -1;
 const double UNPOPULATED_DOUBLE_VALUE = -1;
-// Where other values in a group of sets are populated but this set value isn't
-const num BLANK_NUM_VALUE = -2;

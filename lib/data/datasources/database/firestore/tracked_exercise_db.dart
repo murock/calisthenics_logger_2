@@ -27,6 +27,7 @@ class TrackedExerciseDb {
     }
   }
 
+  // TODO: Remove? Any use for non real time? possible graphing
   Stream<QuerySnapshot> getStreamGivenNameAndDate(
       String exerciseName, DateTime date) {
     int unixStartDay =

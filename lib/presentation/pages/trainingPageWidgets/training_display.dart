@@ -73,6 +73,8 @@ class _TrainingDisplayState extends State<TrainingDisplay> {
               if (state.trackedExercises.trackedExercises.length > 0) {
                 nextSetNumber =
                     state.trackedExercises.trackedExercises[0].rows.length + 1;
+              } else {
+                nextSetNumber = 1;
               }
               return ExerciseListView(trackedExercises: state.trackedExercises);
             } else if (state is TrackedExerciseError) {

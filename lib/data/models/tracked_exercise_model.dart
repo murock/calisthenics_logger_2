@@ -26,7 +26,7 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
         TrackedExerciseModel.fromQueryDocumentSnapshot(snapshot.docs));
   }
 
-  // TODO: Implement this
+  // TODO: Does this need to be implmented to read data?
   factory TrackedExerciseModel.rowFromJson(Map<String, Object?> json) {
     return TrackedExerciseModel(trackedExercises: []);
   }
@@ -34,18 +34,52 @@ class TrackedExerciseModel extends GroupedTrackedExercises {
   Map<String, Object?> rowToJson() {
     int index = trackedExercises.length - 1;
     int rowIndex = trackedExercises[index].rows.length - 1;
-    return {
+
+    Map<String, Object?> result = Map<String, Object?>();
+
+    Map<String, String> stringElements = {
       'name': trackedExercises[index].exerciseName,
+      'band': trackedExercises[index].rows[rowIndex].band,
+      'tempo': trackedExercises[index].rows[rowIndex].tempo,
+      'tool': trackedExercises[index].rows[rowIndex].tool,
+      'cluster': trackedExercises[index].rows[rowIndex].cluster,
+    };
+
+    stringElements.forEach((key, value) {
+      if (value.isNotEmpty) {
+        result[key] = value;
+      }
+    });
+
+    Map<String, num> numElements = {
       'timestamp': getUnixTimeFromDateTime(trackedExercises[index].date),
       'setNum': trackedExercises[index].rows[rowIndex].setNum,
       'reps': trackedExercises[index].rows[rowIndex].reps,
       'weight': trackedExercises[index].rows[rowIndex].weight,
       'holdTime': trackedExercises[index].rows[rowIndex].holdTime,
-      'band': trackedExercises[index].rows[rowIndex].band,
-      'tempo': trackedExercises[index].rows[rowIndex].tempo,
-      'tool': trackedExercises[index].rows[rowIndex].tool,
       'rest': trackedExercises[index].rows[rowIndex].rest,
-      'cluster': trackedExercises[index].rows[rowIndex].cluster,
     };
+
+    numElements.forEach((key, value) {
+      if (value >= 0) {
+        result[key] = value;
+      }
+    });
+
+    return result;
+
+    // return {
+    //   'name': trackedExercises[index].exerciseName,
+    //   'timestamp': getUnixTimeFromDateTime(trackedExercises[index].date),
+    //   'setNum': trackedExercises[index].rows[rowIndex].setNum,
+    //   'reps': trackedExercises[index].rows[rowIndex].reps,
+    //   'weight': trackedExercises[index].rows[rowIndex].weight,
+    //   'holdTime': trackedExercises[index].rows[rowIndex].holdTime,
+    //   'band': trackedExercises[index].rows[rowIndex].band,
+    //   'tempo': trackedExercises[index].rows[rowIndex].tempo,
+    //   'tool': trackedExercises[index].rows[rowIndex].tool,
+    //   'rest': trackedExercises[index].rows[rowIndex].rest,
+    //   'cluster': trackedExercises[index].rows[rowIndex].cluster,
+    // };
   }
 }
