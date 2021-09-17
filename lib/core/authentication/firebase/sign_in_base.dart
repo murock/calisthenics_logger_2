@@ -6,6 +6,14 @@ class SignInBase {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  static bool isAlreadySignedIn() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<String?> signIn() async {
     try {
       return await signInWithProvider();

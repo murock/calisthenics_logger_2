@@ -12,6 +12,10 @@ class AuthProvider extends ChangeNotifier {
   bool get signedIn => _signedIn;
   bool get isSignUpScreen => _isSignUpScreen;
 
+  AuthProvider(BuildContext context) {
+    checkIfAlreadySignedIn(context);
+  }
+
   void signIn(SignInBase signInAuth, BuildContext context) async {
     _isLoading = true;
     notifyListeners();
@@ -32,5 +36,13 @@ class AuthProvider extends ChangeNotifier {
   void toggleSignUpScreen() {
     _isSignUpScreen = !_isSignUpScreen;
     notifyListeners();
+  }
+
+  void checkIfAlreadySignedIn(BuildContext context) {
+    print('checking if signed in');
+    if (SignInBase.isAlreadySignedIn()) {
+      print('already signed in');
+      Navigator.pushNamed(context, '/home');
+    }
   }
 }
