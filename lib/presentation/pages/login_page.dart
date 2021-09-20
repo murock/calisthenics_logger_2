@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => AuthProvider(context),
+      create: (context) => AuthProvider(),
       child: Selector<AuthProvider, bool>(
           selector: (_, provider) => provider.isSignUpScreen,
           builder: (_, isLogInScreen, __) {

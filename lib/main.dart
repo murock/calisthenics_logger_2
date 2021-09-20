@@ -1,3 +1,4 @@
+import 'package:calisthenics_logger_2/core/authentication/firebase/sign_in_base.dart';
 import 'package:calisthenics_logger_2/core/util/theme.dart';
 import 'package:calisthenics_logger_2/injection.dart';
 import 'package:calisthenics_logger_2/presentation/pages/calendar_page.dart';
@@ -36,8 +37,15 @@ class MyApp extends StatelessWidget {
       //  home: ChartsPage.withSampleData(), //TrainingPage(), //
       initialRoute: '/',
       routes: {
-        '/': (context) =>
-            LoginPage(isSignUp: true), //TrainingPage(), //HomePage(),
+        '/': (context) {
+          if (SignInBase.isAlreadySignedIn()) {
+            return HomePage();
+          } else {
+            return LoginPage(
+              isSignUp: true,
+            );
+          }
+        },
         '/home': (context) => HomePage(),
         '/tools': (context) => ChartsPage.withSampleData(),
         '/calender': (context) => CalendarPage(),
