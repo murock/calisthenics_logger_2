@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const END_GRADIENT_COLOUR = Color(0xff080c26);
 const START_GRADIENT_COLOUR = Color(0Xff0c2c65);
+const POPUP_MENU_COLOUR = Color(0Xff203051);
 const APP_BAR_COLOUR = Color(0Xff081A3E);
 const CONTRAST_COLOUR = Color(0Xffd71263);
 const CONTRAST_COLOUR_LIGHT = Color(0xffdf4182);

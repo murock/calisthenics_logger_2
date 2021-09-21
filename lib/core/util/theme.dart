@@ -69,6 +69,7 @@ ThemeData basicTheme() {
     ),
     floatingActionButtonTheme: _fabTheme(base.floatingActionButtonTheme),
     elevatedButtonTheme: _elevatedButtonTheme(base.elevatedButtonTheme),
+    cardColor: POPUP_MENU_COLOUR,
   );
 }
 
