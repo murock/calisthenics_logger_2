@@ -27,15 +27,6 @@ class TrainingMenu extends StatefulWidget {
 class _TrainingMenuState extends State<TrainingMenu> {
   late List<bool> checkedList;
 
-  _toggleValue(int i) {
-    setState(() {
-      print('toggling value ' + i.toString());
-      if (checkedList.length > i) {
-        checkedList[i] = !checkedList[i];
-      }
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -50,92 +41,45 @@ class _TrainingMenuState extends State<TrainingMenu> {
     ];
   }
 
+  _toggleValue(int i) {
+    setState(() {
+      if (checkedList.length > i) {
+        checkedList[i] = !checkedList[i];
+      }
+    });
+  }
+
+  _test() {
+    setState(() {
+      checkedList[0] = !checkedList[0];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton(itemBuilder: (_) {
+    return PopupMenuButton(itemBuilder: (context) {
       return ['Reps', 'Time', 'Tools', 'Band', 'Weighted', 'Tempo', 'Cluster']
           .asMap()
           .map((i, choice) => MapEntry(
                 i,
                 PopupMenuItem(
-                  child: ListTile(
-                    title: Text(
-                      choice,
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                    trailing: Checkbox(
-                      value: this.checkedList[i],
+                  child: StatefulBuilder(
+                    builder: (_context, _setState) => CheckboxListTile(
                       activeColor: CONTRAST_COLOUR,
-                      onChanged: (bool? value) {
-                        _toggleValue(i);
-                      },
+                      value: this.checkedList[i],
+                      onChanged: (value) =>
+                          _setState(() => this.checkedList[i] = value!),
+                      title: Text(
+                        choice,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
                     ),
-                    onTap: () {
-                      _toggleValue(i);
-                    },
                   ),
-                  // child: TextCheckbox(
-                  //   text: choice,
-                  //   value: this.checkedList[i],
-                  // ),
                   value: choice,
                 ),
               ))
           .values
           .toList();
     });
-  }
-}
-
-class TextCheckbox extends StatefulWidget {
-  final String text;
-  bool? value;
-  TextCheckbox({Key? key, required this.text, this.value = false})
-      : super(key: key);
-
-  @override
-  _TextCheckboxState createState() => _TextCheckboxState();
-}
-
-class _TextCheckboxState extends State<TextCheckbox> {
-  _toggleValue(bool? value) {
-    setState(() {
-      if (widget.value != null) {
-        print('changing widget value');
-        print(widget.value);
-        widget.value = !widget.value!;
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        GestureDetector(
-          child: Text(
-            widget.text,
-            style: Theme.of(context).textTheme.bodyText2,
-          ),
-          onTap: () {
-            setState(
-              () {
-                if (widget.value != null) {
-                  print('changing widget value');
-                  print(widget.value);
-                  widget.value = !widget.value!;
-                }
-              },
-            );
-          },
-        ),
-        Checkbox(
-          value: widget.value,
-          activeColor: CONTRAST_COLOUR,
-          onChanged: _toggleValue,
-        )
-      ],
-    );
   }
 }
