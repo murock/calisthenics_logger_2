@@ -9,6 +9,7 @@ class StyledScaffold extends StatelessWidget {
   final String title;
   final Widget body;
   final List<Widget> completedSetDrawerItems;
+  final List<Widget> appBarActions;
 
   factory StyledScaffold.withSampleData(
       {required String title, required Widget body}) {
@@ -19,11 +20,12 @@ class StyledScaffold extends StatelessWidget {
     );
   }
 
-  const StyledScaffold(
+  StyledScaffold(
       {Key? key,
       required this.title,
       required this.body,
-      required this.completedSetDrawerItems})
+      required this.completedSetDrawerItems,
+      this.appBarActions = const []})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -33,9 +35,7 @@ class StyledScaffold extends StatelessWidget {
           this.title,
           style: Theme.of(context).textTheme.headline1,
         ),
-        actions: [
-          TrainingMenu(),
-        ],
+        actions: this.appBarActions,
         backgroundColor: APP_BAR_COLOUR,
       ),
       backgroundColor: Colors.transparent,
@@ -106,67 +106,5 @@ class StyledScaffold extends StatelessWidget {
       DrawerSection('Pistol Squats', '3 Sets'),
       DrawerSection('Human Flag', '3 Sets'),
     ];
-  }
-}
-
-class TrainingMenu extends StatefulWidget {
-  const TrainingMenu({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  _TrainingMenuState createState() => _TrainingMenuState();
-}
-
-class _TrainingMenuState extends State<TrainingMenu> {
-  @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton(itemBuilder: (_) {
-      return {'Tools', 'Band', 'Weighted', 'Tempo', 'Cluster'}
-          .map((String choice) {
-        return PopupMenuItem(
-          child: TextCheckbox(
-            text: choice,
-          ),
-          value: choice,
-        );
-      }).toList();
-    });
-  }
-}
-
-class TextCheckbox extends StatefulWidget {
-  final String text;
-  const TextCheckbox({
-    Key? key,
-    required this.text,
-  }) : super(key: key);
-
-  @override
-  _TextCheckboxState createState() => _TextCheckboxState();
-}
-
-class _TextCheckboxState extends State<TextCheckbox> {
-  bool? value = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          widget.text,
-          style: Theme.of(context).textTheme.bodyText2,
-        ),
-        Checkbox(
-            value: this.value,
-            activeColor: CONTRAST_COLOUR,
-            onChanged: (bool? value) {
-              setState(() {
-                this.value = value;
-              });
-            })
-      ],
-    );
   }
 }
