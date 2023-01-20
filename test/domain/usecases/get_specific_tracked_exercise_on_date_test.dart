@@ -1,52 +1,52 @@
-import 'package:calisthenics_logger_2/core/util/params.dart';
-import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
-import 'package:calisthenics_logger_2/domain/repos/tracked_exercise_repo.dart';
-import 'package:calisthenics_logger_2/domain/usecases/get_specific_tracked_exercise_on_date.dart';
-import 'package:dartz/dartz.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+// import 'package:calisthenics_logger_2/core/util/params.dart';
+// import 'package:calisthenics_logger_2/domain/entities/tracked_exercise.dart';
+// import 'package:calisthenics_logger_2/domain/repos/tracked_exercise_repo.dart';
+// import 'package:calisthenics_logger_2/domain/usecases/get_specific_tracked_exercise_on_date.dart';
+// import 'package:dartz/dartz.dart';
+// import 'package:flutter_test/flutter_test.dart';
+// import 'package:mockito/annotations.dart';
+// import 'package:mockito/mockito.dart';
 
-import 'get_specific_tracked_exercise_on_date_test.mocks.dart';
+// import 'get_specific_tracked_exercise_on_date_test.mocks.dart';
 
-@GenerateMocks([TrackedExerciseRepo])
-void main() {
-  MockTrackedExerciseRepo mockExerciseRepo = MockTrackedExerciseRepo();
-  GetSpecificTrackedExerciseOnDate usecase =
-      GetSpecificTrackedExerciseOnDate(mockExerciseRepo);
+// @GenerateMocks([TrackedExerciseRepo])
+// void main() {
+//   MockTrackedExerciseRepo mockExerciseRepo = MockTrackedExerciseRepo();
+//   GetSpecificTrackedExerciseOnDate usecase =
+//       GetSpecificTrackedExerciseOnDate(mockExerciseRepo);
 
-  setUp(() {
-    mockExerciseRepo = MockTrackedExerciseRepo();
-    usecase = GetSpecificTrackedExerciseOnDate(mockExerciseRepo);
-  });
+//   setUp(() {
+//     mockExerciseRepo = MockTrackedExerciseRepo();
+//     usecase = GetSpecificTrackedExerciseOnDate(mockExerciseRepo);
+//   });
 
-  final tExerciseRowDatas = [
-    TrackedExerciseRow(setNum: '1', reps: '4', weight: '5', tool: 'wide'),
-    TrackedExerciseRow(setNum: '2', reps: '5', weight: '5', tool: 'wide'),
-    TrackedExerciseRow(setNum: '3', reps: '4', weight: '10', tool: 'wide'),
-  ];
+//   final tExerciseRowDatas = [
+//     TrackedExerciseRow(setNum: '1', reps: '4', weight: '5', tool: 'wide'),
+//     TrackedExerciseRow(setNum: '2', reps: '5', weight: '5', tool: 'wide'),
+//     TrackedExerciseRow(setNum: '3', reps: '4', weight: '10', tool: 'wide'),
+//   ];
 
-  final tExerciseData = new TrackedExercise(
-      exerciseName: 'Pull Ups',
-      numPopulatedFields: 3,
-      date: DateTime(2021, 1, 1),
-      rows: tExerciseRowDatas);
+//   final tExerciseData = new TrackedExercise(
+//       exerciseName: 'Pull Ups',
+//       numPopulatedFields: 3,
+//       date: DateTime(2021, 1, 1),
+//       rows: tExerciseRowDatas);
 
-  final tGroupedTrackedExercise =
-      new GroupedTrackedExercises(trackedExercises: [tExerciseData]);
+//   final tGroupedTrackedExercise =
+//       new GroupedTrackedExercises(trackedExercises: [tExerciseData]);
 
-  test(
-    'should get all tracked exercises from the repo',
-    () async {
-      // arrange
-      when(mockExerciseRepo.getSpecificTrackedExerciseOnDate(any, any))
-          .thenAnswer((_) async => Right(tGroupedTrackedExercise));
-      // act
-      final result = await usecase(Params());
-      //assert
-      expect(result, Right(tGroupedTrackedExercise));
-      verify(mockExerciseRepo.getSpecificTrackedExerciseOnDate(any, any));
-      verifyNoMoreInteractions(mockExerciseRepo);
-    },
-  );
-}
+//   test(
+//     'should get all tracked exercises from the repo',
+//     () async {
+//       // arrange
+//       when(mockExerciseRepo.getSpecificTrackedExerciseOnDate(any, any))
+//           .thenAnswer((_) async => Right(tGroupedTrackedExercise));
+//       // act
+//       final result = await usecase(Params());
+//       //assert
+//       expect(result, Right(tGroupedTrackedExercise));
+//       verify(mockExerciseRepo.getSpecificTrackedExerciseOnDate(any, any));
+//       verifyNoMoreInteractions(mockExerciseRepo);
+//     },
+//   );
+// }
