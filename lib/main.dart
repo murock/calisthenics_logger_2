@@ -10,6 +10,7 @@ import 'package:calisthenics_logger_2/presentation/pages/training_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   configureDependencies();
@@ -24,7 +25,7 @@ void main() async {
   // Than we setup preferred orientations,
   // and only after it finished we run our app
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((value) => runApp(MyApp()));
+      .then((value) => runApp(ProviderScope(child: MyApp())));
 }
 
 class MyApp extends StatelessWidget {
