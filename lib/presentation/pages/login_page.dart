@@ -7,7 +7,17 @@ import 'package:calisthenics_logger_2/presentation/custom_icons_icons.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Container.dart';
 import 'package:calisthenics_logger_2/presentation/widgets/styled_Scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
+
+class LoginPage2 extends ConsumerWidget {
+  const LoginPage2({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
 
 class LoginPage extends StatefulWidget {
   final bool isSignUp;

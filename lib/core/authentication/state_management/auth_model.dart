@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+//https://codewithandrea.com/articles/flutter-state-management-riverpod/
 Widget build(BuildContext context, WidgetRef ref) {
   // watch the FutureProvider and get an AsyncValue<Weather>
   final weatherAsync = ref.watch(weatherFutureProvider);
@@ -27,7 +28,8 @@ final weatherRepositoryProvider = Provider<WeatherRepository>((ref) {
   return WeatherRepository(); // declared elsewhere
 });
 
-final authFutureProvider = FutureProvider.family<UserCredential, SignInBase>((ref, signInAuth) async {
+final authFutureProvider =
+    FutureProvider.family<UserCredential, SignInBase>((ref, signInAuth) async {
   final authRepository = ref.watch(authRepositoryProvider);
 
   return AuthModel().signIn(signInAuth);
@@ -86,7 +88,7 @@ class AuthProvider extends ChangeNotifier {
     _isLoading = false;
     _signedIn = true;
     notifyListeners();
-  //  Navigator.pushNamed(context, '/home');
+    //  Navigator.pushNamed(context, '/home');
   }
 
   void toggleSignUpScreen() {
